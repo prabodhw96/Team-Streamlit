@@ -65,4 +65,4 @@ def write():
 	fig = px.bar(dft.tail(), x="CountryName", y="Active", title="Top 5 countries by active cases on "+day)
 	st.plotly_chart(fig)
 	st.markdown("Source: [CCSE@JHU daily reports] (https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data/csse_covid_19_daily_reports)&nbsp;\
-		[Bing COVI-19 Data] (https://github.com/microsoft/Bing-COVID-19-Data)")
+		[Bing COVID-19 Data] (https://github.com/microsoft/Bing-COVID-19-Data)")
