@@ -80,7 +80,7 @@ def write():
 	st.markdown("### Select countries")
 	data = load_data()
 	countries = list(data["CountryName"].unique())
-	selected_country = st.selectbox("Type the countries to select", countries, key='selected_country')
+	selected_country = st.selectbox("Type the country to select", countries, key='selected_country')
 
 	if st.button("Submit", False):
 		ip = create_ip(selected_country, c1, c2, c3, c4, c5, c6, c7, c8, h1, h2, h3, h6)
