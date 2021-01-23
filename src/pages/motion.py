@@ -9,57 +9,46 @@ import time
 import awesome_streamlit as ast
 
 @st.cache(persist=True)
-def load_data():
-	data = pd.read_csv("src/data/activecases.csv", parse_dates=["Date"])
+def load_data(parse=False):
+	if parse:
+		data = pd.read_csv("src/data/activecases.csv", parse_dates=["Date"])
+		dow = pd.to_datetime(data["Date"]).iloc[-1].dayofweek
+		data = data[pd.to_datetime(data["Date"]).dt.dayofweek == dow].reset_index(drop=True)
+	else:
+		data = pd.read_csv("src/data/activecases.csv")
+		dow = pd.to_datetime(data["Date"]).iloc[-1].dayofweek
+		data = data[pd.to_datetime(data["Date"]).dt.dayofweek == dow].reset_index(drop=True)
 	return data
 
 def write():
 	#with st.spinner("Loading Motion Chart..."):
 	st.markdown("## Active Cases - Motion Chart")
-	data = load_data()
+	data = load_data(parse=False)
+
+	access_token = 'pk.eyJ1IjoicHJhYm9kaHc5NiIsImEiOiJja2s5a3p5Y2gwNGIzMndueGd1MmoxbDB3In0.EdO-eu9KIA_Sz9-JBNs4Uw'
+	px.set_mapbox_access_token(access_token)
+
+	fig = px.scatter_mapbox(
+		data, lat="Latitude", lon="Longitude",
+		size="Active", size_max=50,
+		color="Deaths", color_continuous_scale=px.colors.sequential.Pinkyl,
+		hover_name="CountryName",
+		mapbox_style='dark', zoom=1,
+		animation_frame="Date", animation_group="CountryName"
+	)
+	fig.layout.updatemenus[0].buttons[0].args[1]["frame"]["duration"] = 200
+	fig.layout.updatemenus[0].buttons[0].args[1]["transition"]["duration"] = 200
+	fig.layout.coloraxis.showscale = False
+	fig.layout.sliders[0].pad.t = 10
+	fig.layout.updatemenus[0].pad.t= 10
+	fig.update_layout(width=925, height=600)
+	m = st.beta_container()
+	with m:
+		st.write(fig)
 
 	date = data["Date"].min()
-	view = pdk.ViewState(latitude=0, longitude=0, zoom=0.2)
-	#features = list(data.columns[4:])
-	#features.insert(0, " ")
-	#feature = st.selectbox("Select statistics to display", features, key='feature')
-	feature = "Active"
-	covidLayer = pdk.Layer(
-		"ScatterplotLayer",
-		data=data,
-		pickable=False,
-		opacity=0.3,
-		stroked=True,
-		filled=True,
-		radius_scale=6,
-		radius_min_pixels=5,
-		radius_max_pixels=60,
-		line_width_min_pixels=1,
-		get_position=["Longitude", "Latitude"],
-		get_radius=feature,
-		get_fill_color=[252, 136, 3],
-		get_line_color=[255,0,0],
-		tooltip="test test",
-	)
-	r = pdk.Deck(layers=[covidLayer],
-		initial_view_state=view,
-		map_style="mapbox://styles/mapbox/light-v9",
-	)
-	st.write("Click on the Start button to see the motion chart")
-	if st.button("Start", False):
-		subheading = st.subheader("")
-		map = st.pydeck_chart(r)
-		days = (data["Date"].max() - data["Date"].min()).days
-		#if feature != " ":
-		for i in range(0, days, 1):
-			date += datetime.timedelta(days=1)
-			covidLayer.data = data[data['Date'] == date.isoformat()]
-			r.update()
-			map.pydeck_chart(r)
-			subheading.subheader("Active cases on %s" % (date.strftime("%B %d, %Y")))
-			#subheading.subheader("%s on %s" % (feature, date.strftime("%B %d, %Y")))
-			time.sleep(0.05)
 
+	data = load_data(parse=True)
 	dft = data[data["Date"] == data["Date"].max()].sort_values(by="Active").reset_index(drop=True)[["CountryName", "Date", "Active"]]
 	day = dft["Date"].max().strftime("%b %d, %Y")
 	fig = px.bar(dft.tail(), x="CountryName", y="Active", title="Top 5 countries by active cases on "+day)
