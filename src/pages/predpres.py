@@ -60,8 +60,11 @@ def write():
 	npi_dict_v2 = {}
 	npi_dict_v2["None"] = 0
 	npi_dict_v2["Medium"] = 1
-	npi_dict_v2["Hard"] = 2
+	npi_dict_v2["Medium-Hard"] = 2
+	npi_dict_v2["Hard"] = 3
 	npi_dict_v2["Strict"] = 4
+
+	vals_v2 = ("None", "Medium", "Medium-Hard", "Hard", "Strict")
 
 	col1, col2, col3 = st.beta_columns(3)
 	col4, col5, col6 = st.beta_columns(3)
@@ -80,7 +83,7 @@ def write():
 		#c3 = st.radio("C3_Cancel public events", vals[:-1], key='c3')
 		#c3 = st.selectbox("C3_Cancel public events", np.arange(0,3,1), key='c3')
 	with col4:
-		c4 = st.selectbox("C4_Restrictions on gatherings", vals, key='c4')
+		c4 = st.selectbox("C4_Restrictions on gatherings", vals_v2, key='c4')
 		#c4 = st.radio("C4_Restrictions on gatherings", vals, key='c4')
 		#c4 = st.selectbox("C4_Restrictions on gatherings", np.arange(0,5,1), key='c4')
 	with col5:
@@ -96,7 +99,7 @@ def write():
 		#c7 = st.radio("C7_Restrictions on internal movement", vals, key='c7')
 		#c7 = st.selectbox("C7_Restrictions on internal movement", np.arange(0,3,1), key='c7')
 	with col8:
-		c8 = st.selectbox("C8_International travel controls", vals, key='c8')
+		c8 = st.selectbox("C8_International travel controls", vals_v2, key='c8')
 		#c8 = st.radio("C8_International travel controls", vals, key='c8')
 		#c8 = st.selectbox("C8_International travel controls", np.arange(0,5,1), key='c8')
 	with col9:
@@ -112,7 +115,7 @@ def write():
 		#h3 = st.radio("H3_Contact tracing", vals[:-1], key='h3')
 		#h3 = st.selectbox("H3_Contact tracing", np.arange(0,3,1), key='h3')
 	with col12:
-		h6 = st.selectbox("H6_Facial Coverings", vals, key='h6')
+		h6 = st.selectbox("H6_Facial Coverings", vals_v2, key='h6')
 		#h6 = st.radio("H6_Facial Coverings", vals, key='h6')
 		#h6 = st.selectbox("H6_Facial Coverings", np.arange(0,5,1), key='h6')
 
