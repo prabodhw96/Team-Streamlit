@@ -59,7 +59,7 @@ def write():
 
 	st.markdown("Source: [OxCGRT_latest.csv] (https://github.com/OxCGRT/covid-policy-tracker/blob/master/data/OxCGRT_latest.csv)&nbsp;\
 		[Additional_Context_Data_Global.csv] (https://github.com/leaf-ai/covid-xprize/blob/master/covid_xprize/examples/predictors/lstm/data/Additional_Context_Data_Global.csv)")
-
+'''
 	if st.checkbox("Show experimental (noqa)", False):
 		st.markdown("### Flight traffic - pairwise data (TODO)")
 		ftdf = pd.read_json("src/data/flights.json")
@@ -81,4 +81,4 @@ def write():
 		view_state = pdk.ViewState(latitude=50, longitude=-40, zoom=1, bearing=0, pitch=0)
 		r = pdk.Deck(layers=[layer], initial_view_state=view_state, tooltip={"text": "{from_name} to {to_name}"},)
 		r.picking_radius = 10
-		st.write(r)
+		st.write(r)'''

@@ -41,7 +41,6 @@ def write():
 		with txt:
 			st.write(data[data["Name"]=="Thin Nguyen"]["p1"].reset_index(drop=True)[0])
 		st.write(data[data["Name"]=="Thin Nguyen"]["p2"].reset_index(drop=True)[0])
-		st.write(data[data["Name"]=="Thin Nguyen"]["p3"].reset_index(drop=True)[0])
 		st.markdown(data[data["Name"]=="Thin Nguyen"]["links"].reset_index(drop=True)[0])
 
 	with st.beta_expander("Andrew Williams"):
@@ -50,7 +49,7 @@ def write():
 	with st.beta_expander("Chen-Yang Su"):
 		img, txt = st.beta_columns([0.25, 0.75])
 		with img:
-			cy_photo = Image.open("src/images/Chen-Yang_Su_pic.JPG")
+			cy_photo = Image.open("src/images/Chen-Yang.JPG")
 			cy_photo = cy_photo.resize((150, 180), Image.ANTIALIAS)
 			st.image(cy_photo)
 		with txt:
@@ -72,7 +71,7 @@ def write():
 	with st.beta_expander("Makesh Narsimhan"):
 		img, txt = st.beta_columns([0.25, 0.75])
 		with img:
-			mn_photo = Image.open("src/images/Makesh.png")
+			mn_photo = Image.open("src/images/Makesh.JPG")
 			mn_photo = mn_photo.resize((150, 180), Image.ANTIALIAS)
 			st.image(mn_photo)
 		with txt:
@@ -88,7 +87,6 @@ def write():
 		with txt:
 			st.write(data[data["Name"]=="Marharyta Aleksandrova"]["p1"].reset_index(drop=True)[0])
 		st.write(data[data["Name"]=="Marharyta Aleksandrova"]["p2"].reset_index(drop=True)[0])
-		st.write(data[data["Name"]=="Marharyta Aleksandrova"]["p3"].reset_index(drop=True)[0])
 		st.markdown(data[data["Name"]=="Marharyta Aleksandrova"]["links"].reset_index(drop=True)[0])
 
 	with st.beta_expander("Sai Aravind Sreeramadas"):
@@ -108,5 +106,4 @@ def write():
 			st.image(pw_photo)
 		with txt:
 			st.write(data[data["Name"]=="Prabodh Wankhede"]["p1"].reset_index(drop=True)[0])
-		st.write(data[data["Name"]=="Prabodh Wankhede"]["p2"].reset_index(drop=True)[0])
 		st.markdown(data[data["Name"]=="Prabodh Wankhede"]["links"].reset_index(drop=True)[0])
