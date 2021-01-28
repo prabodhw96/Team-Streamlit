@@ -13,7 +13,7 @@ def write():
 			encourage technological development to benefit humanity. The XPRIZE mission is to bring about \
 			""radical breakthroughs for the benefit of humanity"" through incentivized competition. Their board of trustees \
 			include James Cameron, Larry Page, Arianna Huffington, and Ratan Tata among others.")
-		st.markdown("## XPRIZE Pandemic Response Challenge")
+		st.markdown("## $500K Pandemic Response Challenge sponsored by Cognizant")
 		st.write("The Pandemic Response Challenge focuses on the development of data-driven AI systems to predict COVID-19 infection \
 			rates and prescribe Intervention Plans (IPs) that regional governments, communities, and organizations can implement to \
 			minimize harm when reopening their economies.")
