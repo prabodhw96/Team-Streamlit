@@ -20,6 +20,11 @@ def load_weights():
 	data = pd.read_csv("src/data/weights_today.csv")
 	return data
 
+@st.cache(persist=True)
+def load_leader_data():
+	data = pd.read_csv("src/data/leaders.csv", parse_dates=["Date"])
+	return data
+
 def create_ip(selected_country, c1, c2, c3, c4, c5, c6, c7, c8, h1, h2, h3, h6):
 	data = load_data()
 	cols = ["CountryName", "RegionName", "GeoID", "Date", "NewCases", "C1_School closing", "C2_Workplace closing", 
@@ -51,6 +56,8 @@ def create_ip(selected_country, c1, c2, c3, c4, c5, c6, c7, c8, h1, h2, h3, h6):
 	return ip
 
 def write():
+	leaders = load_leader_data()
+	lc = list(leaders["CountryName"].unique())
 	start = time.time()
 	st.markdown("# Prediction of cases from prescription of stringencies")
 
@@ -106,16 +113,33 @@ def write():
 		t = t.round()
 		dfn = pd.concat([df, t])
 		dfn = dfn.tail(120).reset_index(drop=True) #dfn[334:].reset_index(drop=True)
-
+		
 		dfn1 = dfn[dfn["Date"] < pred["Date"].min()].reset_index(drop=True)
 		dfn2 = dfn[dfn["Date"] >= pred["Date"].min()].reset_index(drop=True)
-		fig = make_subplots(rows=1, cols=1, subplot_titles=["Daily New Cases - "+str(selected_country)])
+		fig = make_subplots(rows=1, cols=1, subplot_titles=["Daily New Cases - "+str(selected_country)], specs=[[{"secondary_y": True}]])
 		fig.add_trace(go.Scatter(x=dfn1["Date"], y=dfn1["DailyNewCases"], 
-			name="Ground Truth", mode='lines', line={'dash': 'dash', 'width':3, 'color':'orange'}), row=1, col=1)
+			name="Ground Truth", mode='lines', line={'dash': 'dash', 'width':3, 'color':'orange'}), row=1, col=1, secondary_y=False)
 		fig.add_trace(go.Scatter(x=dfn2["Date"], y=dfn2["DailyNewCases"], name="Predicted", 
-			mode='lines', line={'color':'#636efa'}), row=1, col=1)
-		fig.update_layout(height=500, width=750)
+			mode='lines', line={'color':'#636efa'}), row=1, col=1, secondary_y=False)
+		#if selected_country in lc:
+		#	df3 = leaders[leaders["CountryName"]==selected_country].reset_index(drop=True)
+		#	df3 = df3[df3["Date"]>=dfn["Date"].min()].reset_index(drop=True)
+		#	fig.add_trace(go.Scatter(x=df3["Date"], y=df3["approval"], name=list(df3["Name"].unique())[0]),
+		#		secondary_y=True)
+			#fig.update_yaxes(range=[40,85], secondary_y=True)
+		fig.update_layout(height=500, width=800)
 		st.plotly_chart(fig)
+
+		if selected_country in lc:
+			df_ = leaders[leaders["CountryName"]==selected_country].reset_index(drop=True)
+			leader_name = list(df_["Name"].unique())[0]
+			fig1 = make_subplots(rows=1, cols=1, subplot_titles=["Popularity of "+leader_name+" amid COVID-19"], specs=[[{"secondary_y": True}]])
+			fig1.add_trace(go.Scatter(x=df["Date"], y=df["DailyNewCases"], 
+			name="Daily New Cases", mode='lines', line={'dash': 'dash', 'width':3, 'color':'orange'}), row=1, col=1, secondary_y=False)
+			fig1.add_trace(go.Scatter(x=df_["Date"], y=df_["approval"], name=leader_name, line={'color':'#00cc96'}), secondary_y=True)
+			fig1.update_layout(height=500, width=800)
+			st.plotly_chart(fig1)
 
 		end = time.time()
 		st.write(round(end-start, 2), "seconds")
+		
