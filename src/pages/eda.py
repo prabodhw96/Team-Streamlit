@@ -21,7 +21,7 @@ def load_pop_data():
 
 def write():
 	#with st.spinner("Loading Exploratory Data Analsysis..."):
-	st.markdown("## Cases - Exploratory Data Analsysis")
+	st.markdown("# Cases - Exploratory Data Analsysis")
 	data = load_data()
 	stat = st.sidebar.selectbox("Select statistics to display", list(data.columns[4:]), key='stat')
 

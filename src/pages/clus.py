@@ -17,7 +17,7 @@ def load_json():
 	return data
 
 def write():
-	st.markdown("## Clustering of countries based on seasons being similar")
+	st.markdown("# Countries with similar seasonal nature")
 	clus = load_clus_data()
 						
 	gj = load_json()

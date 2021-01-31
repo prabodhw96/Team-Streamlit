@@ -15,6 +15,11 @@ def load_data():
 	data = pd.read_csv("src/data/casesanddeaths.csv", parse_dates=["Date"])
 	return data
 
+@st.cache(persist=True)
+def load_weights():
+	data = pd.read_csv("src/data/weights_today.csv")
+	return data
+
 def create_ip(selected_country, c1, c2, c3, c4, c5, c6, c7, c8, h1, h2, h3, h6):
 	data = load_data()
 	cols = ["CountryName", "RegionName", "GeoID", "Date", "NewCases", "C1_School closing", "C2_Workplace closing", 
@@ -47,97 +52,48 @@ def create_ip(selected_country, c1, c2, c3, c4, c5, c6, c7, c8, h1, h2, h3, h6):
 
 def write():
 	start = time.time()
-	st.markdown("## Predict cases by prescribing stringency of containment and closure policies")
+	st.markdown("# Prediction of cases from prescription of stringencies")
 
-	npi_dict = {}
-	npi_dict["None"] = 0
-	npi_dict["Medium"] = 1
-	npi_dict["Hard"] = 2
-	npi_dict["Strict"] = 3
-
-	vals = ("None", "Medium", "Hard", "Strict")
-
-	npi_dict_v2 = {}
-	npi_dict_v2["None"] = 0
-	npi_dict_v2["Medium"] = 1
-	npi_dict_v2["Medium-Hard"] = 2
-	npi_dict_v2["Hard"] = 3
-	npi_dict_v2["Strict"] = 4
-
-	vals_v2 = ("None", "Medium", "Medium-Hard", "Hard", "Strict")
-
-	col1, col2, col3 = st.beta_columns(3)
-	col4, col5, col6 = st.beta_columns(3)
-	col7, col8, col9 = st.beta_columns(3)
-	col10, col11, col12 = st.beta_columns(3)
-	with col1:
-		c1 = st.selectbox("C1_School closing", vals, key='c1')
-		#c1 = st.radio("C1_School closing", vals, key='c1')
-		#c1 = st.selectbox("C1_School closing", np.arange(0,4,1), key='c1')
-	with col2:
-		c2 = st.selectbox("C2_Workplace closing", vals, key='c2')
-		#c2 = st.radio("C2_Workplace closing", vals, key='c2')
-		#c2 = st.selectbox("C2_Workplace closing", np.arange(0,4,1), key='c2')
-	with col3:
-		c3 = st.selectbox("C3_Cancel public events", vals[:-1], key='c3')
-		#c3 = st.radio("C3_Cancel public events", vals[:-1], key='c3')
-		#c3 = st.selectbox("C3_Cancel public events", np.arange(0,3,1), key='c3')
-	with col4:
-		c4 = st.selectbox("C4_Restrictions on gatherings", vals_v2, key='c4')
-		#c4 = st.radio("C4_Restrictions on gatherings", vals, key='c4')
-		#c4 = st.selectbox("C4_Restrictions on gatherings", np.arange(0,5,1), key='c4')
-	with col5:
-		c5 = st.selectbox("C5_Close public transport", vals[:-1], key='c5')
-		#c5 = st.radio("C5_Close public transport", vals[:-1], key='c5')
-		#c5 = st.selectbox("C5_Close public transport", np.arange(0,3,1), key='c5')
-	with col6:
-		c6 = st.selectbox("C6_Stay at home requirements", vals, key='c6')
-		#c6 = st.radio("C6_Stay at home requirements", vals, key='c6')
-		#c6 = st.selectbox("C6_Stay at home requirements", np.arange(0,4,1), key='c6')
-	with col7:
-		c7 = st.selectbox("C7_Restrictions on internal movement", vals[:-1], key='c7')
-		#c7 = st.radio("C7_Restrictions on internal movement", vals, key='c7')
-		#c7 = st.selectbox("C7_Restrictions on internal movement", np.arange(0,3,1), key='c7')
-	with col8:
-		c8 = st.selectbox("C8_International travel controls", vals_v2, key='c8')
-		#c8 = st.radio("C8_International travel controls", vals, key='c8')
-		#c8 = st.selectbox("C8_International travel controls", np.arange(0,5,1), key='c8')
-	with col9:
-		h1 = st.selectbox("H1_Public information campaigns", vals[:-1], key='h1')
-		#h1 = st.radio("H1_Public information campaigns", vals[:-1], key='h1')
-		#h1 = st.selectbox("H1_Public information campaigns", np.arange(0,3,1), key='h1')
-	with col10:
-		h2 = st.selectbox("H2_Testing policy", vals, key='h2')
-		#h2 = st.radio("H2_Testing policy", vals, key='h2')
-		#h2 = st.selectbox("H2_Testing policy", np.arange(0,4,1), key='h2')
-	with col11:
-		h3 = st.selectbox("H3_Contact tracing", vals[:-1], key='h3')
-		#h3 = st.radio("H3_Contact tracing", vals[:-1], key='h3')
-		#h3 = st.selectbox("H3_Contact tracing", np.arange(0,3,1), key='h3')
-	with col12:
-		h6 = st.selectbox("H6_Facial Coverings", vals_v2, key='h6')
-		#h6 = st.radio("H6_Facial Coverings", vals, key='h6')
-		#h6 = st.selectbox("H6_Facial Coverings", np.arange(0,5,1), key='h6')
-
-	st.markdown("### Select countries")
+	st.markdown("### Select country")
 	data = load_data()
-	countries = list(data["CountryName"].unique())
+	countries = list(data.sort_values(by="ConfirmedCases", ascending=False)["CountryName"].unique())
 	selected_country = st.selectbox("Type the country to select", countries, key='selected_country')
 
+	weights = load_weights()
+
+	fourvals = [0, 0.33, 0.67, 1]
+	threevals = [0, 0.5, 1]
+	fivevals = [0, 0.25, 0.5, 0.75, 1]
+
+	c1 = st.sidebar.select_slider("C1_School closing", fourvals, key='c1',
+								value=weights[weights["CountryName"]==selected_country]["C1_School closing"].reset_index(drop=True)[0]) #vals
+	c2 = st.sidebar.select_slider("C2_Workplace closing", fourvals, key='c2',
+								value=weights[weights["CountryName"]==selected_country]["C2_Workplace closing"].reset_index(drop=True)[0]) #vals
+	c3 = st.sidebar.select_slider("C3_Cancel public events", threevals, key='c3',
+								value=weights[weights["CountryName"]==selected_country]["C3_Cancel public events"].reset_index(drop=True)[0]) #vals[:-1]
+	c4 = st.sidebar.select_slider("C4_Restrictions on gatherings", fivevals, key='c4',
+								value=weights[weights["CountryName"]==selected_country]["C4_Restrictions on gatherings"].reset_index(drop=True)[0]) #vals_v2
+	c5 = st.sidebar.select_slider("C5_Close public transport", threevals, key='c5',
+								value=weights[weights["CountryName"]==selected_country]["C5_Close public transport"].reset_index(drop=True)[0]) #vals[:-1]
+	c6 = st.sidebar.select_slider("C6_Stay at home requirements", fourvals, key='c6',
+								value=weights[weights["CountryName"]==selected_country]["C6_Stay at home requirements"].reset_index(drop=True)[0]) #vals
+	c7 = st.sidebar.select_slider("C7_Restrictions on internal movement", threevals, key='c7',
+								value=weights[weights["CountryName"]==selected_country]["C7_Restrictions on internal movement"].reset_index(drop=True)[0]) #vals[:-1]
+	c8 = st.sidebar.select_slider("C8_International travel controls", fivevals, key='c8',
+								value=weights[weights["CountryName"]==selected_country]["C8_International travel controls"].reset_index(drop=True)[0]) #vals_v2
+	h1 = st.sidebar.select_slider("H1_Public information campaigns", threevals, key='h1',
+								value=weights[weights["CountryName"]==selected_country]["H1_Public information campaigns"].reset_index(drop=True)[0]) #vals[:-1]
+	h2 = st.sidebar.select_slider("H2_Testing policy", fourvals, key='h2',
+								value=weights[weights["CountryName"]==selected_country]["H2_Testing policy"].reset_index(drop=True)[0]) #vals
+	h3 = st.sidebar.select_slider("H3_Contact tracing", threevals, key='h3',
+								value=weights[weights["CountryName"]==selected_country]["H3_Contact tracing"].reset_index(drop=True)[0]) #vals[:-1]
+	h6 = st.sidebar.select_slider("H6_Facial Coverings", fivevals, key='h6',
+								value=weights[weights["CountryName"]==selected_country]["H6_Facial Coverings"].reset_index(drop=True)[0]) #vals_v2
+
 	if st.button("Submit", False):
-		ip = create_ip(selected_country,
-						npi_dict[c1],
-						npi_dict[c2],
-						npi_dict[c3],
-						npi_dict_v2[c4],
-						npi_dict[c5],
-						npi_dict[c6],
-						npi_dict[c7],
-						npi_dict_v2[c8],
-						npi_dict[h1],
-						npi_dict[h2],
-						npi_dict[h3],
-						npi_dict_v2[h6])
+		ip = create_ip(selected_country, fourvals.index(c1), fourvals.index(c2), threevals.index(c3), fivevals.index(c4),
+			threevals.index(c5), fourvals.index(c6), threevals.index(c7), fivevals.index(c8), threevals.index(h1),
+			fourvals.index(h2), threevals.index(h3), fivevals.index(h6))
 		pred = predict(ip)
 		df = data[data["CountryName"]==selected_country].reset_index(drop=True)
 		df = df[["CountryName", "Date", "ConfirmedCases", "ConfirmedDeaths", "DailyNewCases", "DailyNewDeaths"]]
@@ -158,34 +114,8 @@ def write():
 			name="Ground Truth", mode='lines', line={'dash': 'dash', 'width':3, 'color':'orange'}), row=1, col=1)
 		fig.add_trace(go.Scatter(x=dfn2["Date"], y=dfn2["DailyNewCases"], name="Predicted", 
 			mode='lines', line={'color':'#636efa'}), row=1, col=1)
+		fig.update_layout(height=500, width=750)
 		st.plotly_chart(fig)
-
-		#fig = px.line(dfn, x="Date", y="DailyNewCases")
-		#st.plotly_chart(fig)
-		#fig = px.line(dfn, x="Date", y="DailyNewDeaths")
-		#st.plotly_chart(fig)
-
-		#dfn1 = dfn[dfn["Date"] < pred["Date"].min()].reset_index(drop=True)
-		#dfn2 = dfn[dfn["Date"] >= pred["Date"].min()].reset_index(drop=True)
-
-		#fig = make_subplots(rows=2, cols=1, subplot_titles=["Daily New Cases", "Daily New Deaths"])
-		#fig.add_trace(go.Scatter(x=dfn1["Date"], y=dfn1["DailyNewCases"], 
-		#	name="Ground Truth (Cases)", mode='lines', line={'dash': 'dash', 'width':3, 'color':'orange'}), row=1, col=1)
-		#fig.add_trace(go.Scatter(x=dfn2["Date"], y=dfn2["DailyNewCases"], name="Predicted (Cases)", 
-		#	mode='lines', line={'color':'#636efa'}), row=1, col=1)
-		#fig.add_trace(go.Scatter(x=dfn1["Date"], y=dfn1["DailyNewDeaths"], name="Ground Truth (Deaths)", 
-		#	mode='lines', line={'dash': 'dash', 'width':3, 'color':'#ed6d59'}), row=2, col=1)
-		#fig.add_trace(go.Scatter(x=dfn2["Date"], y=dfn2["DailyNewDeaths"], name="Predicted (Deaths)", 
-		#	mode='lines', line={'color':'#ab63fa'}), row=2, col=1)
-		#fig.update_layout(height=700, width=700)
-		#st.plotly_chart(fig)
-		
-		#fig = make_subplots(rows=2, cols=1)
-		#fig.add_trace(go.Scatter(x=dfn["Date"], y=dfn["DailyNewCases"], name="Daily New Cases"), row=1, col=1)
-		#fig.add_trace(go.Scatter(x=dfn["Date"], y=dfn["DailyNewDeaths"], name="Daily New Deaths"), row=2, col=1)
-		#fig.update_layout(height=700, width=700)
-		#st.plotly_chart(fig)
-		#st.write(pred.drop(columns=["RegionName", "GeoID"]).round())
 
 		end = time.time()
 		st.write(round(end-start, 2), "seconds")

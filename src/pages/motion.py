@@ -22,7 +22,7 @@ def load_data(parse=False):
 
 def write():
 	#with st.spinner("Loading Motion Chart..."):
-	st.markdown("## Active Cases - Motion Chart")
+	st.markdown("# Pandemic Spread Chart")
 	data = load_data(parse=False)
 
 	access_token = 'pk.eyJ1IjoicHJhYm9kaHc5NiIsImEiOiJja2s5a3p5Y2gwNGIzMndueGd1MmoxbDB3In0.EdO-eu9KIA_Sz9-JBNs4Uw'
@@ -30,11 +30,11 @@ def write():
 
 	fig = px.scatter_mapbox(
 		data, lat="Latitude", lon="Longitude",
-		size="Active", size_max=50,
-		color="Deaths", color_continuous_scale=px.colors.sequential.Pinkyl,
+		size="% of Population", size_max=50,
+		color="Active", color_continuous_scale=px.colors.sequential.Pinkyl,
 		hover_name="CountryName",
 		mapbox_style='dark', zoom=1,
-		animation_frame="Date", animation_group="CountryName"
+		animation_frame="Date", animation_group="CountryName",
 	)
 	fig.layout.updatemenus[0].buttons[0].args[1]["frame"]["duration"] = 200
 	fig.layout.updatemenus[0].buttons[0].args[1]["transition"]["duration"] = 200
