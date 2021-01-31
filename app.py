@@ -14,9 +14,8 @@ ast.core.services.other.set_logging_format()
 
 PAGES = {
 	"Prediction": src.pages.predpres,
-	#"Home": src.pages.home,
-	"Exploratory Data Analysis": src.pages.eda,
 	"Pandemic Spread Chart": src.pages.motion,
+	"Exploratory Data Analysis": src.pages.eda,
 	"Clustering": src.pages.clus,
 	"About": src.pages.about,
 	"Team": src.pages.team,
