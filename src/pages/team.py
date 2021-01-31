@@ -4,7 +4,7 @@ import streamlit as st
 import awesome_streamlit as ast
 from PIL import Image
 
-st.cache(persist=True)
+st.cache(persist=True, allow_output_mutation=True)
 def load_data():
 	data = pd.read_csv("src/data/team.csv", encoding="cp1252")
 	return data

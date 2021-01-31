@@ -8,7 +8,7 @@ import time
 
 import awesome_streamlit as ast
 
-@st.cache(persist=True)
+@st.cache(persist=True, allow_output_mutation=True)
 def load_data(parse=False):
 	if parse:
 		data = pd.read_csv("src/data/activecases.csv", parse_dates=["Date"])

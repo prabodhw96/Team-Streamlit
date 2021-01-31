@@ -6,12 +6,12 @@ from streamlit_folium import folium_static
 
 import awesome_streamlit as ast
 
-@st.cache(persist=True)
+@st.cache(persist=True, allow_output_mutation=True)
 def load_clus_data():
 	data = pd.read_csv("src/data/clus.csv")
 	return data
 
-@st.cache(persist=True)
+@st.cache(persist=True, allow_output_mutation=True)
 def load_json():
 	data = pd.read_json("src/data/world-countries.json")
 	return data

@@ -10,17 +10,17 @@ from src.pages.predict import predict
 
 import awesome_streamlit as ast
 
-@st.cache(persist=True)
+@st.cache(persist=True, allow_output_mutation=True)
 def load_data():
 	data = pd.read_csv("src/data/casesanddeaths.csv", parse_dates=["Date"])
 	return data
 
-@st.cache(persist=True)
+@st.cache(persist=True, allow_output_mutation=True)
 def load_weights():
 	data = pd.read_csv("src/data/weights_today.csv")
 	return data
 
-@st.cache(persist=True)
+@st.cache(persist=True, allow_output_mutation=True)
 def load_leader_data():
 	data = pd.read_csv("src/data/leaders.csv", parse_dates=["Date"])
 	return data

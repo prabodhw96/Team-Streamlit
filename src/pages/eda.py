@@ -9,12 +9,12 @@ from streamlit_folium import folium_static
 
 import awesome_streamlit as ast
 
-@st.cache(persist=True)
+@st.cache(persist=True, allow_output_mutation=True)
 def load_data():
 	data = pd.read_csv("src/data/casesanddeaths.csv", parse_dates=["Date"])
 	return data
 
-@st.cache(persist=True)
+@st.cache(persist=True, allow_output_mutation=True)
 def load_pop_data():
 	data = pd.read_csv("src/data/population.csv")
 	return data
