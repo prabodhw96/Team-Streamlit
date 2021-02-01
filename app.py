@@ -10,7 +10,7 @@ import src.pages.motion
 import src.pages.clus
 import src.pages.about
 
-st.set_page_config(initial_sidebar_state='collapsed')
+st.beta_set_page_config(initial_sidebar_state='collapsed')
 
 st.markdown("""<style>.sidebar .sidebar-collapse-control{
   background-image: linear-gradient(#f6bdc0, #f6bdc0);
