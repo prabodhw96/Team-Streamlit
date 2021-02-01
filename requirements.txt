@@ -9,6 +9,6 @@ scikit-learn==0.23.2
 lightgbm
 tensorflow
 keras
-streamlit
+streamlit==0.69
 streamlit_folium
 awesome-streamlit
