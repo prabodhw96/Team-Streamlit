@@ -28,6 +28,12 @@ def write():
 	access_token = 'pk.eyJ1IjoicHJhYm9kaHc5NiIsImEiOiJja2s5a3p5Y2gwNGIzMndueGd1MmoxbDB3In0.EdO-eu9KIA_Sz9-JBNs4Uw'
 	px.set_mapbox_access_token(access_token)
 
+	st.markdown(f"""<style>
+		.reportview-container .main .block-container{{
+		max-width: 1100px;
+		padding-left: 5rem;
+		}}</style>""", unsafe_allow_html=True)
+
 	fig = px.scatter_mapbox(
 		data, lat="Latitude", lon="Longitude",
 		size="% of Population", size_max=50,
@@ -42,9 +48,9 @@ def write():
 	fig.layout.sliders[0].pad.t = 10
 	fig.layout.updatemenus[0].pad.t= 10
 	fig.update_layout(width=925, height=600)
-	m = st.beta_container()
-	with m:
-		st.write(fig)
+	st.plotly_chart(fig, use_container_width=False)
+	#with m:
+	#	st.write(fig)
 
 	date = data["Date"].min()
 

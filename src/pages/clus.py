@@ -3,6 +3,7 @@ import numpy as np
 import pandas as pd
 import folium
 from streamlit_folium import folium_static
+from branca.element import Figure
 
 import awesome_streamlit as ast
 
@@ -18,7 +19,18 @@ def load_json():
 
 def write():
 	st.markdown("# Countries with similar seasonal nature")
+	st.write("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut \
+		labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris \
+		nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit \
+		esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in \
+		culpa qui officia deserunt mollit anim id est laborum.")
 	clus = load_clus_data()
+
+#	st.markdown(f"""<style>
+#		.reportview-container .main .block-container{{
+#		max-width: 1000px;
+#		padding-left: 10rem;
+#		}}</style>""", unsafe_allow_html=True)
 						
 	gj = load_json()
 	gj = gj.assign(id=gj["features"].apply(pd.Series)["id"], name=gj["features"].apply(pd.Series)["properties"].apply(pd.Series)["name"])
@@ -54,26 +66,18 @@ def write():
 		ss = {'fillColor':f'{cc[0]}', 'color':f'{cc[1]}'}
 		return ss
 
-	if st.checkbox("Show all countries", False):
-		m = folium.Map(location = [51.5074, 0.1728], zoom_start=2, control_scale=True)
-
+	st.write('<style>div.row-widget.stRadio > div{flex-direction:row;}</style>', unsafe_allow_html=True)
+	c = st.radio("Select Cluster#", ["Show all",0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15])
+	if c == "Show all":
+		m = folium.Map(location=[51.5074, 0.1728], zoom_start=2, control_scale=True, max_bounds=True)
 		for r in gj.to_dict(orient="records"):
 			folium.GeoJson(r["features"], name=r["name"], tooltip=r["name"], style_function=style_fn).add_to(m)
-
 		folium_static(m)
-
-	if st.checkbox("Show countries by cluster", False):
-		st.write('<style>div.row-widget.stRadio > div{flex-direction:row;}</style>', unsafe_allow_html=True)
-		c = st.radio("Select Cluster#", np.arange(0, 16, 1))
+	else:
 		x = clus[clus["cluster"]==c]
 		dx = gj[gj["name"].isin(x["country"].unique())].reset_index(drop=True)
-
-		m = folium.Map(location = [51.5074, 0.1728], zoom_start=2, control_scale=True)
-
+		m = folium.Map(location = [51.5074, 0.1728], zoom_start=2, control_scale=True, max_bounds=True)
 		for r in dx.to_dict(orient="records"):
 			folium.GeoJson(r["features"], name=r["name"], tooltip=r["name"], style_function=style_fn).add_to(m)
-		
 		folium_static(m)
-
-		if st.checkbox("Show name of countries", False):
-			st.write(list(x["country"].unique()))
+		st.write(list(x["country"].unique()))

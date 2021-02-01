@@ -59,7 +59,7 @@ def write():
 	leaders = load_leader_data()
 	lc = list(leaders["CountryName"].unique())
 	start = time.time()
-	st.markdown("# Prediction of cases from prescription of stringencies")
+	st.markdown("# Prescription of stringencies to predict the new cases")
 
 	st.markdown("### Select country")
 	data = load_data()
@@ -68,39 +68,53 @@ def write():
 
 	weights = load_weights()
 
-	fourvals = [0, 0.33, 0.67, 1]
-	threevals = [0, 0.5, 1]
-	fivevals = [0, 0.25, 0.5, 0.75, 1]
+	fourvals = [0, 1, 2, 3]
+	threevals = [0, 1, 2]
+	fivevals = [0, 1, 2, 3, 4]
 
-	c1 = st.sidebar.select_slider("C1_School closing", fourvals, key='c1',
-								value=weights[weights["CountryName"]==selected_country]["C1_School closing"].reset_index(drop=True)[0]) #vals
-	c2 = st.sidebar.select_slider("C2_Workplace closing", fourvals, key='c2',
-								value=weights[weights["CountryName"]==selected_country]["C2_Workplace closing"].reset_index(drop=True)[0]) #vals
-	c3 = st.sidebar.select_slider("C3_Cancel public events", threevals, key='c3',
-								value=weights[weights["CountryName"]==selected_country]["C3_Cancel public events"].reset_index(drop=True)[0]) #vals[:-1]
-	c4 = st.sidebar.select_slider("C4_Restrictions on gatherings", fivevals, key='c4',
-								value=weights[weights["CountryName"]==selected_country]["C4_Restrictions on gatherings"].reset_index(drop=True)[0]) #vals_v2
-	c5 = st.sidebar.select_slider("C5_Close public transport", threevals, key='c5',
-								value=weights[weights["CountryName"]==selected_country]["C5_Close public transport"].reset_index(drop=True)[0]) #vals[:-1]
-	c6 = st.sidebar.select_slider("C6_Stay at home requirements", fourvals, key='c6',
-								value=weights[weights["CountryName"]==selected_country]["C6_Stay at home requirements"].reset_index(drop=True)[0]) #vals
-	c7 = st.sidebar.select_slider("C7_Restrictions on internal movement", threevals, key='c7',
-								value=weights[weights["CountryName"]==selected_country]["C7_Restrictions on internal movement"].reset_index(drop=True)[0]) #vals[:-1]
-	c8 = st.sidebar.select_slider("C8_International travel controls", fivevals, key='c8',
-								value=weights[weights["CountryName"]==selected_country]["C8_International travel controls"].reset_index(drop=True)[0]) #vals_v2
-	h1 = st.sidebar.select_slider("H1_Public information campaigns", threevals, key='h1',
-								value=weights[weights["CountryName"]==selected_country]["H1_Public information campaigns"].reset_index(drop=True)[0]) #vals[:-1]
-	h2 = st.sidebar.select_slider("H2_Testing policy", fourvals, key='h2',
-								value=weights[weights["CountryName"]==selected_country]["H2_Testing policy"].reset_index(drop=True)[0]) #vals
-	h3 = st.sidebar.select_slider("H3_Contact tracing", threevals, key='h3',
-								value=weights[weights["CountryName"]==selected_country]["H3_Contact tracing"].reset_index(drop=True)[0]) #vals[:-1]
-	h6 = st.sidebar.select_slider("H6_Facial Coverings", fivevals, key='h6',
-								value=weights[weights["CountryName"]==selected_country]["H6_Facial Coverings"].reset_index(drop=True)[0]) #vals_v2
+	col1, col2, col3, col4 = st.beta_columns(4)
+	col5, col6, col7, col8 = st.beta_columns(4)
+	col9, col10, col11, col12 = st.beta_columns(4)
+
+	with col1:
+		c1 = st.select_slider("C1_School closing", fourvals, key='c1',
+									value=weights[weights["CountryName"]==selected_country]["C1_School closing"].reset_index(drop=True)[0]) #vals
+	with col2:
+		c2 = st.select_slider("C2_Workplace closing", fourvals, key='c2',
+									value=weights[weights["CountryName"]==selected_country]["C2_Workplace closing"].reset_index(drop=True)[0]) #vals
+	with col3:
+		c3 = st.select_slider("C3_Cancel public events", threevals, key='c3',
+									value=weights[weights["CountryName"]==selected_country]["C3_Cancel public events"].reset_index(drop=True)[0]) #vals[:-1]
+	with col4:
+		c4 = st.select_slider("C4_Restrictions on gatherings", fivevals, key='c4',
+									value=weights[weights["CountryName"]==selected_country]["C4_Restrictions on gatherings"].reset_index(drop=True)[0]) #vals_v2
+	with col5:
+		c5 = st.select_slider("C5_Close public transport", threevals, key='c5',
+									value=weights[weights["CountryName"]==selected_country]["C5_Close public transport"].reset_index(drop=True)[0]) #vals[:-1]
+	with col6:
+		c6 = st.select_slider("C6_Stay at home requirements", fourvals, key='c6',
+									value=weights[weights["CountryName"]==selected_country]["C6_Stay at home requirements"].reset_index(drop=True)[0]) #vals
+	with col7:
+		c7 = st.select_slider("C7_Restrictions on internal movement", threevals, key='c7',
+									value=weights[weights["CountryName"]==selected_country]["C7_Restrictions on internal movement"].reset_index(drop=True)[0]) #vals[:-1]
+	with col8:
+		c8 = st.select_slider("C8_International travel controls", fivevals, key='c8',
+									value=weights[weights["CountryName"]==selected_country]["C8_International travel controls"].reset_index(drop=True)[0]) #vals_v2
+	with col9:
+		h1 = st.select_slider("H1_Public information campaigns", threevals, key='h1',
+									value=weights[weights["CountryName"]==selected_country]["H1_Public information campaigns"].reset_index(drop=True)[0]) #vals[:-1]
+	with col10:
+		h2 = st.select_slider("H2_Testing policy", fourvals, key='h2',
+									value=weights[weights["CountryName"]==selected_country]["H2_Testing policy"].reset_index(drop=True)[0]) #vals
+	with col11:
+		h3 = st.select_slider("H3_Contact tracing", threevals, key='h3',
+									value=weights[weights["CountryName"]==selected_country]["H3_Contact tracing"].reset_index(drop=True)[0]) #vals[:-1]
+	with col12:
+		h6 = st.select_slider("H6_Facial Coverings", fivevals, key='h6',
+									value=weights[weights["CountryName"]==selected_country]["H6_Facial Coverings"].reset_index(drop=True)[0]) #vals_v2
 
 	if st.button("Submit", False):
-		ip = create_ip(selected_country, fourvals.index(c1), fourvals.index(c2), threevals.index(c3), fivevals.index(c4),
-			threevals.index(c5), fourvals.index(c6), threevals.index(c7), fivevals.index(c8), threevals.index(h1),
-			fourvals.index(h2), threevals.index(h3), fivevals.index(h6))
+		ip = create_ip(selected_country, c1, c2, c3, c4, c5, c6, c7, c8, h1, h2, h3, h6)
 		pred = predict(ip)
 		df = data[data["CountryName"]==selected_country].reset_index(drop=True)
 		df = df[["CountryName", "Date", "ConfirmedCases", "ConfirmedDeaths", "DailyNewCases", "DailyNewDeaths"]]
@@ -133,10 +147,10 @@ def write():
 		if selected_country in lc:
 			df_ = leaders[leaders["CountryName"]==selected_country].reset_index(drop=True)
 			leader_name = list(df_["Name"].unique())[0]
-			fig1 = make_subplots(rows=1, cols=1, subplot_titles=["Popularity of "+leader_name+" amid COVID-19"], specs=[[{"secondary_y": True}]])
+			fig1 = make_subplots(rows=1, cols=1, subplot_titles=["Popular support amid COVID-19"], specs=[[{"secondary_y": True}]])
 			fig1.add_trace(go.Scatter(x=df["Date"], y=df["DailyNewCases"], 
 			name="Daily New Cases", mode='lines', line={'dash': 'dash', 'width':3, 'color':'orange'}), row=1, col=1, secondary_y=False)
-			fig1.add_trace(go.Scatter(x=df_["Date"], y=df_["approval"], name=leader_name, line={'color':'#00cc96'}), secondary_y=True)
+			fig1.add_trace(go.Scatter(x=df_["Date"], y=df_["approval"], name="Popular support", line={'color':'#00cc96'}), secondary_y=True)
 			fig1.update_layout(height=500, width=800)
 			st.plotly_chart(fig1)
 
