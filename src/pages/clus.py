@@ -3,7 +3,8 @@ import numpy as np
 import pandas as pd
 import folium
 from streamlit_folium import folium_static
-from branca.element import Figure
+
+import streamlit.components.v1 as components
 
 import awesome_streamlit as ast
 
@@ -18,6 +19,13 @@ def load_json():
 	return data
 
 def write():
+	#st.markdown(f"""<style>
+	#	.reportview-container .main .block-container{{
+	#	max-width: 1500px;
+	#	padding-top: 0rem;
+	#	padding-left: 0rem;
+	#	}}</style>""", unsafe_allow_html=True)
+	#components.iframe("https://pop.xprize.org/Prizes/PrizeDetails?codename=pandemic_response_challenge",width=1500,height=4500)
 	st.markdown("# Countries with similar seasonal nature")
 	st.write("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut \
 		labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris \

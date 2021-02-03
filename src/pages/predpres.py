@@ -7,6 +7,7 @@ import plotly.express as px
 from plotly.subplots import make_subplots
 import plotly.graph_objects as go
 from src.pages.predict import predict
+from typing import List, Optional
 
 import awesome_streamlit as ast
 
@@ -55,6 +56,8 @@ def create_ip(selected_country, c1, c2, c3, c4, c5, c6, c7, c8, h1, h2, h3, h6):
 	ip = ip.sort_values(by="CountryName").reset_index(drop=True)
 	return ip
 
+init_str = "322412232314"
+
 def write():
 	leaders = load_leader_data()
 	lc = list(leaders["CountryName"].unique())
@@ -72,9 +75,10 @@ def write():
 	threevals = [0, 1, 2]
 	fivevals = [0, 1, 2, 3, 4]
 
-	col1, col2, col3, col4 = st.beta_columns(4)
-	col5, col6, col7, col8 = st.beta_columns(4)
-	col9, col10, col11, col12 = st.beta_columns(4)
+	col1, col2, col3 = st.beta_columns(3)
+	col4, col5, col6 = st.beta_columns(3)
+	col7, col8, col9 = st.beta_columns(3)
+	col10, col11, col12 = st.beta_columns(3)
 
 	with col1:
 		c1 = st.select_slider("C1_School closing", fourvals, key='c1',
@@ -113,7 +117,11 @@ def write():
 		h6 = st.select_slider("H6_Facial Coverings", fivevals, key='h6',
 									value=weights[weights["CountryName"]==selected_country]["H6_Facial Coverings"].reset_index(drop=True)[0]) #vals_v2
 
+	flag = False
+	str_ip = str(c1)+str(c2)+str(c3)+str(c4)+str(c5)+str(c6)+str(c7)+str(c8)+str(h1)+str(h2)+str(h3)+str(h6)
+
 	if st.button("Submit", False):
+		flag = True
 		ip = create_ip(selected_country, c1, c2, c3, c4, c5, c6, c7, c8, h1, h2, h3, h6)
 		pred = predict(ip)
 		df = data[data["CountryName"]==selected_country].reset_index(drop=True)
@@ -127,6 +135,8 @@ def write():
 		t = t.round()
 		dfn = pd.concat([df, t])
 		dfn = dfn.tail(120).reset_index(drop=True) #dfn[334:].reset_index(drop=True)
+		#dfn.to_csv("us_df.csv", index=False)
+		#st.write("Saved!")
 		
 		dfn1 = dfn[dfn["Date"] < pred["Date"].min()].reset_index(drop=True)
 		dfn2 = dfn[dfn["Date"] >= pred["Date"].min()].reset_index(drop=True)
@@ -156,4 +166,27 @@ def write():
 
 		end = time.time()
 		st.write(round(end-start, 2), "seconds")
-		
+
+	if selected_country == "United States" and str_ip == init_str and flag==False:
+		us_df = pd.read_csv("us_df.csv")
+		us_df1 = us_df.head(us_df.shape[0] - 30).reset_index(drop=True)
+		us_df2 = us_df.tail(30).reset_index(drop=True)
+		fig_us = make_subplots(rows=1, cols=1, subplot_titles=["Daily New Cases - "+str(selected_country)], specs=[[{"secondary_y": True}]])
+		fig_us.add_trace(go.Scatter(x=us_df1["Date"], y=us_df1["DailyNewCases"], 
+			name="Ground Truth", mode='lines', line={'dash': 'dash', 'width':3, 'color':'orange'}), row=1, col=1, secondary_y=False)
+		fig_us.add_trace(go.Scatter(x=us_df2["Date"], y=us_df2["DailyNewCases"], name="Predicted", 
+			mode='lines', line={'color':'#636efa'}), row=1, col=1, secondary_y=False)
+		fig_us.update_layout(height=500, width=800)
+		st.plotly_chart(fig_us)
+
+		dfw = data[data["CountryName"]=="United States"].reset_index(drop=True)
+		dfw = dfw[["CountryName", "Date", "ConfirmedCases", "ConfirmedDeaths", "DailyNewCases", "DailyNewDeaths"]]
+
+		df_1 = leaders[leaders["CountryName"]=="United States"].reset_index(drop=True)
+		leader_name1 = list(df_1["Name"].unique())[0]
+		fig2 = make_subplots(rows=1, cols=1, subplot_titles=["Popular support amid COVID-19"], specs=[[{"secondary_y": True}]])
+		fig2.add_trace(go.Scatter(x=dfw["Date"], y=dfw["DailyNewCases"], 
+		name="Daily New Cases", mode='lines', line={'dash': 'dash', 'width':3, 'color':'orange'}), row=1, col=1, secondary_y=False)
+		fig2.add_trace(go.Scatter(x=df_1["Date"], y=df_1["approval"], name="Popular support", line={'color':'#00cc96'}), secondary_y=True)
+		fig2.update_layout(height=500, width=800)
+		st.plotly_chart(fig2)
