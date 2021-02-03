@@ -26,14 +26,14 @@ def load_leader_data():
 	data = pd.read_csv("src/data/leaders.csv", parse_dates=["Date"])
 	return data
 
-def create_ip(selected_country, c1, c2, c3, c4, c5, c6, c7, c8, h1, h2, h3, h6):
+def create_ip(selected_country, c1, c2, c3, c4, c5, c6, c7, c8, h1, h2, h3, h6, n_days=30):
 	data = load_data()
 	cols = ["CountryName", "RegionName", "GeoID", "Date", "NewCases", "C1_School closing", "C2_Workplace closing", 
 	"C3_Cancel public events", "C4_Restrictions on gatherings", "C5_Close public transport", 
 	"C6_Stay at home requirements", "C7_Restrictions on internal movement", "C8_International travel controls", 
 	"H1_Public information campaigns", "H2_Testing policy", "H3_Contact tracing", "H6_Facial Coverings"]
 	ip = pd.DataFrame(columns=cols)
-	for i in range(1,31):
+	for i in range(1,n_days+1):
 		val = {}
 		val["CountryName"] = selected_country
 		val["RegionName"] = np.nan
@@ -68,6 +68,9 @@ def write():
 	data = load_data()
 	countries = list(data.sort_values(by="ConfirmedCases", ascending=False)["CountryName"].unique())
 	selected_country = st.selectbox("Type the country to select", countries, key='selected_country')
+	col0, colx, coly = st.beta_columns(3)
+	with col0:
+		n_days = st.number_input("Enter no. of days", 30, 90, value=30)
 
 	weights = load_weights()
 
@@ -122,7 +125,7 @@ def write():
 
 	if st.button("Submit", False):
 		flag = True
-		ip = create_ip(selected_country, c1, c2, c3, c4, c5, c6, c7, c8, h1, h2, h3, h6)
+		ip = create_ip(selected_country, c1, c2, c3, c4, c5, c6, c7, c8, h1, h2, h3, h6, n_days)
 		pred = predict(ip)
 		df = data[data["CountryName"]==selected_country].reset_index(drop=True)
 		df = df[["CountryName", "Date", "ConfirmedCases", "ConfirmedDeaths", "DailyNewCases", "DailyNewDeaths"]]
@@ -134,7 +137,7 @@ def write():
 			"PredictedDailyNewDeaths":"DailyNewDeaths"}, inplace=True)
 		t = t.round()
 		dfn = pd.concat([df, t])
-		dfn = dfn.tail(120).reset_index(drop=True) #dfn[334:].reset_index(drop=True)
+		dfn = dfn.tail(90+n_days).reset_index(drop=True) #dfn[334:].reset_index(drop=True)
 		#dfn.to_csv("us_df.csv", index=False)
 		#st.write("Saved!")
 		
@@ -167,7 +170,7 @@ def write():
 		end = time.time()
 		st.write(round(end-start, 2), "seconds")
 
-	if selected_country == "United States" and str_ip == init_str and flag==False:
+	if selected_country == "United States" and str_ip == init_str and flag==False and n_days==30:
 		us_df = pd.read_csv("us_df.csv")
 		us_df1 = us_df.head(us_df.shape[0] - 30).reset_index(drop=True)
 		us_df2 = us_df.tail(30).reset_index(drop=True)
