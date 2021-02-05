@@ -74,8 +74,8 @@ PAGES = {
 }
 
 def main():
-	hide_streamlit_style = """<style>#MainMenu {visibility: hidden;}</style>"""
-	st.markdown(hide_streamlit_style, unsafe_allow_html=True)
+	#hide_streamlit_style = """<style>#MainMenu {visibility: hidden;}</style>"""
+	#st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 	#st.markdown("<h1 style='text-align: center;'>M-montreal-quebec</h1>", unsafe_allow_html=True)
 	#st.sidebar.title("Navigation")
 	selection = st.sidebar.radio(" ", list(PAGES.keys()))
