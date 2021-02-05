@@ -86,5 +86,5 @@ def write():
 			generate_sequence_for_change(i, k[i])
 			break
 
-	if st.button("Submit", False):
-		st.write(c1, c2, c3, c4, c5, c6, c7, c8, h1, h2, h3, h6)
+	#if st.button("Submit", False):
+	#	st.write(c1, c2, c3, c4, c5, c6, c7, c8, h1, h2, h3, h6)
