@@ -4,6 +4,7 @@
 This is the code for website for XPRIZE Pandemic Response Challenge.
 
 ## Dependencies
+Python version >= 3.7.x<br>
 ``pip install -r requirements.txt``
 
 ## Execution
