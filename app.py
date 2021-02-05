@@ -3,13 +3,14 @@ import streamlit as st
 #st.beta_set_page_config(page_title='M-montreal-quebec', initial_sidebar_state='auto')
 
 import awesome_streamlit as ast
-import src.pages.predpres
+import src.pages.prediction
 import src.pages.eda
 import src.pages.team
 import src.pages.motion
 import src.pages.clus
 import src.pages.about
 import src.pages.virus
+import src.pages.prescription
 
 import warnings
 warnings.filterwarnings("ignore")
@@ -62,13 +63,14 @@ html = """
 ast.core.services.other.set_logging_format()
 
 PAGES = {
-	"Prescription": src.pages.predpres,
-	"Pandemic Spread Chart": src.pages.motion,
+	"Prediction": src.pages.prediction,
+  "Prescription": src.pages.prescription,
+	#"Pandemic Spread Chart": src.pages.motion,
 	#"Exploratory Data Analysis": src.pages.eda,
-	"Clustering": src.pages.clus,
+	#"Clustering": src.pages.clus,
   "SARS-CoV-2": src.pages.virus,
 	"About": src.pages.about,
-	"Team": src.pages.team,
+	#"Team": src.pages.team,
 }
 
 def main():

@@ -22,7 +22,8 @@ def load_data(parse=False):
 
 def write():
 	#with st.spinner("Loading Motion Chart..."):
-	st.markdown("# Pandemic Spread Chart")
+	#st.markdown("# Pandemic Spread Chart")
+	st.markdown("<h1 style='text-align: center;'>Pandemic Spread Chart</h1>", unsafe_allow_html=True)
 	data = load_data(parse=False)
 
 	access_token = 'pk.eyJ1IjoicHJhYm9kaHc5NiIsImEiOiJja2s5a3p5Y2gwNGIzMndueGd1MmoxbDB3In0.EdO-eu9KIA_Sz9-JBNs4Uw'
@@ -31,13 +32,14 @@ def write():
 	st.markdown(f"""<style>
 		.reportview-container .main .block-container{{
 		max-width: 1100px;
+		padding-top: 0em;
 		padding-left: 5rem;
 		}}</style>""", unsafe_allow_html=True)
 
 	fig = px.scatter_mapbox(
 		data, lat="Latitude", lon="Longitude",
 		size="% of Population", size_max=50,
-		color="Active", color_continuous_scale=px.colors.sequential.Pinkyl,
+		color="Active", color_continuous_scale=['#F4564E', '#F4564E', '#F4564E', '#F4564E', '#F4564E', '#F4564E', '#F4564E', '#F4564E', '#F4564E', '#F4564E'],
 		hover_name="CountryName",
 		mapbox_style='dark', zoom=1,
 		animation_frame="Date", animation_group="CountryName",

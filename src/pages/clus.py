@@ -19,6 +19,10 @@ def load_json():
 	return data
 
 def write():
+	st.markdown(f"""<style>
+	.reportview-container .main .block-container{{
+	padding-top: 0em;
+	}}</style>""", unsafe_allow_html=True)
 	#st.markdown(f"""<style>
 	#	.reportview-container .main .block-container{{
 	#	max-width: 1500px;
@@ -74,18 +78,22 @@ def write():
 		ss = {'fillColor':f'{cc[0]}', 'color':f'{cc[1]}'}
 		return ss
 
-	st.write('<style>div.row-widget.stRadio > div{flex-direction:row;}</style>', unsafe_allow_html=True)
-	c = st.radio("Select Cluster#", ["Show all",0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15])
-	if c == "Show all":
-		m = folium.Map(location=[51.5074, 0.1728], zoom_start=2, control_scale=True, max_bounds=True)
-		for r in gj.to_dict(orient="records"):
-			folium.GeoJson(r["features"], name=r["name"], tooltip=r["name"], style_function=style_fn).add_to(m)
-		folium_static(m)
-	else:
-		x = clus[clus["cluster"]==c]
-		dx = gj[gj["name"].isin(x["country"].unique())].reset_index(drop=True)
-		m = folium.Map(location = [51.5074, 0.1728], zoom_start=2, control_scale=True, max_bounds=True)
-		for r in dx.to_dict(orient="records"):
-			folium.GeoJson(r["features"], name=r["name"], tooltip=r["name"], style_function=style_fn).add_to(m)
-		folium_static(m)
-		st.write(list(x["country"].unique()))
+	#st.write('<style>div.row-widget.stRadio > div{flex-direction:row;}</style>', unsafe_allow_html=True)
+	col1, col2 = st.beta_columns([0.2, 0.8])
+	with col1:
+		c = st.radio("Select Cluster#", ["Show all",0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15])
+	#c = st.radio("Select Cluster#", ["Show all",0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15])
+	with col2:
+		if c == "Show all":
+			m = folium.Map(location=[51.5074, 0.1728], zoom_start=2, control_scale=True, max_bounds=True)
+			for r in gj.to_dict(orient="records"):
+				folium.GeoJson(r["features"], name=r["name"], tooltip=r["name"], style_function=style_fn).add_to(m)
+			folium_static(m)
+		else:
+			x = clus[clus["cluster"]==c]
+			dx = gj[gj["name"].isin(x["country"].unique())].reset_index(drop=True)
+			m = folium.Map(location = [51.5074, 0.1728], zoom_start=2, control_scale=True, max_bounds=True)
+			for r in dx.to_dict(orient="records"):
+				folium.GeoJson(r["features"], name=r["name"], tooltip=r["name"], style_function=style_fn).add_to(m)
+			folium_static(m)
+			st.write(list(x["country"].unique()))
