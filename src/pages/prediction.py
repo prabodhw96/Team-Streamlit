@@ -22,6 +22,20 @@ def load_weights():
 	data = pd.read_csv("src/data/weights_today.csv")
 	return data
 
+def change_in_ip(df, country, date):
+	df["Date"] = pd.to_datetime(df["Date"])
+	df_country = df[df["CountryName"]==country].reset_index(drop=True)
+	df_country = df_country[df_country["Date"] <= pd.to_datetime(date)][-2:].reset_index(drop=True)
+	df_country_series = abs(df_country.drop(columns=["CountryName", "Date"]).loc[1] - df_country.drop(columns=["CountryName", "Date"]).loc[0])
+	intervention = df_country_series[df_country_series == df_country_series.max()].index[0]
+	res = intervention + " changed from "+str(df_country[intervention][0])+" to "+str(df_country[intervention][1])
+	return res
+
+#@st.cache(persist=True, allow_output_mutation=True)
+#def load_leader_data():
+#	data = pd.read_csv("src/data/leaders.csv", parse_dates=["Date"])
+#	return data
+
 @st.cache(persist=True, allow_output_mutation=True)
 def load_ip_change():
 	data = pd.read_csv("src/data/change_in_ip.csv", parse_dates=["Date"])
@@ -169,17 +183,17 @@ def write():
 		#	df3 = df3[df3["Date"]>=dfn["Date"].min()].reset_index(drop=True)
 		#	fig.add_trace(go.Scatter(x=df3["Date"], y=df3["approval"], name=list(df3["Name"].unique())[0]),
 		#		secondary_y=True)
-			#fig.update_yaxes(range=[40,85], secondary_y=True)
+		#	fig.update_yaxes(range=[40,85], secondary_y=True)
 		fig.update_layout(height=600, width=900)
-		fig.update_xaxes(spikesnap="cursor", spikecolor="#999999", spikedash="dot", spikethickness=3)
-		fig.update_yaxes(spikesnap="cursor", spikecolor="#999999", spikedash="dot", spikethickness=3)
+		fig.update_xaxes(spikesnap="cursor", spikecolor="#999999", spikedash="solid", spikethickness=3)
+		fig.update_yaxes(spikesnap="cursor", spikecolor="#999999", spikedash="solid", spikethickness=3)
 
 		fig.add_trace(go.Scatter(x=req_cip["Date"], y=req_cip["DailyNewCases"], mode='markers', name="Changes in IP",
-			marker=dict(size=12), hoverinfo="all", hovertext="(See the table below for interventions on this day)"))
+			marker=dict(size=12), hoverinfo="all", hovertext=req_cip["change"]))
 
 		st.plotly_chart(fig)
 
-		st.write(req_cip.drop(columns=["DailyNewCases"]))
+		#st.write(req_cip.drop(columns=["DailyNewCases"]))
 
 		#if selected_country in lc:
 		#	df_ = leaders[leaders["CountryName"]==selected_country].reset_index(drop=True)
@@ -188,7 +202,7 @@ def write():
 		#	fig1.add_trace(go.Scatter(x=df["Date"], y=df["DailyNewCases"], 
 		#	name="Daily New Cases", mode='lines', line={'dash': 'dash', 'width':3, 'color':'orange'}), row=1, col=1, secondary_y=False)
 		#	fig1.add_trace(go.Scatter(x=df_["Date"], y=df_["approval"], name="Popular support", line={'color':'#00cc96'}), secondary_y=True)
-		#	fig1.update_layout(height=500, width=800)
+		#	fig1.update_layout(height=600, width=900)
 		#	st.plotly_chart(fig1)
 
 		end = time.time()
@@ -213,15 +227,15 @@ def write():
 			mode='lines', line={'color':'#636efa'}), row=1, col=1, secondary_y=False)
 		
 		fig_us.update_layout(height=600, width=900)
-		fig_us.update_xaxes(spikesnap="cursor", spikecolor="#999999", spikedash="dot", spikethickness=3)
-		fig_us.update_yaxes(spikesnap="cursor", spikecolor="#999999", spikedash="dot", spikethickness=3)
+		fig_us.update_xaxes(spikesnap="cursor", spikecolor="#999999", spikedash="solid", spikethickness=3)
+		fig_us.update_yaxes(spikesnap="cursor", spikecolor="#999999", spikedash="solid", spikethickness=3)
 		
 		fig_us.add_trace(go.Scatter(x=req_cip["Date"], y=req_cip["DailyNewCases"], mode='markers', name="Changes in IP",
-			marker=dict(size=12), hoverinfo="all", hovertext="(See the table below for interventions on this day)"))
+			marker=dict(size=12), hoverinfo="all", hovertext=req_cip["change"]))
 		
 		st.plotly_chart(fig_us)
 
-		st.write(req_cip.drop(columns=["DailyNewCases"]))
+		#st.write(req_cip.drop(columns=["DailyNewCases"]))
 
 		#dfw = data[data["CountryName"]=="United States"].reset_index(drop=True)
 		#dfw = dfw[["CountryName", "Date", "ConfirmedCases", "ConfirmedDeaths", "DailyNewCases", "DailyNewDeaths"]]
@@ -232,5 +246,5 @@ def write():
 		#fig2.add_trace(go.Scatter(x=dfw["Date"], y=dfw["DailyNewCases"], 
 		#name="Daily New Cases", mode='lines', line={'dash': 'dash', 'width':3, 'color':'orange'}), row=1, col=1, secondary_y=False)
 		#fig2.add_trace(go.Scatter(x=df_1["Date"], y=df_1["approval"], name="Popular support", line={'color':'#00cc96'}), secondary_y=True)
-		#fig2.update_layout(height=500, width=800)
+		#fig2.update_layout(height=600, width=900)
 		#st.plotly_chart(fig2)

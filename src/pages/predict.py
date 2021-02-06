@@ -3,8 +3,8 @@ import pandas as pd
 import pickle
 import streamlit as st
 
-from src.pages.tempgeolstm_predictor import tempGeoLSTMPredictor
-from src.pages.tempgeolgbm_predictor import tempGeoLGBMPredictor
+from src.pages.predictor.tempgeolstm_predictor import tempGeoLSTMPredictor
+from src.pages.predictor.tempgeolgbm_predictor import tempGeoLGBMPredictor
 
 import awesome_streamlit as ast
 
