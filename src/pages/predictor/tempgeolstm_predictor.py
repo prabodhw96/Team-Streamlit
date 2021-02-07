@@ -19,6 +19,8 @@ from keras.layers import Reshape
 from keras.layers import Lambda
 from keras.models import Model
 
+import streamlit as st
+
 import src.pages.predictor.base as base
 from src.pages.predictor.base import BasePredictor
 
@@ -40,6 +42,11 @@ NPI_DELAY = 0
 TEMP_SCALE = 20.  # divide temperature values by 20 so they're roughly in the range 0-2
 AVG_EARTH_TEMP = 16./TEMP_SCALE  # average temperature on earth (used to predict for locations where temperature data is missing)
 DISCARD_DATA_BFR = np.datetime64("2020-02-01")
+
+@st.cache(persist=True, allow_output_mutation=True, show_spinner=False)
+def load_temperature_data():
+    data = pd.read_csv(TEMPERATURE_DATA_FILE_PATH, parse_dates=['Date'], encoding="ISO-8859-1", dtype={"RegionName": str, "RegionCode": str}, error_bad_lines=False)
+    return data
 
 class Positive(Constraint):
 
@@ -82,7 +89,7 @@ class tempGeoLSTMPredictor(BasePredictor):
             self.predictor.load_weights(path_to_model_weights)
 
         # read and preprocess temperature data
-        self.temp_df = pd.read_csv(TEMPERATURE_DATA_FILE_PATH, parse_dates=['Date'], encoding="ISO-8859-1", dtype={"RegionName": str,"RegionCode": str}, error_bad_lines=False)
+        self.temp_df = load_temperature_data() #pd.read_csv(TEMPERATURE_DATA_FILE_PATH, parse_dates=['Date'], encoding="ISO-8859-1", dtype={"RegionName": str,"RegionCode": str}, error_bad_lines=False)
         self.temp_df["GeoID"] = np.where(self.temp_df["RegionName"].isnull(), self.temp_df["CountryName"], self.temp_df["CountryName"] + ' / ' + self.temp_df["RegionName"])
         self.temp_df[TEMPERATURE_COLUMN] = self.temp_df[TEMPERATURE_COLUMN]/TEMP_SCALE
         self.country_samples = None  # will be set when fit() or predict() are called

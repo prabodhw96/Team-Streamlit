@@ -22,6 +22,7 @@ def load_weights():
 	data = pd.read_csv("src/data/weights_today.csv")
 	return data
 
+@st.cache(persist=True, allow_output_mutation=True)
 def change_in_ip(df, country, date):
 	df["Date"] = pd.to_datetime(df["Date"])
 	df_country = df[df["CountryName"]==country].reset_index(drop=True)

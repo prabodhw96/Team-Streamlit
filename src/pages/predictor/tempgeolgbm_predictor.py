@@ -6,6 +6,8 @@ from sklearn.multioutput import MultiOutputRegressor
 import numpy as np
 import pandas as pd
 
+import streamlit as st
+
 import src.pages.predictor.base as base
 from src.pages.predictor.base import BasePredictor
 
@@ -26,6 +28,11 @@ TEMP_SCALE = 20.  # divide temperature values by 20 so they're roughly in the ra
 AVG_EARTH_TEMP = 16./TEMP_SCALE  # average temperature on earth (used to predict for locations where temperature data is missing)
 
 HYPOTHETICAL_SUBMISSION_DATE = np.datetime64("2020-05-06")
+
+@st.cache(persist=True, allow_output_mutation=True, show_spinner=False)
+def load_temperature_data():
+    data = pd.read_csv(TEMPERATURE_DATA_FILE_PATH, parse_dates=['Date'], encoding="ISO-8859-1", dtype={"RegionName": str, "RegionCode": str}, error_bad_lines=False)
+    return data
 
 import random
 def seed_everything(seed=0):
@@ -63,7 +70,7 @@ class tempGeoLGBMPredictor(BasePredictor):
         self.npi_delay = npi_delay
 
         # read and preprocess temperature data
-        self.temp_df = pd.read_csv(TEMPERATURE_DATA_FILE_PATH, parse_dates=['Date'], encoding="ISO-8859-1", dtype={"RegionName": str, "RegionCode": str}, error_bad_lines=False)
+        self.temp_df = load_temperature_data() #pd.read_csv(TEMPERATURE_DATA_FILE_PATH, parse_dates=['Date'], encoding="ISO-8859-1", dtype={"RegionName": str, "RegionCode": str}, error_bad_lines=False)
         self.temp_df["GeoID"] = np.where(self.temp_df["RegionName"].isnull(), self.temp_df["CountryName"], self.temp_df["CountryName"] + ' / ' + self.temp_df["RegionName"])
         self.temp_df[TEMPERATURE_COLUMN] = self.temp_df[TEMPERATURE_COLUMN]/TEMP_SCALE
 

@@ -4,6 +4,8 @@ import os
 import pandas as pd
 from datetime import datetime, date, timedelta
 
+import streamlit as st
+
 SEED = 0
 TEST_CONFIGS = [
     ('Nov', {'end_month': 11, 'n_test_months': 1}),
@@ -44,6 +46,27 @@ CONTEXT_COLUMNS = ['CountryName',
                    'ConfirmedDeaths',
                    'Population']
 
+@st.cache(persist=True, allow_output_mutation=True, show_spinner=False)
+def load_oxford_data():
+    data = pd.read_csv(OXFORD_FILEPATH, parse_dates=['Date'], encoding="ISO-8859-1", dtype={"RegionName": str, "RegionCode": str}, error_bad_lines=False)
+    return data
+
+@st.cache(persist=True, allow_output_mutation=True, show_spinner=False)
+def load_additional_context_data():
+    data = pd.read_csv(ADDITIONAL_CONTEXT_FILE, usecols=['CountryName', 'Population'])
+    return data
+
+@st.cache(persist=True, allow_output_mutation=True, show_spinner=False)
+def load_additional_us_context_data():
+    data = pd.read_csv(ADDITIONAL_US_STATES_CONTEXT, usecols=['NAME', 'POPESTIMATE2019'])
+    return data
+
+@st.cache(persist=True, allow_output_mutation=True, show_spinner=False)
+def load_additional_uk_context_data():
+    data = pd.read_csv(ADDITIONAL_UK_CONTEXT)
+    return data
+
+
 def load_train_test(start_date=None, end_date=None, n_test_months=1, end_month=11, n_test_days=None,
                     start_month=None, window_size=7, dropifnocases=True,
                     dropifnodeaths=False, update_data=False):
@@ -75,12 +98,7 @@ def load_train_test(start_date=None, end_date=None, n_test_months=1, end_month=1
         df.to_csv(OXFORD_FILEPATH)
         print('DONE')
     else:
-        df = pd.read_csv(OXFORD_FILEPATH,
-                         parse_dates=['Date'],
-                         encoding="ISO-8859-1",
-                         dtype={"RegionName": str,
-                                "RegionCode": str},
-                         error_bad_lines=False)
+        df = load_oxford_data() #pd.read_csv(OXFORD_FILEPATH, parse_dates=['Date'], encoding="ISO-8859-1", dtype={"RegionName": str, "RegionCode": str}, error_bad_lines=False)
         print('Using existing data up to date {}'.format(str(df.Date[len(df) - 1]).split()[0]))
 
     # Add unique identifier for each location (region + country)
@@ -151,13 +169,11 @@ def load_train_test(start_date=None, end_date=None, n_test_months=1, end_month=1
 def load_additional_context_df():
     # File containing the population for each country
     # Note: this file contains only countries population, not regions
-    additional_context_df = pd.read_csv(ADDITIONAL_CONTEXT_FILE,
-                                        usecols=['CountryName', 'Population'])
+    additional_context_df = load_additional_context_data() #pd.read_csv(ADDITIONAL_CONTEXT_FILE, usecols=['CountryName', 'Population'])
     additional_context_df['GeoID'] = additional_context_df['CountryName']
 
     # US states population
-    additional_us_states_df = pd.read_csv(ADDITIONAL_US_STATES_CONTEXT,
-                                          usecols=['NAME', 'POPESTIMATE2019'])
+    additional_us_states_df = load_additional_us_context_data() #pd.read_csv(ADDITIONAL_US_STATES_CONTEXT, usecols=['NAME', 'POPESTIMATE2019'])
     # Rename the columns to match measures_df ones
     additional_us_states_df.rename(columns={'POPESTIMATE2019': 'Population'}, inplace=True)
     # Prefix with country name to match measures_df
@@ -167,7 +183,7 @@ def load_additional_context_df():
     additional_context_df = additional_context_df.append(additional_us_states_df)
 
     # UK population
-    additional_uk_df = pd.read_csv(ADDITIONAL_UK_CONTEXT)
+    additional_uk_df = load_additional_uk_context_data() #pd.read_csv(ADDITIONAL_UK_CONTEXT)
     # Append the new data to additional_df
     additional_context_df = additional_context_df.append(additional_uk_df)
 
