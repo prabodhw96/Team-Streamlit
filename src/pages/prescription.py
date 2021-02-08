@@ -136,7 +136,7 @@ def write():
 		prior_ip_country = prior_ip_country.tail(21).reset_index(drop=True)[ip_cols]
 
 		start_date = str((prior_ip_country["Date"].max()+timedelta(days=1)).date())
-		end_date = str((prior_ip_country["Date"].max()+timedelta(days=21)).date())
+		end_date = str((prior_ip_country["Date"].max()+timedelta(days=14)).date())
 		res_df = prescribe(str(start_date), str(end_date), prior_ip_country, cost)
 		res_df.to_csv("src/data/res_df.csv", index=False)
 
@@ -168,5 +168,5 @@ def write():
 		duration = 0
 	else:
 		duration = end - start
-	st.write('Duration: {}'.format(duration))
+	st.write(round(end-start, 2), "seconds")
 
