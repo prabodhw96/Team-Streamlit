@@ -231,9 +231,9 @@ def prescribe(start_date_str: str, end_date_str: str, prior_ip_df, cost_df_file)
 
     prescriptors = {
         #'Neat2D_AD1': neat2d_ad1,
-        #'Neat2D_AD15_CKP0': neat2d_ad15_ckp0, (commented)
+        'Neat2D_AD15_CKP0': neat2d_ad15_ckp0,
         #'Neat2D_AD15_CKP1': neat2d_ad15_ckp1,
-        'Heuristic': heuristic,
+        #'Heuristic': heuristic, (commented)
         #'BlindGreedy': blind_greedy, (commented)
     }
 
