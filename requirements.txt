@@ -12,3 +12,5 @@ keras
 streamlit==0.69
 streamlit_folium
 awesome-streamlit
+neat
+pickle5

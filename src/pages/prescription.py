@@ -1,8 +1,10 @@
 import streamlit as st
+from datetime import timedelta
 
 import numpy as np
 import pandas as pd
 import src.pages.rerun as rerun
+from src.pages.prescribe import prescribe
 
 def generate_sequence_for_change(changed_index, changed_value):
 	fixed_sum = 12
@@ -25,6 +27,23 @@ def load_countries():
 	df = pd.read_csv("src/data/country_cc_desc.csv")
 	return df
 
+@st.cache(persist=True, allow_output_mutation=True, show_spinner=False)
+def load_oxford_data():
+    data = pd.read_csv("src/data/OxCGRT_latest.csv",
+    					parse_dates=['Date'],
+    					encoding="ISO-8859-1",
+    					dtype={"RegionName": str, "RegionCode": str},
+    					error_bad_lines=False)
+    return data
+
+def load_cost():
+	data = pd.read_csv("src/data/cost.csv")
+	return data
+
+def load_res_df():
+	data = pd.read_csv("src/data/res_df.csv")
+	return data
+
 def write():
 	st.markdown(f"""<style>
 	.reportview-container .main .block-container{{
@@ -33,6 +52,8 @@ def write():
 	}}</style>""", unsafe_allow_html=True)
 
 	st.markdown("<h1 style='text-align: center;'>Prescription - Phase 2</h1>", unsafe_allow_html=True)
+
+	prior_ip = load_oxford_data()
 
 	countries = load_countries()
 	countries = list(countries["CountryName"].unique())
@@ -95,12 +116,40 @@ def write():
 			generate_sequence_for_change(i, k[i])
 			break
 
-	cols = ["CountryName", "RegionName", "C1_School closing", "C2_Workplace closing", "C3_Cancel public events", 
+	cost_cols = ["CountryName", "RegionName", "C1_School closing", "C2_Workplace closing", "C3_Cancel public events", 
 			"C4_Restrictions on gatherings", "C5_Close public transport", "C6_Stay at home requirements",
 			"C7_Restrictions on internal movement", "C8_International travel controls", "H1_Public information campaigns",
 			"H2_Testing policy", "H3_Contact tracing", "H6_Facial Coverings"]
+
+	ip_cols = cost_cols.copy()
+	ip_cols.insert(2, "Date")
 	
 	if st.button("Submit", False):
 		#st.write(c1, c2, c3, c4, c5, c6, c7, c8, h1, h2, h3, h6)
-		cost = pd.DataFrame([[selected_country, np.nan, c1, c2, c3, c4, c5, c6, c7, c8, h1, h2, h3, h6]], columns=cols)
-		st.write(cost)
+		cost = pd.DataFrame([[selected_country, np.nan, c1, c2, c3, c4, c5, c6, c7, c8, h1, h2, h3, h6]], columns=cost_cols)
+		cost.to_csv("src/data/cost.csv", index=False)
+		prior_ip_country = prior_ip[prior_ip["CountryName"]==selected_country]
+		prior_ip_country = prior_ip_country.dropna(subset=ip_cols[3:])
+		prior_ip_country = prior_ip_country.tail(21).reset_index(drop=True)[ip_cols]
+
+		start_date = str((prior_ip_country["Date"].max()+timedelta(days=1)).date())
+		end_date = str((prior_ip_country["Date"].max()+timedelta(days=21)).date())
+		res_df = prescribe(str(start_date), str(end_date), prior_ip_country, cost)
+		res_df.to_csv("src/data/res_df.csv", index=False)
+
+	res_df = load_res_df()
+	sd = res_df["Date"].min()
+	ed = res_df["Date"].max()
+	cost_ = load_cost()
+	pres = res_df.groupby(["PrescriptionIndex"]).mean().reset_index().drop(columns=["RegionName"])
+	cost_ = cost_.drop(columns=["CountryName", "RegionName"])
+	pres["Stringency"] = pres.drop(columns=["PrescriptionIndex"]).mul(cost_.loc[0],axis=1).sum(axis=1)
+	sl = list(pres["Stringency"])
+	pres["Stringency"] = ['%.2f' % elem for elem in sl]
+	pres = pres.drop_duplicates(subset=["Stringency"], keep="first")
+	stringency_list = list(pres["Stringency"])
+	col1, col2 = st.beta_columns(2)
+	with col1:
+		stringency = st.select_slider("Select Stringency", stringency_list)
+	st.write(pres[pres["Stringency"]==stringency].drop(columns=["Stringency"]).reset_index(drop=True))
+	st.write(sd, ed)
