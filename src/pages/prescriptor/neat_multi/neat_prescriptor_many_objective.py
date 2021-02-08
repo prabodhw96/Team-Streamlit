@@ -8,7 +8,7 @@ import pandas as pd
 import os
 from copy import deepcopy
 import datetime
-import src.pages.prescriptor.neat as neat
+import neat as neat
 from tensorflow.python.framework.ops import default_session
 
 from scipy.optimize import curve_fit
