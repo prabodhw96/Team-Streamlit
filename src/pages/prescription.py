@@ -168,5 +168,5 @@ def write():
 		duration = 0
 	else:
 		duration = end - start
-	st.write(round(end-start, 2), "seconds")
+	st.write(round(duration, 2), "seconds")
 
