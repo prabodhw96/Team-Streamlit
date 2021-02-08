@@ -1,5 +1,6 @@
 import streamlit as st
 from datetime import timedelta
+import time
 
 import numpy as np
 import pandas as pd
@@ -123,8 +124,10 @@ def write():
 
 	ip_cols = cost_cols.copy()
 	ip_cols.insert(2, "Date")
-	
+
+	start = 0
 	if st.button("Submit", False):
+		start = time.time()
 		#st.write(c1, c2, c3, c4, c5, c6, c7, c8, h1, h2, h3, h6)
 		cost = pd.DataFrame([[selected_country, np.nan, c1, c2, c3, c4, c5, c6, c7, c8, h1, h2, h3, h6]], columns=cost_cols)
 		cost.to_csv("src/data/cost.csv", index=False)
@@ -145,11 +148,25 @@ def write():
 	cost_ = cost_.drop(columns=["CountryName", "RegionName"])
 	pres["Stringency"] = pres.drop(columns=["PrescriptionIndex"]).mul(cost_.loc[0],axis=1).sum(axis=1)
 	sl = list(pres["Stringency"])
-	pres["Stringency"] = ['%.2f' % elem for elem in sl]
+	pres.sort_values(by=["Stringency"], inplace=True)
+	pres.reset_index(drop=True, inplace=True)
+	#pres["Stringency"] = ['%.2f' % elem for elem in sl]
 	pres = pres.drop_duplicates(subset=["Stringency"], keep="first")
+	sl = list(pres["Stringency"])
+	pres = pres.round(0)
+	pres["Stringency"] = ['%.2f' % elem for elem in sl]
 	stringency_list = list(pres["Stringency"])
 	col1, col2 = st.beta_columns(2)
 	with col1:
-		stringency = st.select_slider("Select Stringency", stringency_list)
-	st.write(pres[pres["Stringency"]==stringency].drop(columns=["Stringency"]).reset_index(drop=True))
-	st.write(sd, ed)
+		stringency = st.select_slider("Select Stringency out of {} possible values".format(len(stringency_list)), stringency_list)
+	st.write(pres[pres["Stringency"] == stringency].drop(columns=["Stringency"]).reset_index(drop=True).T)
+	#st.write(stringency_list)
+	#st.write(pres.T)
+	#st.write(sd, ed)
+	end = time.time()
+	if start == 0:
+		duration = 0
+	else:
+		duration = end - start
+	st.write('Duration: {}'.format(duration))
+

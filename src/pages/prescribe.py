@@ -20,11 +20,11 @@ ROOT_DIR = "src/pages/prescriptor/"
 # Neat2D configs
 NEAT2D_PATH = os.path.join(ROOT_DIR, 'neat_multi/models/5days-results-2d-1-hidden/')
 NEAT2D_CHECKPOINT_0 = 26
-NEAT2D_FILE_0 = os.path.join(NEAT2D_PATH, 'neat-checkpoint-{}_short'.format(NEAT2D_CHECKPOINT_0))
+NEAT2D_FILE_0 = os.path.join(NEAT2D_PATH, 'neat-checkpoint-{}_short_pickle4'.format(NEAT2D_CHECKPOINT_0))
 NEAT2D_FILE_ZIP_0 = os.path.join(NEAT2D_PATH, 'neat-checkpoint-{}.zip'.format(NEAT2D_CHECKPOINT_0))
 NEAT2D_CONFIG_FILE_0 = NEAT2D_PATH + 'config-prescriptor-{}'.format(NEAT2D_CHECKPOINT_0)
 NEAT2D_CHECKPOINT_1 = 45
-NEAT2D_FILE_1 = os.path.join(NEAT2D_PATH, 'neat-checkpoint-{}_short'.format(NEAT2D_CHECKPOINT_1))
+NEAT2D_FILE_1 = os.path.join(NEAT2D_PATH, 'neat-checkpoint-{}_short_pickle4'.format(NEAT2D_CHECKPOINT_1))
 NEAT2D_FILE_ZIP_1 = os.path.join(NEAT2D_PATH, 'neat-checkpoint-{}.zip'.format(NEAT2D_CHECKPOINT_1))
 NEAT2D_CONFIG_FILE_1 = NEAT2D_PATH + 'config-prescriptor-{}'.format(NEAT2D_CHECKPOINT_1)
 
@@ -47,8 +47,8 @@ OXFORD_FILEPATH = os.path.join(DATA_DIR, 'OxCGRT_latest.csv')
 NUM_REQUIRED = 10
 
 # limits on the allowed values of stringency for our solutions
-MIN_STRINGENCY = 0.5
-MAX_STRINGENCY = 35
+MIN_STRINGENCY = -1
+MAX_STRINGENCY = 100
 
 def get_non_dom_ind(vals_arr, verbose=True):
     res_arr = []
@@ -232,7 +232,7 @@ def prescribe(start_date_str: str, end_date_str: str, prior_ip_df, cost_df_file)
     prescriptors = {
         #'Neat2D_AD1': neat2d_ad1,
         'Neat2D_AD15_CKP0': neat2d_ad15_ckp0,
-        'Neat2D_AD15_CKP1': neat2d_ad15_ckp1,
+        #'Neat2D_AD15_CKP1': neat2d_ad15_ckp1,
         'Heuristic': heuristic,
         'BlindGreedy': blind_greedy,
     }
@@ -261,6 +261,7 @@ def prescribe(start_date_str: str, end_date_str: str, prior_ip_df, cost_df_file)
                 pred_df['PrescriptionIndex'] = idx
                 pred_dfs.append(pred_df)
             pred_df = pd.concat(pred_dfs)
+            pred_df.to_csv('src/data/pred_df_{}.csv'.format(presc_name), index=False)
 
             # aggregate cases by prescription index and geo
             agg_pred_df = pred_df.groupby(['CountryName', 'PrescriptionIndex']).mean().reset_index() #'RegionName' dropna=False
@@ -298,6 +299,7 @@ def prescribe(start_date_str: str, end_date_str: str, prior_ip_df, cost_df_file)
 
     # run the aggregation to find the best prescriptions
     pareto_presc = aggregate_results(eval)
+    pareto_presc.to_csv('src/data/pareto_presc.csv', index=False)
 
     agg_df_dict = {'CountryName': [],
                    'RegionName': [],
