@@ -173,13 +173,14 @@ def write():
 	pres = pres.round(0)
 	pres["Stringency"] = ['%.2f' % elem for elem in sl]
 	stringency_list = list(pres["Stringency"])
-	col1, col2 = st.beta_columns(2)
-	with col1:
-		stringency = st.select_slider("Select Stringency out of {} possible values".format(len(stringency_list)), stringency_list)
-	st.write(pres[pres["Stringency"] == stringency].drop(columns=["Stringency"]).reset_index(drop=True).T)
 	end = time.time()
 	if start == 0:
 		duration = 0
 	else:
 		duration = end - start
-	st.write(round(duration, 2), "seconds")
+		st.write(round(duration, 2), "seconds")
+
+	col1, col2 = st.beta_columns(2)
+	with col1:
+		stringency = st.select_slider("Select Stringency out of {} possible values".format(len(stringency_list)), stringency_list)
+	st.write(pres[pres["Stringency"] == stringency].drop(columns=["Stringency"]).reset_index(drop=True).T)
