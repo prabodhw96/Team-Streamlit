@@ -5,6 +5,8 @@ import pandas as pd
 from src.pages.prescriptor.xprize_predictor import XPrizePredictor
 import time
 
+import streamlit as st
+
 SEED = 0
 DEFAULT_TEST_COST = 'covid_xprize/validation/data/uniform_random_costs.csv'
 TEST_CONFIGS = [
@@ -61,6 +63,11 @@ NPI_COLUMNS = list(NPI_MAX_VALUES.keys())
 CASES_COL = ['NewCases']
 
 PRED_CASES_COL = ['PredictedDailyNewCases']
+
+@st.cache(persist=True, allow_output_mutation=True, show_spinner=False)
+def load_oxford_data():
+    data = pd.read_csv(OXFORD_FILEPATH, parse_dates=['Date'], encoding="ISO-8859-1", dtype={"RegionName": str, "RegionCode": str}, error_bad_lines=False)
+    return data
 
 def gen_test_config(start_date=None,
                     end_date=None,
@@ -150,12 +157,7 @@ def load_historical_data(update_data=False):
         df.to_csv(OXFORD_FILEPATH)
         print('DONE')
     else:
-        df = pd.read_csv(OXFORD_FILEPATH,
-                         parse_dates=['Date'],
-                         encoding="ISO-8859-1",
-                         dtype={'RegionName': str,
-                                'RegionCode': str},
-                         error_bad_lines=False)
+        df = load_oxford_data() #pd.read_csv(OXFORD_FILEPATH, parse_dates=['Date'], encoding="ISO-8859-1", dtype={'RegionName': str, 'RegionCode': str}, error_bad_lines=False)
         print('Using existing data up to date {}'.format(str(df.Date[len(df) - 1]).split()[0]))
     df = add_geo_id(df)
 
@@ -203,16 +205,15 @@ def add_geo_id(df):
                            df['CountryName'] + ' / ' + df['RegionName'])
     return df
 
+@st.cache(persist=True, allow_output_mutation=True, show_spinner=False)
 def load_additional_context_df():
     # File containing the population for each country
     # Note: this file contains only countries population, not regions
-    additional_context_df = pd.read_csv(ADDITIONAL_CONTEXT_FILE,
-                                        usecols=['CountryName', 'Population'])
+    additional_context_df = pd.read_csv(ADDITIONAL_CONTEXT_FILE, usecols=['CountryName', 'Population'])
     additional_context_df['GeoID'] = additional_context_df['CountryName']
 
     # US states population
-    additional_us_states_df = pd.read_csv(ADDITIONAL_US_STATES_CONTEXT,
-                                          usecols=['NAME', 'POPESTIMATE2019'])
+    additional_us_states_df = pd.read_csv(ADDITIONAL_US_STATES_CONTEXT, usecols=['NAME', 'POPESTIMATE2019'])
     # Rename the columns to match measures_df ones
     additional_us_states_df.rename(columns={'POPESTIMATE2019': 'Population'}, inplace=True)
     # Prefix with country name to match measures_df

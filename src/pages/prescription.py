@@ -1,6 +1,7 @@
 import streamlit as st
 from datetime import timedelta
 import time
+import os
 
 import numpy as np
 import pandas as pd
@@ -17,6 +18,7 @@ def generate_sequence_for_change(changed_index, changed_value):
 	final_vec = np.insert(req_rand_vec,changed_index,changed_value)
 	d = pd.DataFrame(final_vec)
 	d.to_csv("src/data/init.csv", index=False)
+	os.chmod("src/data/init.csv", 751)
 	rerun.rerun()
 
 def load_data():
@@ -136,7 +138,7 @@ def write():
 		prior_ip_country = prior_ip_country.tail(21).reset_index(drop=True)[ip_cols]
 
 		start_date = str((prior_ip_country["Date"].max()+timedelta(days=1)).date())
-		end_date = str((prior_ip_country["Date"].max()+timedelta(days=14)).date())
+		end_date = str((prior_ip_country["Date"].max()+timedelta(days=28)).date())
 		res_df = prescribe(str(start_date), str(end_date), prior_ip_country, cost)
 		res_df.to_csv("src/data/res_df.csv", index=False)
 
@@ -160,13 +162,9 @@ def write():
 	with col1:
 		stringency = st.select_slider("Select Stringency out of {} possible values".format(len(stringency_list)), stringency_list)
 	st.write(pres[pres["Stringency"] == stringency].drop(columns=["Stringency"]).reset_index(drop=True).T)
-	#st.write(stringency_list)
-	#st.write(pres.T)
-	#st.write(sd, ed)
 	end = time.time()
 	if start == 0:
 		duration = 0
 	else:
 		duration = end - start
 	st.write(round(duration, 2), "seconds")
-
