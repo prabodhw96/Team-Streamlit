@@ -74,7 +74,7 @@ def write():
 	arr = [round(elem, 2) for elem in arr_df]
 	st.write(sum(arr))
 
-	slider_flag = True
+	slider_flag = False
 
 	if slider_flag:
 		with col1:
