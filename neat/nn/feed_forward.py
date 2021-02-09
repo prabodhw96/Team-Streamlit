@@ -2,6 +2,7 @@ from neat.graphs import feed_forward_layers
 from neat.six_util import itervalues
 
 
+FFN_MEMO = {}
 class FeedForwardNetwork(object):
     def __init__(self, inputs, outputs, node_evals):
         self.input_nodes = inputs
@@ -32,6 +33,13 @@ class FeedForwardNetwork(object):
         # Gather expressed connections.
         connections = [cg.key for cg in itervalues(genome.connections) if cg.enabled]
 
+        global FFN_MEMO
+        FFN_MEMO_KEY = (tuple(config.genome_config.input_keys),
+                        tuple(config.genome_config.output_keys),
+                        tuple(connections))
+        if FFN_MEMO_KEY in FFN_MEMO:
+            return FFN_MEMO[FFN_MEMO_KEY]
+
         layers = feed_forward_layers(config.genome_config.input_keys, config.genome_config.output_keys, connections)
         node_evals = []
         for layer in layers:
@@ -51,6 +59,8 @@ class FeedForwardNetwork(object):
                 activation_function = config.genome_config.activation_defs.get(ng.activation)
                 node_evals.append((node, activation_function, aggregation_function, ng.bias, ng.response, inputs))
 
-        return FeedForwardNetwork(config.genome_config.input_keys, config.genome_config.output_keys, node_evals)
+        ffn = FeedForwardNetwork(config.genome_config.input_keys, config.genome_config.output_keys, node_evals)
+        FFN_MEMO[FFN_MEMO_KEY] = ffn
+        return ffn
 
 
