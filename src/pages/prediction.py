@@ -9,7 +9,6 @@ import plotly.graph_objects as go
 from src.pages.predict import predict
 from typing import List, Optional
 import random
-from stqdm import stqdm
 
 import awesome_streamlit as ast
 
