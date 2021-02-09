@@ -9,6 +9,7 @@ import plotly.graph_objects as go
 from src.pages.predict import predict
 from typing import List, Optional
 import random
+from stqdm import stqdm
 
 import awesome_streamlit as ast
 
@@ -102,10 +103,10 @@ def write():
 	threevals = [0, 1, 2]
 	fivevals = [0, 1, 2, 3, 4]
 
-	col1, col2, col3 = st.beta_columns(3)
-	col4, col5, col6 = st.beta_columns(3)
-	col7, col8, col9 = st.beta_columns(3)
-	col10, col11, col12 = st.beta_columns(3)
+	col1, cx1, col2, cx2, col3 = st.beta_columns([0.3, 0.05, 0.3, 0.05, 0.3])
+	col4, cx4, col5, cx5, col6 = st.beta_columns([0.3, 0.05, 0.3, 0.05, 0.3])
+	col7, cx7, col8, cx8, col9 = st.beta_columns([0.3, 0.05, 0.3, 0.05, 0.3])
+	col10, cx10, col11, cx11, col12 = st.beta_columns([0.3, 0.05, 0.3, 0.05, 0.3])
 
 	with col1:
 		c1 = st.select_slider("C1_School closing", fourvals, key='c1',
@@ -149,6 +150,7 @@ def write():
 	
 
 	if st.button("Submit", False):
+		st.write("It takes ⏳ ~ {} seconds to run".format(10))
 		flag = True
 		ip = create_ip(selected_country, c1, c2, c3, c4, c5, c6, c7, c8, h1, h2, h3, h6, n_days)
 		pred = predict(ip)
@@ -165,6 +167,9 @@ def write():
 		dfn = dfn.tail(90+n_days).reset_index(drop=True) #dfn[334:].reset_index(drop=True)
 		#dfn.to_csv("src/data/us_df.csv", index=False)
 		#st.write("Saved!")
+		st.success("Predictions are ready!")
+		end = time.time()
+		st.write("✔️ Took {} seconds".format(round(end-start, 2)))
 		
 		dfn1 = dfn[dfn["Date"] < pred["Date"].min()].reset_index(drop=True)
 		dfn2 = dfn[dfn["Date"] >= pred["Date"].min()].reset_index(drop=True)
@@ -206,10 +211,12 @@ def write():
 		#	fig1.update_layout(height=600, width=900)
 		#	st.plotly_chart(fig1)
 
-		end = time.time()
-		st.write(round(end-start, 2), "seconds")
+		#end = time.time()
+		#st.write("✔️ Took {} seconds".format(round(end-start, 2)))
+		#st.write(round(end-start, 2), "seconds")
 
 	if selected_country == "United States" and str_ip == init_str and flag==False and n_days==30:
+		st.success("Predictions are ready!")
 		us_df = pd.read_csv("src/data/us_df.csv", parse_dates=["Date"])
 		us_df1 = us_df.head(us_df.shape[0] - 30).reset_index(drop=True)
 		us_df2 = us_df.tail(30).reset_index(drop=True)

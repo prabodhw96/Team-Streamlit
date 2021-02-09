@@ -1,11 +1,19 @@
 import streamlit as st
+import datetime
 from datetime import timedelta
 import time
 
 import numpy as np
 import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+import plotly.express as px
+from plotly.subplots import make_subplots
+import plotly.graph_objects as go
+import plotly.figure_factory as ff
 import src.pages.rerun as rerun
 from src.pages.prescribe import prescribe
+from src.pages.hover_dict import hover_dict
 
 def generate_sequence_for_change(changed_index, changed_value):
 	fixed_sum = 12
@@ -19,6 +27,11 @@ def generate_sequence_for_change(changed_index, changed_value):
 	d.to_csv("src/data/init.csv", index=False)
 	st.experimental_rerun()
 	#rerun.rerun()
+
+@st.cache(persist=True, allow_output_mutation=True)
+def load_cases_data():
+	data = pd.read_csv("src/data/casesanddeaths.csv", parse_dates=["Date"])
+	return data
 
 def load_data():
 	df = pd.read_csv("src/data/init.csv")
@@ -43,7 +56,7 @@ def load_cost():
 	return data
 
 def load_res_df():
-	data = pd.read_csv("src/data/res_df.csv")
+	data = pd.read_csv("src/data/res_df.csv", parse_dates=["Date"])
 	return data
 
 def write():
@@ -143,7 +156,8 @@ def write():
 	ip_cols.insert(2, "Date")
 
 	start = 0
-	if st.button("Submit", False):
+	if st.button("Run", False):
+		st.write("This is a slow task; takes ⏳ ~ {} seconds to run".format(100))
 		start = time.time()
 		#st.write(c1, c2, c3, c4, c5, c6, c7, c8, h1, h2, h3, h6)
 		cost = pd.DataFrame([[selected_country, np.nan, c1, c2, c3, c4, c5, c6, c7, c8, h1, h2, h3, h6]], columns=cost_cols)
@@ -154,33 +168,173 @@ def write():
 
 		start_date = str((prior_ip_country["Date"].max()+timedelta(days=1)).date())
 		end_date = str((prior_ip_country["Date"].max()+timedelta(days=28)).date())
+		#st.write(start_date, end_date)
 		res_df = prescribe(str(start_date), str(end_date), prior_ip_country, cost)
 		res_df.to_csv("src/data/res_df.csv", index=False)
+		st.success("Prescriptions are ready!")
+	
+	try:
+		res_df = load_res_df()
+		cost_ = load_cost()
+		pres = res_df.groupby(["PrescriptionIndex"]).mean().reset_index().drop(columns=["RegionName"])
+		cost_ = cost_.drop(columns=["CountryName", "RegionName"])
+		pres["Stringency"] = pres.drop(columns=["PrescriptionIndex"]).mul(cost_.loc[0],axis=1).sum(axis=1)
+		sl = list(pres["Stringency"])
+		pres.sort_values(by=["Stringency"], inplace=True)
+		pres.reset_index(drop=True, inplace=True)
+		#pres["Stringency"] = ['%.2f' % elem for elem in sl]
+		pres = pres.drop_duplicates(subset=["Stringency"], keep="first")
+		sl = list(pres["Stringency"])
+		pres = pres.round(0)
+		pres["Stringency"] = ['%.2f' % elem for elem in sl]
+		stringency_list = list(pres["Stringency"])
+		end = time.time()
 
-	res_df = load_res_df()
-	sd = res_df["Date"].min()
-	ed = res_df["Date"].max()
-	cost_ = load_cost()
-	pres = res_df.groupby(["PrescriptionIndex"]).mean().reset_index().drop(columns=["RegionName"])
-	cost_ = cost_.drop(columns=["CountryName", "RegionName"])
-	pres["Stringency"] = pres.drop(columns=["PrescriptionIndex"]).mul(cost_.loc[0],axis=1).sum(axis=1)
-	sl = list(pres["Stringency"])
-	pres.sort_values(by=["Stringency"], inplace=True)
-	pres.reset_index(drop=True, inplace=True)
-	#pres["Stringency"] = ['%.2f' % elem for elem in sl]
-	pres = pres.drop_duplicates(subset=["Stringency"], keep="first")
-	sl = list(pres["Stringency"])
-	pres = pres.round(0)
-	pres["Stringency"] = ['%.2f' % elem for elem in sl]
-	stringency_list = list(pres["Stringency"])
-	end = time.time()
-	if start == 0:
-		duration = 0
-	else:
-		duration = end - start
-		st.write(round(duration, 2), "seconds")
+		if start == 0:
+			duration = 0
+		else:
+			duration = end - start
+			st.write("✔️ Took {} seconds".format(round(duration, 2)))
+		col1, col2 = st.beta_columns(2)
+		if res_df["CountryName"].unique()[0] == selected_country:
+			with col1:
+				stringency = st.select_slider("Select Stringency out of {} possible values".format(len(stringency_list)), stringency_list)
+		#st.write(pres[pres["Stringency"] == stringency].drop(columns=["Stringency"]).reset_index(drop=True).T)
 
-	col1, col2 = st.beta_columns(2)
-	with col1:
-		stringency = st.select_slider("Select Stringency out of {} possible values".format(len(stringency_list)), stringency_list)
-	st.write(pres[pres["Stringency"] == stringency].drop(columns=["Stringency"]).reset_index(drop=True).T)
+		presc_idx = pres[pres["Stringency"]==stringency].reset_index(drop=True)["PrescriptionIndex"][0]
+		pareto_presc = pd.read_csv("src/data/pareto_presc.csv")
+		source = pareto_presc[pareto_presc["PrescriptionIndex"]==presc_idx].reset_index(drop=True)["source"][0]
+		fname = "src/data/pred_df_{}.csv".format(source)
+		pred_df = pd.read_csv(fname, parse_dates=["Date"])
+		pred_df = pred_df[pred_df["PrescriptionIndex"]==presc_idx].reset_index(drop=True)
+
+		df = prior_ip.copy()
+		cases = load_cases_data()
+		cases_grouped = cases.groupby("CountryName")
+		for country,df_temp in cases_grouped:
+			df_temp["DailyCasesMA"] = df_temp.DailyNewCases.rolling(window=7).mean
+			for i in range(0,7):
+				df_temp.iloc[i]["DailyCasesMA"] = df_temp.iloc[i]["DailyNewCases"]
+		cases["DailyCasesMA"] = cases.groupby('CountryName').rolling(7)['DailyNewCases'].mean().reset_index(drop=True)
+		cases["DailyCasesMA"].fillna(cases.DailyNewCases,inplace=True)
+		cases = cases[cases["Date"] <= res_df["Date"].min()].reset_index(drop=True)
+		cols = cost_cols.copy()
+		cols[1] = "Date"
+
+		def create_timeline(country, intervention):
+			data = df[df["CountryName"]==country].reset_index(drop=True)
+			data = data[cols].dropna().reset_index(drop=True)
+			data = data[["Date", intervention]]
+			data = data[data["Date"] <= res_df["Date"].min()].reset_index(drop=True)
+
+			dates = []
+			ip = []
+			dates.append(data["Date"].min())
+			ip.append(data[data["Date"]==data["Date"].min()].reset_index(drop=True)[intervention][0])
+
+			for i in range(1, len(data)):
+				if data.loc[i-1][intervention] != data.loc[i][intervention]:
+					dates.append(data.loc[i]["Date"])
+					ip.append(data.loc[i][intervention])
+
+			dates.append(data["Date"].max())
+			ip.append(data[data["Date"]==data["Date"].max()].reset_index(drop=True)[intervention][0])
+
+			gc = pd.DataFrame(zip(dates, ip), columns=["Start", "Stringency"])
+			fin = list(gc["Start"])[1:]
+			gc = gc[:-1]
+			gc["Finish"] = fin
+			gc["Task"] = intervention
+
+			st_dict = {0: "None", 1:"Medium", 2:"Medium-Hard", 3:"Hard", 4:"Strict"}
+			gc["Stringency"] = gc["Stringency"].replace(st_dict)
+			return gc
+
+		def create_timeline_forecast(country, intervention):
+			df = res_df.copy()
+			df = df[df["PrescriptionIndex"]==presc_idx].reset_index(drop=True)
+			data = df[df["CountryName"]==country].reset_index(drop=True)
+			data = data[cols].dropna().reset_index(drop=True)
+			data = data[["Date", intervention]]
+			data = data[data["Date"] <= res_df["Date"].min()].reset_index(drop=True)
+
+			dates = []
+			ip = []
+			dates.append(data["Date"].min())
+			ip.append(data[data["Date"]==data["Date"].min()].reset_index(drop=True)[intervention][0])
+
+			for i in range(1, len(data)):
+				if data.loc[i-1][intervention] != data.loc[i][intervention]:
+					dates.append(data.loc[i]["Date"])
+					ip.append(data.loc[i][intervention])
+
+			dates.append(data["Date"].max())
+			ip.append(data[data["Date"]==data["Date"].max()].reset_index(drop=True)[intervention][0])
+
+			gc = pd.DataFrame(zip(dates, ip), columns=["Start", "Stringency"])
+			fin = list(gc["Start"])[1:]
+			gc = gc[:-1]
+			gc["Finish"] = fin
+			gc["Task"] = intervention
+
+			st_dict = {0: "None", 1:"Medium", 2:"Medium-Hard", 3:"Hard", 4:"Strict"}
+			gc["Stringency"] = gc["Stringency"].replace(st_dict)
+			return gc
+
+		def ip_df(country):
+			ip_df = pd.DataFrame(columns=["Start","Stringency","Finish","Task"])
+			for intervention in  cols[2:]:
+				df_temp = create_timeline_forecast(country, intervention)
+				ip_df = ip_df.append(df_temp)
+			return ip_df
+
+		def add_hover_text(row):
+			return hover_dict[row['Task']][row['Stringency']]
+
+		def show_plot(country):
+			df1 = create_timeline(country, cols[2])
+			df2 = ip_df(country)
+			df2["Finish"] = res_df["Date"].max()
+		   
+			for i in cols[3:]:
+				df1 = df1.append(create_timeline(country, i))
+			df1['Description'] = df1.apply(add_hover_text, axis=1)
+			df2['Description'] = df2.apply(add_hover_text, axis=1)
+			df1 = df1.append(df2)
+			color = {"None":"#6f9c3d", "Medium":"#a5c90f", "Medium-Hard":"#ffb366", "Hard":"#ff8829", "Strict":"#ff6b40"}
+			fig = ff.create_gantt(df1, group_tasks=True, index_col="Stringency", colors=color, show_colorbar=True,show_hover_fill=True,bar_width=0.5)
+			fig.update_layout(legend_orientation="h")
+
+			for i in range(5,10):
+				fig.data[i].update(hoverinfo="text",hoveron='points+fills')
+
+			figs = make_subplots(shared_xaxes=True, specs=[[{"secondary_y": True}]])
+			fig.update_traces(opacity=0.5)
+			figs.add_trace(fig.data[2])
+			figs.add_trace(fig.data[3])
+			figs.add_trace(fig.data[4])
+			figs.add_trace(fig.data[1])
+			figs.add_trace(fig.data[0])
+		    
+			for trace in fig.data[5:]:
+				figs.add_trace(trace)
+			cases_country = cases[cases.CountryName==country]
+			cases_x = cases_country['Date']
+			cases_x = cases_x.append(pred_df["Date"])
+			cases_y = cases_country['DailyCasesMA']
+			cases_y = cases_y.append(pred_df["PredictedDailyNewCases"])
+			figs.add_trace(go.Scatter(x=cases_x, y=cases_y, mode='lines', marker=dict(color='Teal',),line=dict(width=4),name="Daily New Cases"),secondary_y=True)
+			figs.layout.xaxis.update(fig.layout.xaxis)
+			figs.layout.yaxis.update(fig.layout.yaxis)
+			figs['layout'].update(legend={'traceorder':'grouped'})
+			figs['layout'].update(legend={'x': 1, 'y': 1})
+			figs.update_layout(height=600, width=1000)
+			return figs
+
+		st.plotly_chart(show_plot(selected_country))
+		#curr_cost = cost_.copy()
+		#curr_cost.index = ["Current costs"]
+		#if st.checkbox("Show current costs", False):
+		#	st.table(curr_cost.T)
+	except:
+		pass
