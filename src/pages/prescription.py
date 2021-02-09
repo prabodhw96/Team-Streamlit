@@ -17,7 +17,8 @@ def generate_sequence_for_change(changed_index, changed_value):
 	final_vec = np.insert(req_rand_vec,changed_index,changed_value)
 	d = pd.DataFrame(final_vec)
 	d.to_csv("src/data/init.csv", index=False)
-	rerun.rerun()
+	st.experimental_rerun()
+	#rerun.rerun()
 
 def load_data():
 	df = pd.read_csv("src/data/init.csv")
