@@ -1,7 +1,6 @@
 import streamlit as st
 from datetime import timedelta
 import time
-import os
 
 import numpy as np
 import pandas as pd
@@ -61,10 +60,10 @@ def write():
 	countries = list(countries["CountryName"].unique())
 	selected_country = st.selectbox("Type the country to select", countries, key='selected_country')
 
-	col1, col2, col3 = st.beta_columns(3)
-	col4, col5, col6 = st.beta_columns(3)
-	col7, col8, col9 = st.beta_columns(3)
-	col10, col11, col12 = st.beta_columns(3)
+	col1, cx1, col2, cx2, col3 = st.beta_columns([0.3, 0.05, 0.3, 0.05, 0.3])
+	col4, cx4, col5, cx5, col6 = st.beta_columns([0.3, 0.05, 0.3, 0.05, 0.3])
+	col7, cx7, col8, cx8, col9 = st.beta_columns([0.3, 0.05, 0.3, 0.05, 0.3])
+	col10, cx10, col11, cx11, col12 = st.beta_columns([0.3, 0.05, 0.3, 0.05, 0.3])
 
 	val_list = np.arange(0.0, 12.01, 0.01)
 	my_rounded_list = [ round(elem, 2) for elem in val_list]
@@ -75,42 +74,58 @@ def write():
 	arr = [round(elem, 2) for elem in arr_df]
 	st.write(sum(arr))
 
-	with col1:
-		c1 = st.number_input(key='c1', label='C1_School closing', min_value=0.00, max_value=12.00, step=0.01, value=arr[0])
-		#c1 = st.select_slider('c1', my_rounded_list, value=arr[0])
-	with col2:
-		c2 = st.number_input(key='c2', label='C2_Workplace closing', min_value=0.00, max_value=12.00, step=0.01, value=arr[1])
-		#c2 = st.select_slider('c2', my_rounded_list, value=arr[1])
-	with col3:
-		c3 = st.number_input(key='c3', label='C3_Cancel public events', min_value=0.00, max_value=12.00, step=0.01, value=arr[2])
-		#c3 = st.select_slider('c3', my_rounded_list, value=arr[2])
-	with col4:
-		c4 = st.number_input(key='c4', label='C4_Restrictions on gatherings', min_value=0.00, max_value=12.00, step=0.01, value=arr[3])
-		#c4 = st.select_slider('c4', my_rounded_list, value=arr[3])
-	with col5:
-		c5 = st.number_input(key='c5', label='C5_Close public transport', min_value=0.00, max_value=12.00, step=0.01, value=arr[4])
-		#c5 = st.select_slider('c5', my_rounded_list, value=arr[4])
-	with col6:
-		c6 = st.number_input(key='c6', label='C6_Stay at home requirements', min_value=0.00, max_value=12.00, step=0.01, value=arr[5])
-		#c6 = st.select_slider('c6', my_rounded_list, value=arr[5])
-	with col7:
-		c7 = st.number_input(key='c7', label='C7_Restrictions on internal movement', min_value=0.00, max_value=12.00, step=0.01, value=arr[6])
-		#c7 = st.select_slider('c7', my_rounded_list, value=arr[6])
-	with col8:
-		c8 = st.number_input(key='c8', label='C8_International travel controls', min_value=0.00, max_value=12.00, step=0.01, value=arr[7])
-		#c8 = st.select_slider('c8', my_rounded_list, value=arr[7])
-	with col9:
-		h1 = st.number_input(key='h1', label='H1_Public information campaigns', min_value=0.00, max_value=12.00, step=0.01, value=arr[8])
-		#h1 = st.select_slider('h1', my_rounded_list, value=arr[8])
-	with col10:
-		h2 = st.number_input(key='h2', label='H2_Testing policy', min_value=0.00, max_value=12.00, step=0.01, value=arr[9])
-		#h2 = st.select_slider('h2', my_rounded_list, value=arr[9])
-	with col11:
-		h3 = st.number_input(key='h3', label='H3_Contact tracing', min_value=0.00, max_value=12.00, step=0.01, value=arr[10])
-		#h3 = st.select_slider('h3', my_rounded_list, value=arr[10])
-	with col12:
-		h6 = st.number_input(key='h6', label='H6_Facial Coverings', min_value=0.00, max_value=12.00, step=0.01, value=arr[11])
-		#h6 = st.select_slider('h6', my_rounded_list, value=arr[11])
+	slider_flag = True
+
+	if slider_flag:
+		with col1:
+			c1 = st.select_slider('C1_School closing', my_rounded_list, arr[0])
+		with col2:
+			c2 = st.select_slider('C2_Workplace closing', my_rounded_list, arr[1])
+		with col3:
+			c3 = st.select_slider('C3_Cancel public events', my_rounded_list, arr[2])
+		with col4:
+			c4 = st.select_slider('C4_Restrictions on gatherings', my_rounded_list, arr[3])
+		with col5:
+			c5 = st.select_slider('C5_Close public transport', my_rounded_list, arr[4])
+		with col6:
+			c6 = st.select_slider('C6_Stay at home requirements', my_rounded_list, arr[5])
+		with col7:
+			c7 = st.select_slider('C7_Restrictions on internal movement',my_rounded_list, arr[6])
+		with col8:
+			c8 = st.select_slider('C8_International travel controls', my_rounded_list, arr[7])
+		with col9:
+			h1 = st.select_slider('H1_Public information campaigns', my_rounded_list, arr[8])
+		with col10:
+			h2 = st.select_slider('H2_Testing policy', my_rounded_list, arr[9])
+		with col11:
+			h3 = st.select_slider('H3_Contact tracing', my_rounded_list, arr[10])
+		with col12:
+			h6 = st.select_slider('H6_Facial Coverings', my_rounded_list, arr[11])
+	else:
+		with col1:
+			c1 = st.number_input(key='c1', label='C1_School closing', min_value=0.00, max_value=12.00, step=0.01, value=arr[0])
+		with col2:
+			c2 = st.number_input(key='c2', label='C2_Workplace closing', min_value=0.00, max_value=12.00, step=0.01, value=arr[1])
+		with col3:
+			c3 = st.number_input(key='c3', label='C3_Cancel public events', min_value=0.00, max_value=12.00, step=0.01, value=arr[2])
+		with col4:
+			c4 = st.number_input(key='c4', label='C4_Restrictions on gatherings', min_value=0.00, max_value=12.00, step=0.01, value=arr[3])
+		with col5:
+			c5 = st.number_input(key='c5', label='C5_Close public transport', min_value=0.00, max_value=12.00, step=0.01, value=arr[4])
+		with col6:
+			c6 = st.number_input(key='c6', label='C6_Stay at home requirements', min_value=0.00, max_value=12.00, step=0.01, value=arr[5])
+		with col7:
+			c7 = st.number_input(key='c7', label='C7_Restrictions on internal movement', min_value=0.00, max_value=12.00, step=0.01, value=arr[6])
+		with col8:
+			c8 = st.number_input(key='c8', label='C8_International travel controls', min_value=0.00, max_value=12.00, step=0.01, value=arr[7])
+		with col9:
+			h1 = st.number_input(key='h1', label='H1_Public information campaigns', min_value=0.00, max_value=12.00, step=0.01, value=arr[8])
+		with col10:
+			h2 = st.number_input(key='h2', label='H2_Testing policy', min_value=0.00, max_value=12.00, step=0.01, value=arr[9])
+		with col11:
+			h3 = st.number_input(key='h3', label='H3_Contact tracing', min_value=0.00, max_value=12.00, step=0.01, value=arr[10])
+		with col12:
+			h6 = st.number_input(key='h6', label='H6_Facial Coverings', min_value=0.00, max_value=12.00, step=0.01, value=arr[11])
 
 	k = [c1, c2, c3, c4, c5, c6, c7, c8, h1, h2, h3, h6]
 	for i in range(len(k)):
