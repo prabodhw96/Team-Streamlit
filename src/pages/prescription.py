@@ -14,18 +14,18 @@ import src.pages.rerun as rerun
 from src.pages.prescribe import prescribe
 from src.pages.hover_dict import hover_dict
 
-def generate_sequence_for_change(changed_index, changed_value):
-	fixed_sum = 12
-	req_sum = fixed_sum - changed_value
-	random_vec = np.random.rand(11)
-	rand_sum = random_vec.sum()
-	coef = req_sum/rand_sum
-	req_rand_vec = coef*random_vec
-	final_vec = np.insert(req_rand_vec,changed_index,changed_value)
-	d = pd.DataFrame(final_vec)
-	d.to_csv("src/data/init.csv", index=False)
-	st.experimental_rerun()
-	#rerun.rerun()
+#def generate_sequence_for_change(changed_index, changed_value):
+#	fixed_sum = 12
+#	req_sum = fixed_sum - changed_value
+#	random_vec = np.random.rand(11)
+#	rand_sum = random_vec.sum()
+#	coef = req_sum/rand_sum
+#	req_rand_vec = coef*random_vec
+#	final_vec = np.insert(req_rand_vec,changed_index,changed_value)
+#	d = pd.DataFrame(final_vec)
+#	d.to_csv("src/data/init.csv", index=False)
+#	st.experimental_rerun()
+#	#rerun.rerun()
 
 @st.cache(persist=True, allow_output_mutation=True)
 def load_cases_data():
@@ -67,8 +67,6 @@ def write():
 
 	st.markdown("<h1 style='text-align: center;'>Prescription - Phase 2</h1>", unsafe_allow_html=True)
 
-	st.info("Note: The sum of costs must be equal to 12")
-
 	prior_ip = load_oxford_data()
 
 	countries = load_countries()
@@ -89,77 +87,59 @@ def write():
 
 	df = load_data()
 	#st.dataframe(df)
-	arr_df = list(df["0"])
-	arr = [round(elem, 2) for elem in arr_df]
-	sum_arr = sum(arr)
-	if sum_arr > 12.0:
-		st.write("Sum of costs = ", 12.0)
-	else:
-		st.write("Sum of costs = ", sum_arr)
+	#arr_df = list(df["0"])
+	#arr = [round(elem, 2) for elem in arr_df]
+	#sum_arr = sum(arr)
+	#if sum_arr > 12.0:
+	#	st.write("Sum of costs = ", 12.0)
+	#else:
+	#	st.write("Sum of costs = ", sum_arr)
 
-	slider_flag = False
+	
+	with col1:
+		c1 = st.number_input(key='c1', label='C1_School closing', min_value=0.00, step=0.01, value=1.00)
+	with col2:
+		c2 = st.number_input(key='c2', label='C2_Workplace closing', min_value=0.00, step=0.01, value=1.00)
+	with col3:
+		c3 = st.number_input(key='c3', label='C3_Cancel public events', min_value=0.00, step=0.01, value=1.00)
+	with col4:
+		c4 = st.number_input(key='c4', label='C4_Restrictions on gatherings', min_value=0.00, step=0.01, value=1.00)
+	with col5:
+		c5 = st.number_input(key='c5', label='C5_Close public transport', min_value=0.00, step=0.01, value=1.00)
+	with col6:
+		c6 = st.number_input(key='c6', label='C6_Stay at home requirements', min_value=0.00, step=0.01, value=1.00)
+	with col7:
+		c7 = st.number_input(key='c7', label='C7_Restrictions on internal movement', min_value=0.00, step=0.01, value=1.00)
+	with col8:
+		c8 = st.number_input(key='c8', label='C8_International travel controls', min_value=0.00, step=0.01, value=1.00)
+	with col9:
+		h1 = st.number_input(key='h1', label='H1_Public information campaigns', min_value=0.00, step=0.01, value=1.00)
+	with col10:
+		h2 = st.number_input(key='h2', label='H2_Testing policy', min_value=0.00, step=0.01, value=1.00)
+	with col11:
+		h3 = st.number_input(key='h3', label='H3_Contact tracing', min_value=0.00, step=0.01, value=1.00)
+	with col12:
+		h6 = st.number_input(key='h6', label='H6_Facial Coverings', min_value=0.00, step=0.01, value=1.00)
 
-	if slider_flag:
-		with col1:
-			c1 = st.select_slider('C1_School closing', my_rounded_list, arr[0])
-		with col2:
-			c2 = st.select_slider('C2_Workplace closing', my_rounded_list, arr[1])
-		with col3:
-			c3 = st.select_slider('C3_Cancel public events', my_rounded_list, arr[2])
-		with col4:
-			c4 = st.select_slider('C4_Restrictions on gatherings', my_rounded_list, arr[3])
-		with col5:
-			c5 = st.select_slider('C5_Close public transport', my_rounded_list, arr[4])
-		with col6:
-			c6 = st.select_slider('C6_Stay at home requirements', my_rounded_list, arr[5])
-		with col7:
-			c7 = st.select_slider('C7_Restrictions on internal movement',my_rounded_list, arr[6])
-		with col8:
-			c8 = st.select_slider('C8_International travel controls', my_rounded_list, arr[7])
-		with col9:
-			h1 = st.select_slider('H1_Public information campaigns', my_rounded_list, arr[8])
-		with col10:
-			h2 = st.select_slider('H2_Testing policy', my_rounded_list, arr[9])
-		with col11:
-			h3 = st.select_slider('H3_Contact tracing', my_rounded_list, arr[10])
-		with col12:
-			h6 = st.select_slider('H6_Facial Coverings', my_rounded_list, arr[11])
-	else:
-		with col1:
-			c1 = st.number_input(key='c1', label='C1_School closing', min_value=0.00, max_value=12.00, step=0.01, value=arr[0])
-		with col2:
-			c2 = st.number_input(key='c2', label='C2_Workplace closing', min_value=0.00, max_value=12.00, step=0.01, value=arr[1])
-		with col3:
-			c3 = st.number_input(key='c3', label='C3_Cancel public events', min_value=0.00, max_value=12.00, step=0.01, value=arr[2])
-		with col4:
-			c4 = st.number_input(key='c4', label='C4_Restrictions on gatherings', min_value=0.00, max_value=12.00, step=0.01, value=arr[3])
-		with col5:
-			c5 = st.number_input(key='c5', label='C5_Close public transport', min_value=0.00, max_value=12.00, step=0.01, value=arr[4])
-		with col6:
-			c6 = st.number_input(key='c6', label='C6_Stay at home requirements', min_value=0.00, max_value=12.00, step=0.01, value=arr[5])
-		with col7:
-			c7 = st.number_input(key='c7', label='C7_Restrictions on internal movement', min_value=0.00, max_value=12.00, step=0.01, value=arr[6])
-		with col8:
-			c8 = st.number_input(key='c8', label='C8_International travel controls', min_value=0.00, max_value=12.00, step=0.01, value=arr[7])
-		with col9:
-			h1 = st.number_input(key='h1', label='H1_Public information campaigns', min_value=0.00, max_value=12.00, step=0.01, value=arr[8])
-		with col10:
-			h2 = st.number_input(key='h2', label='H2_Testing policy', min_value=0.00, max_value=12.00, step=0.01, value=arr[9])
-		with col11:
-			h3 = st.number_input(key='h3', label='H3_Contact tracing', min_value=0.00, max_value=12.00, step=0.01, value=arr[10])
-		with col12:
-			h6 = st.number_input(key='h6', label='H6_Facial Coverings', min_value=0.00, max_value=12.00, step=0.01, value=arr[11])
+	#st.write(pd.DataFrame([[selected_country, np.nan, c1, c2, c3, c4, c5, c6, c7, c8, h1, h2, h3, h6]], columns=cost_cols))
 
-	k = [c1, c2, c3, c4, c5, c6, c7, c8, h1, h2, h3, h6]
-	for i in range(len(k)):
-		if arr[i] != k[i]:
-			generate_sequence_for_change(i, k[i])
-			break
+	#for i in range(len(k)):
+	#	if arr[i] != k[i]:
+	#		generate_sequence_for_change(i, k[i])
+	#		break
 
 	cost_cols = ["CountryName", "RegionName", "C1_School closing", "C2_Workplace closing", "C3_Cancel public events", 
 			"C4_Restrictions on gatherings", "C5_Close public transport", "C6_Stay at home requirements",
 			"C7_Restrictions on internal movement", "C8_International travel controls", "H1_Public information campaigns",
 			"H2_Testing policy", "H3_Contact tracing", "H6_Facial Coverings"]
+
+	k = np.array([c1, c2, c3, c4, c5, c6, c7, c8, h1, h2, h3, h6])
+	k = k/sum(k)
+	k = k*12
+	k = k.tolist()
+	k.insert(0, selected_country)
+	k.insert(1, np.nan)
+	cost = pd.DataFrame([k], columns=cost_cols)
 
 	ip_cols = cost_cols.copy()
 	ip_cols.insert(2, "Date")
@@ -173,7 +153,7 @@ def write():
 			st.write("This is a slow task; takes ⏳ ~ {} seconds to run".format(time_value))
 		start = time.time()
 		#st.write(c1, c2, c3, c4, c5, c6, c7, c8, h1, h2, h3, h6)
-		cost = pd.DataFrame([[selected_country, np.nan, c1, c2, c3, c4, c5, c6, c7, c8, h1, h2, h3, h6]], columns=cost_cols)
+		#cost = pd.DataFrame([[selected_country, np.nan, c1, c2, c3, c4, c5, c6, c7, c8, h1, h2, h3, h6]], columns=cost_cols)
 		cost.to_csv("src/data/cost.csv", index=False)
 		prior_ip_country = prior_ip[prior_ip["CountryName"]==selected_country]
 		prior_ip_country = prior_ip_country.dropna(subset=ip_cols[3:])
