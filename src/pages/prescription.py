@@ -166,7 +166,7 @@ def write():
 
 	start = 0
 	if st.button("Run", False):
-		time_value = 100 * n_days/28
+		time_value = round(100 * n_days/28)
 		if n_days <= 28:
 			st.write("This is a slow task; takes ⏳ ~ {} seconds to run".format(100))
 		else:
