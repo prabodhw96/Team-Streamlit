@@ -44,14 +44,33 @@ def write():
 	st.title("Team")
 	st.markdown("## Team Leaders")
 	with st.beta_expander("Marc-Andre Rousseau"):
-		st.write("Marc-Andre Rousseau")
+		img, txt = st.beta_columns([0.2, 0.8])
+		with img:
+			mar_photo = Image.open("src/images/Marc_Photo.jpg")
+			mar_photo = mar_photo.resize((150, 180), Image.ANTIALIAS)
+			st.image(mar_photo)
+		with txt:
+			st.write("I have worked many jobs including mathematician, college professor, software engineer, project manager and web developer.  I have recently spent the last year of my life studying SARS-COV-2 and trying to help in the pandemic by joining forces with teams at Mila as well as writing a manuscript on a theoretical treatment, currently in clinical trial.  I have aspirations to study medicine in the near future.  I have a passion for volunteer work and for learning about the human body.")
+		st.write("Immunology and Microbiology (2018-2019) McGill")
+		st.write("Graduate studies in mathematical Statistics (2011) McGill")
+		st.write("BSc (Honours) probability and Statistics (2007) McGill")
+		st.write("Freshman Year: Dalhousie Integrated Science Program (Dean's List)")
 
 	with st.beta_expander("Brady Neal"):
-		st.markdown("Brady Neal")
+		img, txt = st.beta_columns([0.2, 0.8])
+		with img:
+			bn_photo = Image.open("src/images/brady-small.jpg")
+			bn_photo = bn_photo.resize((150, 180), Image.ANTIALIAS)
+			st.image(bn_photo)
+		with txt:
+			st.write(" I’m a PhD student in causal inference and machine learning at Mila - Quebec AI Institute, \
+				co-advised by Yoshua Bengio and Ioannis Mitliagkas. You can find my course and book on causal inference \
+				from a machine learning perspective at [causalcourse.com](https://www.bradyneal.com/causal-inference-course).\
+				I chose to join this competition because I'm interested in helping governments make evidence-based decisions.")
 
 	st.markdown("## Team Members")
 	with st.beta_expander("Diogo Pernes"):
-		img, txt = st.beta_columns([0.25, 0.75])
+		img, txt = st.beta_columns([0.2, 0.8])
 		with img:
 			dp_photo = Image.open("src/images/dpernes_photo.jpg")
 			dp_photo = dp_photo.resize((150, 180), Image.ANTIALIAS)
@@ -62,7 +81,7 @@ def write():
 		st.markdown(data[data["Name"]=="Diogo Pernes"]["links"].reset_index(drop=True)[0])
 	
 	with st.beta_expander("Thin Nguyen"):
-		img, txt = st.beta_columns([0.25, 0.75])
+		img, txt = st.beta_columns([0.2, 0.8])
 		with img:
 			tn_photo = Image.open("src/images/Nguyen.PNG")
 			tn_photo = tn_photo.resize((150, 180), Image.ANTIALIAS)
@@ -76,7 +95,7 @@ def write():
 		st.markdown("Andrew Williams")
 
 	with st.beta_expander("Chen-Yang Su"):
-		img, txt = st.beta_columns([0.25, 0.75])
+		img, txt = st.beta_columns([0.2, 0.8])
 		with img:
 			cy_photo = Image.open("src/images/Chen-Yang.JPG")
 			cy_photo = cy_photo.resize((150, 180), Image.ANTIALIAS)
@@ -88,7 +107,7 @@ def write():
 		
 
 	with st.beta_expander("Olexa Bilaniuk"):
-		img, txt = st.beta_columns([0.25, 0.75])
+		img, txt = st.beta_columns([0.2, 0.8])
 		with img:
 			ob_photo = Image.open("src/images/obilaniu.jpg")
 			ob_photo = ob_photo.resize((150, 180), Image.ANTIALIAS)
@@ -98,7 +117,7 @@ def write():
 		st.markdown("[GitHub](https://github.com/obilaniu)")
 
 	with st.beta_expander("Makesh Narsimhan"):
-		img, txt = st.beta_columns([0.25, 0.75])
+		img, txt = st.beta_columns([0.2, 0.8])
 		with img:
 			mn_photo = Image.open("src/images/Makesh.JPG")
 			mn_photo = mn_photo.resize((150, 180), Image.ANTIALIAS)
@@ -108,7 +127,7 @@ def write():
 		st.markdown(data[data["Name"]=="Makesh Narsimhan"]["links"].reset_index(drop=True)[0])
 
 	with st.beta_expander("Marharyta Aleksandrova"):
-		img, txt = st.beta_columns([0.25, 0.75])
+		img, txt = st.beta_columns([0.2, 0.8])
 		with img:
 			ma_photo = Image.open("src/images/Marharyta.jpg")
 			ma_photo = ma_photo.resize((150, 180), Image.ANTIALIAS)
@@ -121,14 +140,18 @@ def write():
 	with st.beta_expander("Sai Aravind Sreeramadas"):
 		st.markdown("Sai Aravind Sreeramadas")
 
-	with st.beta_expander("Djallel Bouneffouf"):
-		st.markdown("Djallel Bouneffouf")
-
 	with st.beta_expander("Baihan Lin"):
-		st.markdown("Baihan Lin")
+		img, txt = st.beta_columns([0.2, 0.8])
+		with img:
+			bl_photo = Image.open("src/images/Baihan_Lin_sq.jpg")
+			bl_photo = bl_photo.resize((150, 180), Image.ANTIALIAS)
+			st.image(bl_photo)
+		with txt:
+			st.write("I am Ph.D candidate pursuing Computational Neuroscience in the Center for Theoretical Neuroscience and Zuckerman Mind Brain Behavior Institute at Columbia University. Academically, I create neuroscience-inspired AI systems and apply ML to understand human brains (Neuro :left_right_arrow: AI) in their healthy and abnormal states. Industrially, I develop large scale ML systems to model complex biological and cognitive systems, in applications such as healthcare, user modeling, computational phenotyping, time series analysis and speech recognition.")
+		st.write("I joined this COVID-19 epidemic challenge because I believe in the power of technology to progress the everchanging social norms and solve critical socioeconomic challenges in the world. I joined this COVID-19 epidemic challenge because I believe in the power of technology to progress the everchanging social norms and solve critical socioeconomic challenges in the world.")
 
 	with st.beta_expander("Prabodh Wankhede"):
-		img, txt = st.beta_columns([0.25, 0.75])
+		img, txt = st.beta_columns([0.2, 0.8])
 		with img:
 			pw_photo = Image.open("src/images/Prabodh.jpg")
 			pw_photo = pw_photo.resize((150, 180), Image.ANTIALIAS)
@@ -136,3 +159,4 @@ def write():
 		with txt:
 			st.write(data[data["Name"]=="Prabodh Wankhede"]["p1"].reset_index(drop=True)[0])
 		st.markdown(data[data["Name"]=="Prabodh Wankhede"]["links"].reset_index(drop=True)[0])
+

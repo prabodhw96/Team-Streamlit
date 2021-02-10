@@ -40,26 +40,12 @@ def write():
 	}}</style>""", unsafe_allow_html=True)
 	#st.markdown("# SARS-CoV-2")
 	st.markdown("<h1 style='text-align: center;'>SARS-CoV-2</h1>", unsafe_allow_html=True)
-	st.write("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut \
-		labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris \
-		nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit \
-		esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in \
-		culpa qui officia deserunt mollit anim id est laborum.")
-	st.write("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut \
-		labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris \
-		nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit \
-		esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in \
-		culpa qui officia deserunt mollit anim id est laborum.")
-	st.write("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut \
-		labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris \
-		nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit \
-		esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in \
-		culpa qui officia deserunt mollit anim id est laborum.")
-	st.write("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut \
-		labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris \
-		nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit \
-		esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in \
-		culpa qui officia deserunt mollit anim id est laborum.")
+	st.write("SARS-COV-2 is a highly infectious pathogen capable of causing a disease called Covid-19 which usually presents as inflammation in the lungs.  The virus itself is not particularly harmful however the immune response to the virus in some people can cause devastating problems.  Most notably, it is thought that tight junctions are affected which loosens the connections between adjacent cells making the infected organ more prone to damage from physical stress.  Furthermore, the virus seems to disproportionately cause disease in the elderly where an exponential distribution is observed when plotting the probability of death vs age of patients who have Covid-19 and been hospitalized.  The cause for this age-susceptibility relationship is currently a matter of scientific debate however the same pattern can be observed when plotting the output of the thymus gland over time and comparing the charts from men and women.  Many hypotheses have been advanced including one due to entropy, another due to the reduction of the production of regulatory T-cells that suppress auto-immune reactions and other genetic factors such as changes in the expression of Angiotensin Convertin Enzyme-2 receptor availability on the cell membrane.  The threat to humanity of a similar virus had been established in 2015 where a partnership between the Wuhan institute of virology and an American university investigated the potential for a SARS-like coronavirus to develop affinity to the human ACE2 receptor.")
+	st.write("In 2017, a company with an organic synthesis for a safe biological response modifier capable of accelerating the maturation and production of T-cells from the thymus, already shown to be effective against SARS-COV-1 was delisted from the NASDAQ and privatized by a Chinese company.  The Chinese government acted quickly to contain the spread of the virus and built two hospitals in record time and a large cohort of medical staff were sent to Hubei, the province at the epicenter of the outbreak.  These medical staff were administered this medication, seemingly ignored by Western medicine and the success of this prophylactic immune boosting campaign were reported in the medical literature.  Furthermore, retrospective studies showed efficacy in reducing mortality, repopulating the depleted immune system and .  The first North American manuscript, published in June, recommended that thymosin be evaluated and there is now a clinical trial in Rhode Island being conducted by a Harvard professor.  The benefit of this approach is that it does not depend on a specific sequence of the virus and instead it seems to increase the diversity of available T-cells thereby theoretically facilitating the recognition of virally infected cells.")
+	st.write("In fact, this approach has recently been tried and found to be successful against certain cancers that display abberrant proteins on their cell surface much like a virally infected cell would.")
+	st.write("In addition to this effort, there is a widescale attempt to vaccinate the public against a rapidly mutating and highly transmissible agent that is losing steam due to the new strains such as the one in South Africa.  As a result, a part of our contribution to this contest is to highlight the potential use of this agent and to encourage others to follow the clinical trial in Rhode Island closely because it may be a light at the end of the tunnel of a very difficult time in human history.")
+	st.write("In addition to causing a terrible burden on the healthcare systems, there have been widespread economic repercussions disproportionately affecting low income and client facing employees whose jobs depend on a healthy service industry.  The problems do not stop there since the closure of schools have resulted in a disproportionate effect on women's careers as they have been shown to be more likely to have chosen to take care of the children at home.  It is clear that a solution that is capable of addressing the problem of not only this particular virus but all future pandemics is needed so that our society is resilient to future outbreaks similar to the ones that happened in 1917-1918 and 1928 and that will most likely happen in the future.")
+	st.write("The pandemic spread chart essentially shows the spread of the disease but is slightly affected by the ability of a country to test for covid (many countries in the African continent lacked that ability in the early stages of the outbreak) as well as large differences in the successes that countries have had in containing the virus.")
 
 	st.markdown("<h2 style='text-align: center;'>Pandemic Spread Chart</h2>", unsafe_allow_html=True)
 	data = load_data(parse=False)
@@ -96,11 +82,15 @@ def write():
 		[Bing COVID-19 Data] (https://github.com/microsoft/Bing-COVID-19-Data)")
 
 	st.markdown("<h2 style='text-align: center;'>Countries with similar seasonal nature</h2>", unsafe_allow_html=True)
-	st.write("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut \
-		labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris \
-		nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit \
-		esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in \
-		culpa qui officia deserunt mollit anim id est laborum.")
+	st.write("Given that our team's predictor was the top predictor throughout all offline evaluation periods and almost the \
+		entire time since the submission, we believe that there is evidence to support the hypothesis that the virus is \
+		predominantly spread via aerosolized particles. While many Countries like Canada focus on fomite transmission and \
+		have people wash their hands frequently, this kind of transmission would not be so heavily affected by changes in \
+		weather patterns. Whereas a virus that is spread via aerosolized particles would see radical increases in countries \
+		with seasons where cold weather drives people indoors thereby increasing the viral density of the air being breathed \
+		given that the virus is now endemic to most of the world. While the solution to phase 2 uses a predictor that does not \
+		use weather, our solution uses a population-weighted temperatures in our model to allow the model to learn from their \
+		associations within this context")
 	clus = load_clus_data()
 
 #	st.markdown(f"""<style>

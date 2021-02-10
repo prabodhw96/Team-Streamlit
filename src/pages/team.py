@@ -18,7 +18,9 @@ def write():
 		st.write("Marc-Andre Rousseau")
 
 	with st.beta_expander("Brady Neal"):
-		st.markdown("Brady Neal")
+		st.write("Brady Neal")
+
+		#st.markdown("Brady Neal")
 
 	st.markdown("## Team Members")
 	with st.beta_expander("Diogo Pernes"):

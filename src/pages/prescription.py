@@ -248,7 +248,7 @@ def write():
 			data = df[df["CountryName"]==country].reset_index(drop=True)
 			data = data[cols].dropna().reset_index(drop=True)
 			data = data[["Date", intervention]]
-			data = data[data["Date"] <= res_df["Date"].min()].reset_index(drop=True)
+			#data = data[data["Date"] <= res_df["Date"].min()].reset_index(drop=True)
 
 			dates = []
 			ip = []
@@ -286,7 +286,8 @@ def write():
 		def show_plot(country):
 			df1 = create_timeline(country, cols[2])
 			df2 = ip_df(country)
-			df2["Finish"] = res_df["Date"].max()
+			#st.write(df2)
+			#df2["Finish"] = res_df["Date"].max()
 		   
 			for i in cols[3:]:
 				df1 = df1.append(create_timeline(country, i))
@@ -321,13 +322,20 @@ def write():
 			figs['layout'].update(legend={'traceorder':'grouped'})
 			figs['layout'].update(legend={'x': 1, 'y': 1})
 			figs.update_layout(height=600, width=1000)
+			figs.add_shape(type="line",
+				x0=res_df["Date"].min(), y0=0, x1=res_df["Date"].min(), y1=1,
+				line=dict(
+					color="RoyalBlue",
+					width=4,
+					dash="dot",))
+			figs.update_shapes(dict(xref='x', yref='paper'))
 			return figs
 
 		st.plotly_chart(show_plot(selected_country))
-		snpi = pres[pres["Stringency"] == stringency].drop(columns=["Stringency", "PrescriptionIndex"]).reset_index(drop=True)
-		snpi.index = ["Prescription"]
-		with st.beta_expander("Suggested interventions for the selected stringency:"):
-			st.table(snpi.T)
+		#snpi = pres[pres["Stringency"] == stringency].drop(columns=["Stringency", "PrescriptionIndex"]).reset_index(drop=True)
+		#snpi.index = ["Prescription"]
+		#with st.beta_expander("Suggested interventions for the selected stringency:"):
+		#	st.table(snpi.T)
 		#st.markdown("#### Suggested interventions for the selected stringency:")
 		#st.table(snpi.T)
 	except:
