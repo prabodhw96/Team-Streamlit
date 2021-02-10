@@ -23,11 +23,7 @@ def generate_sequence_for_change(changed_index, changed_value):
 	req_rand_vec = coef*random_vec
 	final_vec = np.insert(req_rand_vec,changed_index,changed_value)
 	d = pd.DataFrame(final_vec)
-	try:
-		d.to_csv("src/data/init.csv", index=False)
-	except:
-		os.chmod("src/data/init.csv", 777)
-		d.to_csv("src/data/init.csv", index=False)
+	d.to_csv("src/data/init.csv", index=False)
 	st.experimental_rerun()
 	#rerun.rerun()
 
@@ -37,11 +33,7 @@ def load_cases_data():
 	return data
 
 def load_data():
-	try:
-		df = pd.read_csv("src/data/init.csv")
-	except:
-		os.chmod("src/data/init.csv", 777)
-		df = pd.read_csv("src/data/init.csv")
+	df = pd.read_csv("src/data/init.csv")
 	return df
 
 @st.cache(persist=True, allow_output_mutation=True)
