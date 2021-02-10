@@ -2,6 +2,7 @@ import streamlit as st
 import datetime
 from datetime import timedelta
 import time
+import os
 
 import numpy as np
 import pandas as pd
@@ -66,11 +67,17 @@ def write():
 
 	st.markdown("<h1 style='text-align: center;'>Prescription - Phase 2</h1>", unsafe_allow_html=True)
 
+	st.info("Note: The sum of costs must be equal to 12")
+
 	prior_ip = load_oxford_data()
 
 	countries = load_countries()
 	countries = list(countries["CountryName"].unique())
 	selected_country = st.selectbox("Type the country to select", countries, key='selected_country')
+
+	col0, colx, coly = st.beta_columns(3)
+	with col0:
+		n_days = st.number_input("Enter no. of days", 14, 90, value=28)
 
 	col1, cx1, col2, cx2, col3 = st.beta_columns([0.3, 0.05, 0.3, 0.05, 0.3])
 	col4, cx4, col5, cx5, col6 = st.beta_columns([0.3, 0.05, 0.3, 0.05, 0.3])
@@ -84,7 +91,11 @@ def write():
 	#st.dataframe(df)
 	arr_df = list(df["0"])
 	arr = [round(elem, 2) for elem in arr_df]
-	st.write(sum(arr))
+	sum_arr = sum(arr)
+	if sum_arr > 12.0:
+		st.write("Sum of costs = ", 12.0)
+	else:
+		st.write("Sum of costs = ", sum_arr)
 
 	slider_flag = False
 
@@ -155,7 +166,11 @@ def write():
 
 	start = 0
 	if st.button("Run", False):
-		st.write("This is a slow task; takes ⏳ ~ {} seconds to run".format(100))
+		time_value = round(100 * n_days/28)
+		if n_days <= 28:
+			st.write("This is a slow task; takes ⏳ ~ {} seconds to run".format(100))
+		else:
+			st.write("This is a slow task; takes ⏳ ~ {} seconds to run".format(time_value))
 		start = time.time()
 		#st.write(c1, c2, c3, c4, c5, c6, c7, c8, h1, h2, h3, h6)
 		cost = pd.DataFrame([[selected_country, np.nan, c1, c2, c3, c4, c5, c6, c7, c8, h1, h2, h3, h6]], columns=cost_cols)
@@ -165,7 +180,7 @@ def write():
 		prior_ip_country = prior_ip_country.tail(21).reset_index(drop=True)[ip_cols]
 
 		start_date = str((prior_ip_country["Date"].max()+timedelta(days=1)).date())
-		end_date = str((prior_ip_country["Date"].max()+timedelta(days=28)).date())
+		end_date = str((prior_ip_country["Date"].max()+timedelta(days=n_days)).date())
 		#st.write(start_date, end_date)
 		res_df = prescribe(str(start_date), str(end_date), prior_ip_country, cost)
 		res_df.to_csv("src/data/res_df.csv", index=False)
@@ -197,7 +212,6 @@ def write():
 		if res_df["CountryName"].unique()[0] == selected_country:
 			with col1:
 				stringency = st.select_slider("Select Stringency out of {} possible values".format(len(stringency_list)), stringency_list)
-		#st.write(pres[pres["Stringency"] == stringency].drop(columns=["Stringency"]).reset_index(drop=True).T)
 
 		presc_idx = pres[pres["Stringency"]==stringency].reset_index(drop=True)["PrescriptionIndex"][0]
 		pareto_presc = pd.read_csv("src/data/pareto_presc.csv")
@@ -330,9 +344,11 @@ def write():
 			return figs
 
 		st.plotly_chart(show_plot(selected_country))
-		#curr_cost = cost_.copy()
-		#curr_cost.index = ["Current costs"]
-		#if st.checkbox("Show current costs", False):
-		#	st.table(curr_cost.T)
+		snpi = pres[pres["Stringency"] == stringency].drop(columns=["Stringency", "PrescriptionIndex"]).reset_index(drop=True)
+		snpi.index = ["Prescription"]
+		with st.beta_expander("Suggested interventions for the selected stringency:"):
+			st.table(snpi.T)
+		#st.markdown("#### Suggested interventions for the selected stringency:")
+		#st.table(snpi.T)
 	except:
 		pass
