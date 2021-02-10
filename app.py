@@ -11,6 +11,7 @@ import src.pages.clus
 import src.pages.about
 import src.pages.virus
 import src.pages.prescription
+import src.pages.country_comparator
 
 import warnings
 warnings.filterwarnings("ignore")
@@ -63,6 +64,7 @@ html = """
 ast.core.services.other.set_logging_format()
 
 PAGES = {
+  "Country Comparator": src.pages.country_comparator,
   "Prescription": src.pages.prescription,
 	"Prediction": src.pages.prediction,
 	#"Pandemic Spread Chart": src.pages.motion,
