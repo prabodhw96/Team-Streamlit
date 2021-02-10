@@ -10,7 +10,7 @@ N_DAYS = 90
 # output file paths
 OUTPUT_DIR = './cache'
 PRES_OUTPUT = os.path.join(OUTPUT_DIR, 'pres_cache.csv')
-PRED_OUR_IP_OUTPUT = os.path.join(OUTPUT_DIR, 'pred_our_ip_cache.csv')
+PRED_OUR_IP_OUTPUT = os.path.join(OUTPUT_DIR, 'pred_our_ipX_cache.csv')
 PRED_CONST_IP_OUTPUT = os.path.join(OUTPUT_DIR, 'pred_const_ip_cache.csv')
 
 # prescription and prediction scripts
@@ -55,30 +55,37 @@ for npi in NPI_COLUMNS:
 npi_df = df[['CountryName', 'RegionName', 'Date']+NPI_COLUMNS]
 npi_df.to_csv(TMP_IP_FILE)
 
-print('Generating prescriptions ({} - {})...'.format(start_date_str, end_date_str))
-output_str = subprocess.check_output(
-    [
-            'python', PRESCRIBE_SCRIPT,
-            '-s', start_date_str,
-            '-e', end_date_str,
-            '-c', EQUAL_COSTS_FILE,
-            '-ip', TMP_IP_FILE,
-            '-o', PRES_OUTPUT
-    ],
-    stderr=subprocess.STDOUT
-)
+# print('Generating prescriptions ({} - {})...'.format(start_date_str, end_date_str))
+# output_str = subprocess.check_output(
+#     [
+#             'python', PRESCRIBE_SCRIPT,
+#             '-s', start_date_str,
+#             '-e', end_date_str,
+#             '-c', EQUAL_COSTS_FILE,
+#             '-ip', TMP_IP_FILE,
+#             '-o', PRES_OUTPUT
+#     ],
+#     stderr=subprocess.STDOUT
+# )
 
-print('Generating predictions with our intervention plan')
-output_str = subprocess.check_output(
-    [
-        'python', PREDICT_SCRIPT,
-        '--start_date', start_date_str,
-        '--end_date', end_date_str,
-        '--interventions_plan', PRES_OUTPUT,
-        '--output_file', PRED_OUR_IP_OUTPUT
-    ],
-    stderr=subprocess.STDOUT
-)
+all_pres = pd.read_csv(PRES_OUTPUT, parse_dates=['Date'])
+for ip_idx in all_pres['PrescriptionIndex'].unique():
+    pres_df = all_pres[all_pres['PrescriptionIndex'] == ip_idx]
+    pres_df.drop(columns=['PrescriptionIndex'])
+    pres_df.to_csv(TMP_IP_FILE)
+    output_name = PRED_OUR_IP_OUTPUT.replace('X', str(ip_idx))
+
+    print('Generating predictions with intervention plan {}'.format(ip_idx))
+    output_str = subprocess.check_output(
+        [
+            'python', PREDICT_SCRIPT,
+            '--start_date', start_date_str,
+            '--end_date', end_date_str,
+            '--interventions_plan', TMP_IP_FILE,
+            '--output_file', output_name
+        ],
+        stderr=subprocess.STDOUT
+    )
 
 # repeat current values of the interventions until end_date
 npi_df = npi_df[npi_df['Date'] < start_date]
