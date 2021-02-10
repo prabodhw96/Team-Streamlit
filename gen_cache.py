@@ -55,18 +55,18 @@ for npi in NPI_COLUMNS:
 npi_df = df[['CountryName', 'RegionName', 'Date']+NPI_COLUMNS]
 npi_df.to_csv(TMP_IP_FILE)
 
-# print('Generating prescriptions ({} - {})...'.format(start_date_str, end_date_str))
-# output_str = subprocess.check_output(
-#     [
-#             'python', PRESCRIBE_SCRIPT,
-#             '-s', start_date_str,
-#             '-e', end_date_str,
-#             '-c', EQUAL_COSTS_FILE,
-#             '-ip', TMP_IP_FILE,
-#             '-o', PRES_OUTPUT
-#     ],
-#     stderr=subprocess.STDOUT
-# )
+print('Generating prescriptions ({} - {})...'.format(start_date_str, end_date_str))
+output_str = subprocess.check_output(
+    [
+            'python', PRESCRIBE_SCRIPT,
+            '-s', start_date_str,
+            '-e', end_date_str,
+            '-c', EQUAL_COSTS_FILE,
+            '-ip', TMP_IP_FILE,
+            '-o', PRES_OUTPUT
+    ],
+    stderr=subprocess.STDOUT
+)
 
 all_pres = pd.read_csv(PRES_OUTPUT, parse_dates=['Date'])
 for ip_idx in all_pres['PrescriptionIndex'].unique():
