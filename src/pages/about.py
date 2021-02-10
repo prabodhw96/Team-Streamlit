@@ -139,7 +139,7 @@ def write():
 	with st.beta_expander("Sai Aravind Sreeramadas"):
 		img, txt = st.beta_columns([0.2, 0.8])
 		with img:
-			sa_photo = Image.open("src/images/Sai_photo.jpg")
+			sa_photo = Image.open("src/images/Sai_Photo.jpg")
 			sa_photo = sa_photo.resize((150, 180), Image.ANTIALIAS)
 			st.image(sa_photo)
 		with txt:
