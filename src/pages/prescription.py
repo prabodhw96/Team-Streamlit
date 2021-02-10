@@ -154,7 +154,7 @@ def write():
 		start = time.time()
 		#st.write(c1, c2, c3, c4, c5, c6, c7, c8, h1, h2, h3, h6)
 		#cost = pd.DataFrame([[selected_country, np.nan, c1, c2, c3, c4, c5, c6, c7, c8, h1, h2, h3, h6]], columns=cost_cols)
-		cost.to_csv("src/data/cost.csv", index=False)
+		#cost.to_csv("src/data/cost.csv", index=False)
 		prior_ip_country = prior_ip[prior_ip["CountryName"]==selected_country]
 		prior_ip_country = prior_ip_country.dropna(subset=ip_cols[3:])
 		prior_ip_country = prior_ip_country.tail(21).reset_index(drop=True)[ip_cols]
@@ -168,7 +168,7 @@ def write():
 	
 	try:
 		res_df = load_res_df()
-		cost_ = load_cost()
+		cost_ = cost.copy() #load_cost()
 		pres = res_df.groupby(["PrescriptionIndex"]).mean().reset_index().drop(columns=["RegionName"])
 		cost_ = cost_.drop(columns=["CountryName", "RegionName"])
 		pres["Stringency"] = pres.drop(columns=["PrescriptionIndex"]).mul(cost_.loc[0],axis=1).sum(axis=1)
