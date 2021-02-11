@@ -52,5 +52,10 @@ hover_dict = {'C1_School closing': {'None':'None',
 									'Medium-Hard': 'Availability for TWO of following: key workers/ clinically vulnerable groups / elderly groups',
 									'Hard' : 'Availability for ALL of following: key workers/ clinically vulnerable groups / elderly groups',
 									'Strict': 'Universal availability'},
-			
+			'E1_Income support': {'None':'No income support',
+								'Medium-Hard': 'Government is replacing less than 50 percent of lost salary (or if a flat sum, it is less than 50 percent median salary)',
+								'Medium': 'Government is replacing 50 percent or more of lost salary (or if a flat sum, it is greater than 50 percent median salary)'},
+			'E2_Debt/contract relief': {'None': 'No debt/contract relief',
+										'Medium-Hard': 'narrow relief, specific to one kind of contract',
+										'Medium': 'broad debt/contract relief'},
 									}

@@ -76,8 +76,9 @@ def write():
 
 	cols = ["CountryName", "Date", "C1_School closing", "C2_Workplace closing", "C3_Cancel public events", 
 			"C4_Restrictions on gatherings", "C5_Close public transport", "C6_Stay at home requirements",
-			"C7_Restrictions on internal movement", "C8_International travel controls", "H1_Public information campaigns",
-			"H2_Testing policy", "H3_Contact tracing", "H6_Facial Coverings"]
+			"C7_Restrictions on internal movement", "C8_International travel controls", "E1_Income support",
+			"E2_Debt/contract relief", "H1_Public information campaigns", "H2_Testing policy", "H3_Contact tracing", 
+			"H6_Facial Coverings"]
 
 	def create_timeline(country, intervention):
 		data = df[df["CountryName"]==country].reset_index(drop=True)
@@ -185,7 +186,7 @@ def write():
 		figs.layout.plot_bgcolor = "white"
 		fig2.update_layout(showlegend=False)
 		figs.update_xaxes(rangeselector_visible=False)
-		figs.update_layout(height=800, width=1200)
+		figs.update_layout(height=900, width=1200)
 
 		return figs
 
