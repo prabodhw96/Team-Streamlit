@@ -288,8 +288,8 @@ def write():
 			cases_x = cases_country['Date']
 			cases_x = cases_x.append(pred_df["Date"])
 			cases_y = cases_country['DailyCasesMA']
+
 			pred_df["PredictedDailyNewCasesMA"] = pred_df["PredictedDailyNewCases"].rolling(7, min_periods=1).mean()
-			#pred_df["PredictedDailyNewCasesMA"].fillna(pred_df["PredictedDailyNewCases"],inplace=True)
 			pred_df["PredictedDailyNewCases"] = pred_df["PredictedDailyNewCasesMA"]
 
 			cases_y = cases_y.append(pred_df["PredictedDailyNewCases"])
