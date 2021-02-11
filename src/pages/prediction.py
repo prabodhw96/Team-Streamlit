@@ -32,11 +32,6 @@ def change_in_ip(df, country, date):
 	res = intervention + " changed from "+str(df_country[intervention][0])+" to "+str(df_country[intervention][1])
 	return res
 
-#@st.cache(persist=True, allow_output_mutation=True)
-#def load_leader_data():
-#	data = pd.read_csv("src/data/leaders.csv", parse_dates=["Date"])
-#	return data
-
 @st.cache(persist=True, allow_output_mutation=True)
 def load_ip_change():
 	data = pd.read_csv("src/data/change_in_ip.csv", parse_dates=["Date"])
@@ -81,11 +76,8 @@ def write():
 		max-width: 900px;
 		}}</style>""", unsafe_allow_html=True)
 
-	#leaders = load_leader_data()
-	#lc = list(leaders["CountryName"].unique())
 	cip = load_ip_change()
 	start = time.time()
-	#st.markdown("# Prescription of stringencies to predict the new cases")
 	st.markdown("<h1 style='text-align: center;'>Prediction - Phase 1</h1>", unsafe_allow_html=True)
 
 	st.markdown("### Select country")
@@ -164,6 +156,10 @@ def write():
 		t = t.round()
 		dfn = pd.concat([df, t])
 		dfn = dfn.tail(90+n_days).reset_index(drop=True) #dfn[334:].reset_index(drop=True)
+		dfn["DailyNewCasesMA"] = dfn["DailyNewCases"].rolling(7).mean()
+		dfn["DailyNewCasesMA"].fillna(dfn["DailyNewCases"], inplace=True)
+		dfn["DailyNewCases"] = dfn["DailyNewCasesMA"]
+
 		#dfn.to_csv("src/data/us_df.csv", index=False)
 		#st.write("Saved!")
 		st.success("Predictions are ready!")
@@ -178,17 +174,12 @@ def write():
 		req_cip = req_cip.sort_values(by=["Date"]).reset_index(drop=True)
 		req_cip["DailyNewCases"] = dfn1[dfn1["Date"].isin(req_cip["Date"])]["DailyNewCases"].reset_index(drop=True)
 
-		fig = make_subplots(rows=1, cols=1, subplot_titles=["Daily New Cases - "+str(selected_country)], specs=[[{"secondary_y": True}]])
+		fig = make_subplots(rows=1, cols=1, subplot_titles=["Daily New Cases - "+str(selected_country)+" (7 Day Moving Average)"], specs=[[{"secondary_y": True}]])
 		fig.add_trace(go.Scatter(x=dfn1["Date"], y=dfn1["DailyNewCases"], 
 			name="Ground Truth", mode='lines', line={'dash': 'dash', 'width':3, 'color':'orange'}), row=1, col=1, secondary_y=False)
 		fig.add_trace(go.Scatter(x=dfn2["Date"], y=dfn2["DailyNewCases"], name="Predicted", 
 			mode='lines', line={'color':'#636efa'}), row=1, col=1, secondary_y=False)
-		#if selected_country in lc:
-		#	df3 = leaders[leaders["CountryName"]==selected_country].reset_index(drop=True)
-		#	df3 = df3[df3["Date"]>=dfn["Date"].min()].reset_index(drop=True)
-		#	fig.add_trace(go.Scatter(x=df3["Date"], y=df3["approval"], name=list(df3["Name"].unique())[0]),
-		#		secondary_y=True)
-		#	fig.update_yaxes(range=[40,85], secondary_y=True)
+
 		fig.update_layout(height=600, width=900)
 		fig.update_xaxes(spikesnap="cursor", spikecolor="#999999", spikedash="solid", spikethickness=3)
 		fig.update_yaxes(spikesnap="cursor", spikecolor="#999999", spikedash="solid", spikethickness=3)
@@ -198,60 +189,30 @@ def write():
 
 		st.plotly_chart(fig)
 
-		#st.write(req_cip.drop(columns=["DailyNewCases"]))
+	#if selected_country == "United States" and str_ip == init_str and flag==False and n_days==30:
+	#	st.success("Predictions are ready!")
+	#	us_df = pd.read_csv("src/data/us_df.csv", parse_dates=["Date"])
+	#	us_df1 = us_df.head(us_df.shape[0] - 30).reset_index(drop=True)
+	#	us_df2 = us_df.tail(30).reset_index(drop=True)
 
-		#if selected_country in lc:
-		#	df_ = leaders[leaders["CountryName"]==selected_country].reset_index(drop=True)
-		#	leader_name = list(df_["Name"].unique())[0]
-		#	fig1 = make_subplots(rows=1, cols=1, subplot_titles=["Popular support amid COVID-19"], specs=[[{"secondary_y": True}]])
-		#	fig1.add_trace(go.Scatter(x=df["Date"], y=df["DailyNewCases"], 
-		#	name="Daily New Cases", mode='lines', line={'dash': 'dash', 'width':3, 'color':'orange'}), row=1, col=1, secondary_y=False)
-		#	fig1.add_trace(go.Scatter(x=df_["Date"], y=df_["approval"], name="Popular support", line={'color':'#00cc96'}), secondary_y=True)
-		#	fig1.update_layout(height=600, width=900)
-		#	st.plotly_chart(fig1)
+	#	req_cip = cip[cip["CountryName"]==selected_country].reset_index(drop=True)
+	#	req_cip = req_cip[(req_cip["Date"] >= us_df1["Date"].min()) & (req_cip["Date"] <= us_df1["Date"].max())].reset_index(drop=True)
+	#	req_cip = req_cip.sort_values(by=["Date"]).reset_index(drop=True)
+	#	req_cip["DailyNewCases"] = us_df1[us_df1["Date"].isin(req_cip["Date"])]["DailyNewCases"].reset_index(drop=True)
 
-		#end = time.time()
-		#st.write("✔️ Took {} seconds".format(round(end-start, 2)))
-		#st.write(round(end-start, 2), "seconds")
-
-	if selected_country == "United States" and str_ip == init_str and flag==False and n_days==30:
-		st.success("Predictions are ready!")
-		us_df = pd.read_csv("src/data/us_df.csv", parse_dates=["Date"])
-		us_df1 = us_df.head(us_df.shape[0] - 30).reset_index(drop=True)
-		us_df2 = us_df.tail(30).reset_index(drop=True)
-
-		req_cip = cip[cip["CountryName"]==selected_country].reset_index(drop=True)
-		req_cip = req_cip[(req_cip["Date"] >= us_df1["Date"].min()) & (req_cip["Date"] <= us_df1["Date"].max())].reset_index(drop=True)
-		req_cip = req_cip.sort_values(by=["Date"]).reset_index(drop=True)
-		req_cip["DailyNewCases"] = us_df1[us_df1["Date"].isin(req_cip["Date"])]["DailyNewCases"].reset_index(drop=True)
-
-		fig_us = make_subplots(rows=1, cols=1, subplot_titles=["Daily New Cases - "+str(selected_country)], specs=[[{"secondary_y": True}]])
+	#	fig_us = make_subplots(rows=1, cols=1, subplot_titles=["Daily New Cases - "+str(selected_country)], specs=[[{"secondary_y": True}]])
+	#	
+	#	fig_us.add_trace(go.Scatter(x=us_df1["Date"], y=us_df1["DailyNewCases"], 
+	#		name="Ground Truth", mode='lines', line={'dash': 'dash', 'width':3, 'color':'orange'}), row=1, col=1, secondary_y=False)
 		
-		fig_us.add_trace(go.Scatter(x=us_df1["Date"], y=us_df1["DailyNewCases"], 
-			name="Ground Truth", mode='lines', line={'dash': 'dash', 'width':3, 'color':'orange'}), row=1, col=1, secondary_y=False)
+	#	fig_us.add_trace(go.Scatter(x=us_df2["Date"], y=us_df2["DailyNewCases"], name="Predicted", 
+	#		mode='lines', line={'color':'#636efa'}), row=1, col=1, secondary_y=False)
 		
-		fig_us.add_trace(go.Scatter(x=us_df2["Date"], y=us_df2["DailyNewCases"], name="Predicted", 
-			mode='lines', line={'color':'#636efa'}), row=1, col=1, secondary_y=False)
+	#	fig_us.update_layout(height=600, width=900)
+	#	fig_us.update_xaxes(spikesnap="cursor", spikecolor="#999999", spikedash="solid", spikethickness=3)
+	#	fig_us.update_yaxes(spikesnap="cursor", spikecolor="#999999", spikedash="solid", spikethickness=3)
 		
-		fig_us.update_layout(height=600, width=900)
-		fig_us.update_xaxes(spikesnap="cursor", spikecolor="#999999", spikedash="solid", spikethickness=3)
-		fig_us.update_yaxes(spikesnap="cursor", spikecolor="#999999", spikedash="solid", spikethickness=3)
+	#	fig_us.add_trace(go.Scatter(x=req_cip["Date"], y=req_cip["DailyNewCases"], mode='markers', name="Changes in IP",
+	#		marker=dict(size=12), hoverinfo="all", hovertext=req_cip["change"]))
 		
-		fig_us.add_trace(go.Scatter(x=req_cip["Date"], y=req_cip["DailyNewCases"], mode='markers', name="Changes in IP",
-			marker=dict(size=12), hoverinfo="all", hovertext=req_cip["change"]))
-		
-		st.plotly_chart(fig_us)
-
-		#st.write(req_cip.drop(columns=["DailyNewCases"]))
-
-		#dfw = data[data["CountryName"]=="United States"].reset_index(drop=True)
-		#dfw = dfw[["CountryName", "Date", "ConfirmedCases", "ConfirmedDeaths", "DailyNewCases", "DailyNewDeaths"]]
-
-		#df_1 = leaders[leaders["CountryName"]=="United States"].reset_index(drop=True)
-		#leader_name1 = list(df_1["Name"].unique())[0]
-		#fig2 = make_subplots(rows=1, cols=1, subplot_titles=["Popular support amid COVID-19"], specs=[[{"secondary_y": True}]])
-		#fig2.add_trace(go.Scatter(x=dfw["Date"], y=dfw["DailyNewCases"], 
-		#name="Daily New Cases", mode='lines', line={'dash': 'dash', 'width':3, 'color':'orange'}), row=1, col=1, secondary_y=False)
-		#fig2.add_trace(go.Scatter(x=df_1["Date"], y=df_1["approval"], name="Popular support", line={'color':'#00cc96'}), secondary_y=True)
-		#fig2.update_layout(height=600, width=900)
-		#st.plotly_chart(fig2)
+	#	st.plotly_chart(fig_us)
