@@ -64,8 +64,8 @@ html = """
 ast.core.services.other.set_logging_format()
 
 PAGES = {
-  "Country Comparator": src.pages.country_comparator,
   "Prescription": src.pages.prescription,
+  "Country Comparator": src.pages.country_comparator,
 	"Prediction": src.pages.prediction,
 	#"Pandemic Spread Chart": src.pages.motion,
 	#"Exploratory Data Analysis": src.pages.eda,

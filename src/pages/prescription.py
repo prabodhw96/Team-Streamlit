@@ -315,6 +315,10 @@ def write():
 			cases_x = cases_country['Date']
 			cases_x = cases_x.append(pred_df["Date"])
 			cases_y = cases_country['DailyCasesMA']
+			pred_df["PredictedDailyNewCasesMA"] = pred_df["PredictedDailyNewCases"].rolling(7).mean()
+			pred_df["PredictedDailyNewCasesMA"].fillna(pred_df["PredictedDailyNewCases"],inplace=True)
+
+
 			cases_y = cases_y.append(pred_df["PredictedDailyNewCases"])
 			figs.add_trace(go.Scatter(x=cases_x, y=cases_y, mode='lines', marker=dict(color='Teal',),line=dict(width=4),name="Daily New Cases"),secondary_y=True)
 			figs.layout.xaxis.update(fig.layout.xaxis)
