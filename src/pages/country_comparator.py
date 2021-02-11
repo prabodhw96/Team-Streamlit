@@ -34,6 +34,11 @@ def load_cases_data():
 	data = pd.read_csv("src/data/casesanddeaths.csv", parse_dates=["Date"])
 	return data
 
+@st.cache(persist=True, allow_output_mutation=True, show_spinner=False)
+def load_econ_res():
+	data = pd.read_csv("src/data/econ_res.csv", parse_dates=["Date"])
+	return data
+
 def write():
 	st.markdown(f"""<style>
 		.reportview-container .main .block-container{{
@@ -60,6 +65,7 @@ def write():
 
 	df = load_oxford_data()
 	cases = load_cases_data()
+	econ_df = load_econ_res()
 
 	cases_grouped = cases.groupby("CountryName")
 	for country,df_temp in cases_grouped:
@@ -79,12 +85,15 @@ def write():
 			"C7_Restrictions on internal movement", "C8_International travel controls", "E1_Income support",
 			"E2_Debt/contract relief", "H1_Public information campaigns", "H2_Testing policy", "H3_Contact tracing", 
 			"H6_Facial Coverings"]
+	E1_dict = {"0/0": 0, "1/0":1, "2/0":2, "1/1":3, "2/1":4}
 
 	def create_timeline(country, intervention):
 		data = df[df["CountryName"]==country].reset_index(drop=True)
 		data = data[cols].dropna().reset_index(drop=True)
 		data = data[["Date", intervention]]
-
+		data["E1_Income support"] = econ_df[econ_df["CountryName"]==country]["E1_Income support"].reset_index(drop=True)
+		data["E2_Debt/contract relief"] = econ_df[econ_df["CountryName"]==country]["E2_Debt/contract relief"].reset_index(drop=True)
+		
 		dates = []
 		ip = []
 		dates.append(data["Date"].min())
@@ -186,7 +195,7 @@ def write():
 		figs.layout.plot_bgcolor = "white"
 		fig2.update_layout(showlegend=False)
 		figs.update_xaxes(rangeselector_visible=False)
-		figs.update_layout(height=900, width=1200)
+		figs.update_layout(height=1000, width=1200)
 
 		return figs
 
