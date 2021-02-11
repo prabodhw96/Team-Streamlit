@@ -322,7 +322,9 @@ def write():
 			cases_x = cases_x.append(pred_df["Date"])
 			cases_y = cases_country['DailyCasesMA']
 			pred_df["PredictedDailyNewCasesMA"] = pred_df["PredictedDailyNewCases"].rolling(7).mean()
-			pred_df["PredictedDailyNewCasesMA"].fillna(pred_df["PredictedDailyNewCases"],inplace=True)
+			st.write(pred_df)
+			pred_df["PredictedDailyNewCasesMA"].iloc[:7] = cases_country.DailyCasesMA.iloc[-14:].rolling(window=7).mean()[6:]
+			st.write(pred_df)
 			pred_df["PredictedDailyNewCases"] = pred_df["PredictedDailyNewCasesMA"]
 
 
