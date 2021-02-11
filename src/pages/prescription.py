@@ -14,19 +14,6 @@ import src.pages.rerun as rerun
 from src.pages.prescribe import prescribe
 from src.pages.hover_dict import hover_dict
 
-#def generate_sequence_for_change(changed_index, changed_value):
-#	fixed_sum = 12
-#	req_sum = fixed_sum - changed_value
-#	random_vec = np.random.rand(11)
-#	rand_sum = random_vec.sum()
-#	coef = req_sum/rand_sum
-#	req_rand_vec = coef*random_vec
-#	final_vec = np.insert(req_rand_vec,changed_index,changed_value)
-#	d = pd.DataFrame(final_vec)
-#	d.to_csv("src/data/init.csv", index=False)
-#	st.experimental_rerun()
-#	#rerun.rerun()
-
 @st.cache(persist=True, allow_output_mutation=True)
 def load_cases_data():
 	data = pd.read_csv("src/data/casesanddeaths.csv", parse_dates=["Date"])
@@ -67,11 +54,11 @@ def write():
 
 	st.markdown("<h1 style='text-align: center;'>Prescription - Phase 2</h1>", unsafe_allow_html=True)
 	st.write("This dashboard allows the user to visualize the intervention plans suggested by our prescriptor built for Phase 2.")
-	st.write("1. Select the country from the drop down list.")
-	st.write("2. Enter the number of days to prescribe intervention plans for.")
-	st.write("3. Enter the costs associated with taking various intervention actions.")
-	st.write("4. Click on Run. (Note: It takes ~100 seconds to run for 28 days)")
-	st.write("5. Select the stringency level.")
+	st.markdown("1. Select the country from the drop down list.")
+	st.markdown("2. Enter the number of days to prescribe intervention plans for.")
+	st.markdown("3. Enter the costs associated with taking various intervention actions.")
+	st.markdown("4. Click on Run. (Note: It takes ~100 seconds to run for 28 days)")
+	st.markdown("5. Select the stringency level.")
 
 	prior_ip = load_oxford_data()
 
@@ -92,15 +79,6 @@ def write():
 	my_rounded_list = [ round(elem, 2) for elem in val_list]
 
 	df = load_data()
-	#st.dataframe(df)
-	#arr_df = list(df["0"])
-	#arr = [round(elem, 2) for elem in arr_df]
-	#sum_arr = sum(arr)
-	#if sum_arr > 12.0:
-	#	st.write("Sum of costs = ", 12.0)
-	#else:
-	#	st.write("Sum of costs = ", sum_arr)
-
 	
 	with col1:
 		c1 = st.number_input(key='c1', label='C1_School closing', min_value=0.00, step=0.01, value=1.00)
@@ -127,13 +105,6 @@ def write():
 	with col12:
 		h6 = st.number_input(key='h6', label='H6_Facial Coverings', min_value=0.00, step=0.01, value=1.00)
 
-	#st.write(pd.DataFrame([[selected_country, np.nan, c1, c2, c3, c4, c5, c6, c7, c8, h1, h2, h3, h6]], columns=cost_cols))
-
-	#for i in range(len(k)):
-	#	if arr[i] != k[i]:
-	#		generate_sequence_for_change(i, k[i])
-	#		break
-
 	cost_cols = ["CountryName", "RegionName", "C1_School closing", "C2_Workplace closing", "C3_Cancel public events", 
 			"C4_Restrictions on gatherings", "C5_Close public transport", "C6_Stay at home requirements",
 			"C7_Restrictions on internal movement", "C8_International travel controls", "H1_Public information campaigns",
@@ -158,9 +129,6 @@ def write():
 		else:
 			st.write("This is a slow task; takes ⏳ ~ {} seconds to run".format(time_value))
 		start = time.time()
-		#st.write(c1, c2, c3, c4, c5, c6, c7, c8, h1, h2, h3, h6)
-		#cost = pd.DataFrame([[selected_country, np.nan, c1, c2, c3, c4, c5, c6, c7, c8, h1, h2, h3, h6]], columns=cost_cols)
-		#cost.to_csv("src/data/cost.csv", index=False)
 		prior_ip_country = prior_ip[prior_ip["CountryName"]==selected_country]
 		prior_ip_country = prior_ip_country.dropna(subset=ip_cols[3:])
 		prior_ip_country = prior_ip_country.tail(21).reset_index(drop=True)[ip_cols]
@@ -181,7 +149,6 @@ def write():
 		sl = list(pres["Stringency"])
 		pres.sort_values(by=["Stringency"], inplace=True)
 		pres.reset_index(drop=True, inplace=True)
-		#pres["Stringency"] = ['%.2f' % elem for elem in sl]
 		pres = pres.drop_duplicates(subset=["Stringency"], keep="first")
 		sl = list(pres["Stringency"])
 		pres = pres.round(0)
@@ -321,10 +288,9 @@ def write():
 			cases_x = cases_country['Date']
 			cases_x = cases_x.append(pred_df["Date"])
 			cases_y = cases_country['DailyCasesMA']
-			pred_df["PredictedDailyNewCasesMA"] = pred_df["PredictedDailyNewCases"].rolling(7).mean()
-			pred_df["PredictedDailyNewCasesMA"].fillna(pred_df["PredictedDailyNewCases"],inplace=True)
+			pred_df["PredictedDailyNewCasesMA"] = pred_df["PredictedDailyNewCases"].rolling(7, min_periods=1).mean()
+			#pred_df["PredictedDailyNewCasesMA"].fillna(pred_df["PredictedDailyNewCases"],inplace=True)
 			pred_df["PredictedDailyNewCases"] = pred_df["PredictedDailyNewCasesMA"]
-
 
 			cases_y = cases_y.append(pred_df["PredictedDailyNewCases"])
 			figs.add_trace(go.Scatter(x=cases_x, y=cases_y, mode='lines', marker=dict(color='Teal',),line=dict(width=4),name="Daily New Cases"),secondary_y=True)
