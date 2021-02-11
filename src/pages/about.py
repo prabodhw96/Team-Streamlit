@@ -98,7 +98,7 @@ def write():
 			st.image(aw_photo)
 		with txt:
 			st.write(data[data["Name"]=="Andrew Williams"]["p1"].reset_index(drop=True)[0])
-		st.write(data[data["Name"]=="Andrew Williams"]["p2"].reset_index(drop=True)[0])
+		
 		
 
 	with st.beta_expander("Chen-Yang Su"):
