@@ -17,7 +17,16 @@ import warnings
 warnings.filterwarnings("ignore")
 
 st.beta_set_page_config(initial_sidebar_state='expanded')
-
+st.markdown(
+  f'''
+    <style>
+        .sidebar .sidebar-content {{
+          width:200px;
+        }}
+    </style>
+  ''',
+  unsafe_allow_html=True
+)
 st.markdown("""<style>.sidebar .sidebar-collapse-control{
   background-image: linear-gradient(#f6bdc0, #f6bdc0);
   color: white;
