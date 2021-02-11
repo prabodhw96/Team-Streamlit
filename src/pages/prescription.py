@@ -66,6 +66,12 @@ def write():
 	}}</style>""", unsafe_allow_html=True)
 
 	st.markdown("<h1 style='text-align: center;'>Prescription - Phase 2</h1>", unsafe_allow_html=True)
+	st.write("This dashboard allows the user to visualize the intervention plans suggested by our prescriptor built for Phase 2.")
+	st.write("1. Select the country from the drop down list.")
+	st.write("2. Enter the number of days to prescribe intervention plans for.")
+	st.write("3. Enter the costs associated with taking various intervention actions.")
+	st.write("4. Click on Run. (Note: It takes ~100 seconds to run for 28 days)")
+	st.write("5. Select the stringency level.")
 
 	prior_ip = load_oxford_data()
 
