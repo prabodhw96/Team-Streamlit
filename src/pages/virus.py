@@ -84,15 +84,8 @@ def write():
 		[Bing COVID-19 Data] (https://github.com/microsoft/Bing-COVID-19-Data)")
 
 	st.markdown("<h2 style='text-align: center;'>Countries with similar seasonal nature</h2>", unsafe_allow_html=True)
-	st.write("Given that our team's predictor was the top predictor throughout all offline evaluation periods and almost the \
-		entire time since the submission, we believe that there is evidence to support the hypothesis that the virus is \
-		predominantly spread via aerosolized particles. While many Countries like Canada focus on fomite transmission and \
-		have people wash their hands frequently, this kind of transmission would not be so heavily affected by changes in \
-		weather patterns. Whereas a virus that is spread via aerosolized particles would see radical increases in countries \
-		with seasons where cold weather drives people indoors thereby increasing the viral density of the air being breathed \
-		given that the virus is now endemic to most of the world. While the solution to phase 2 uses a predictor that does not \
-		use weather, our solution uses a population-weighted temperatures in our model to allow the model to learn from their \
-		associations within this context")
+	st.write("Given that our team's predictor was the top predictor throughout all offline evaluation periods and almost the entire time since the submission, we believe that there is evidence to support the hypothesis that the virus is predominantly spread via aerosolized particles. While many Countries like Canada focus on fomite transmission and have people wash their hands frequently, this kind of transmission would not be so heavily affected by changes in weather patterns. Whereas a virus that is spread via aerosolized particles would see radical increases in countries with extreme seasons where cold weather drives people indoors thereby increasing the viral density of the air being breathed.")
+	st.write("The increase in viral density leads to a greater viral inoculum when indoors for a similar period of time due to a greater number of people and inadequate global ventilation standards.  Shown below is a clustering of countries that experience similar seasonal behaviour and therefore would be prime candidates for comparison using our country comparator feature.  Exposure to the same climactic conditions makes the comparison of NPIs fairer given that the population are exposed to similar forces driving them indoors or outdoors or affecting the diffusion rate of the virus.")
 	clus = load_clus_data()
 
 #	st.markdown(f"""<style>
