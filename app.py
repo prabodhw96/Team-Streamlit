@@ -16,7 +16,7 @@ import src.pages.country_comparator
 import warnings
 warnings.filterwarnings("ignore")
 
-st.beta_set_page_config(initial_sidebar_state='collapsed')
+st.beta_set_page_config(initial_sidebar_state='expanded')
 
 st.markdown("""<style>.sidebar .sidebar-collapse-control{
   background-image: linear-gradient(#f6bdc0, #f6bdc0);
