@@ -136,7 +136,7 @@ def write():
 	#st.write('<style>div.row-widget.stRadio > div{flex-direction:row;}</style>', unsafe_allow_html=True)
 	col1, col2 = st.beta_columns([0.2, 0.8])
 	with col1:
-		c = st.radio("Select Cluster#", ["Show all",0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15])
+		c = st.radio("Select Cluster#", ["Show all",<div style={'color:blue;'}>0</div>,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],unsafe_allow_html=True)
 	#c = st.radio("Select Cluster#", ["Show all",0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15])
 	with col2:
 		if c == "Show all":
