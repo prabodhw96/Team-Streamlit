@@ -51,5 +51,6 @@ hover_dict = {'C1_School closing': {'None':'None',
 			'H7_Vaccination Policy': {'None':'None','Medium':'Availability for ONE of following: key workers/ clinically vulnerable groups / elderly groups',
 									'Medium-Hard': 'Availability for TWO of following: key workers/ clinically vulnerable groups / elderly groups',
 									'Hard' : 'Availability for ALL of following: key workers/ clinically vulnerable groups / elderly groups',
-									'Strict': 'Universal availability'}
+									'Strict': 'Universal availability'},
+			
 									}
