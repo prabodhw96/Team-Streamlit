@@ -93,7 +93,7 @@ def write():
 	with st.beta_expander("Andrew Williams"):
 		img, txt = st.beta_columns([0.2, 0.8])
 		with img:
-			aw_photo = Image.open("src/images/andrew.PNG")
+			aw_photo = Image.open("src/images/andrew.png")
 			aw_photo = aw_photo.resize((150, 180), Image.ANTIALIAS)
 			st.image(aw_photo)
 		with txt:
