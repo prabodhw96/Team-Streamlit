@@ -53,8 +53,9 @@ def write():
 	}}</style>""", unsafe_allow_html=True)
 
 	st.markdown("<h1 style='text-align: center;'>Prescription - Phase 2</h1>", unsafe_allow_html=True)
-	st.write("NOTE: Please note that this is not a full fledged website. The script runs in a top-down manner and hence when one request has been submitted, we request you to be patient and wait for the graph and results to be shown before changing the settings. \
-		 If the Run button has been clicked, it would take ~100 seconds to render the results and please wait until the graph appears. It will not be possible to move to another page when the process is running due to limitations of the script we use.")
+	st.write("NOTE: Please note that this is not a full fledged website. \
+		 If the Run button has been clicked, it would take ~100 seconds to render the results. Please wait until the graph appears. It will not be possible to move to another page when the process is running due to limitations of the script we use.\
+		 In case there is an issue with rendering the graph, please move the stringency slider or reload the page (Ctrl+R/Cmd+R). ")
 	
 	
 	st.write("This dashboard allows the user to visualize the intervention plans suggested by our prescriptor built for Phase 2.")

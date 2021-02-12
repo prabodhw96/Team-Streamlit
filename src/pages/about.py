@@ -196,4 +196,10 @@ def write():
 		st.write(data[data["Name"]=="Djallel Bouneffouf"]["links"].reset_index(drop=True)[0])
 
 	with st.beta_expander("Yang Zhang"):
-		st.write(data[data["Name"]=="Yang Zhang"]["p1"].reset_index(drop=True)[0])
+		img, txt = st.beta_columns([0.2, 0.8])
+		with img:
+			yz_photo = Image.open("src/images/Yang.jpg")
+			yz_photo = yz_photo.resize((150, 180), Image.ANTIALIAS)
+			st.image(yz_photo)
+		with txt:
+			st.write(data[data["Name"]=="Yang Zhang"]["p1"].reset_index(drop=True)[0])
