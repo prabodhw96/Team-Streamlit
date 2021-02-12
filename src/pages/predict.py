@@ -46,7 +46,7 @@ def predict(npis_df) -> None:
 	
 	for npi_col in NPI_COLUMNS:
 		npis_df.update(npis_df.groupby(['CountryName', 'RegionName'])[npi_col].ffill().fillna(0))
-
+	st.write(npis_df)
 	predictors = ["LSTM", "LGBM"]
 	for model in predictors:
 		if model == "LSTM":
