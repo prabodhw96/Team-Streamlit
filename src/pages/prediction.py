@@ -37,27 +37,11 @@ def load_ip_change():
 	data = pd.read_csv("src/data/change_in_ip.csv", parse_dates=["Date"])
 	return data
 
-@st.cache(persist=True, allow_output_mutation=True)
-def load_pred_cache():
-	data = pd.read_csv("cache/pred_const_ip_cache.csv", parse_dates=["Date"])
-	data = data[~data["RegionName"].isin(data["RegionName"].unique()[1:])].reset_index(drop=True)
-	data = data.rename(columns={"PredictedDailyNewCases":"DailyNewCases"})
-	data["DailyNewCasesMA"] = data["DailyNewCases"].rolling(7).mean()
-	data["DailyNewCasesMA"].fillna(data["DailyNewCases"], inplace=True)
-	data["DailyNewCases"] = data["DailyNewCasesMA"]
-	data = data.sort_values(by=["CountryName", "Date"]).reset_index(drop=True)
-	data = data.drop(columns=["DailyNewCasesMA"])
-	return data
 def get_table_download_link(df):
-	"""Generates a link allowing the data in a given panda dataframe to be downloaded
-	in:  dataframe
-	out: href string
-	"""
 	csv = df.to_csv(index=False)
 	b64 = base64.b64encode(csv.encode()).decode()  # some strings <-> bytes conversions necessary here
-	href = f'<a href="data:file/csv;base64,{b64}">Download csv file</a>'
+	href = f'<a href="data:file/csv;base64,{b64}" download="prediction.csv">Download csv file</a>'
 	return href
-
 
 def create_ip(selected_country, c1, c2, c3, c4, c5, c6, c7, c8, h1, h2, h3, h6, n_days=30):
 	data = load_data()
@@ -89,8 +73,6 @@ def create_ip(selected_country, c1, c2, c3, c4, c5, c6, c7, c8, h1, h2, h3, h6, 
 	ip = ip.sort_values(by="CountryName").reset_index(drop=True)
 	return ip
 
-#init_str = "322412232314"
-
 def write():
 	st.markdown(f"""<style>
 		.reportview-container .main .block-container{{
@@ -115,7 +97,6 @@ def write():
 		n_days = st.number_input("Enter no. of days", 30, 90, value=30)
 
 	weights = load_weights()
-	cache_pred = load_pred_cache()
 
 	fourvals = [0, 1, 2, 3]
 	threevals = [0, 1, 2]
@@ -127,41 +108,41 @@ def write():
 	col10, cx10, col11, cx11, col12 = st.beta_columns([0.3, 0.05, 0.3, 0.05, 0.3])
 
 	with col1:
-		c1 = st.select_slider("C1_School closing", fourvals, key='c1',
-									value=weights[weights["CountryName"]==selected_country]["C1_School closing"].reset_index(drop=True)[0]) #vals
+		c1_val = int(weights[weights["CountryName"]==selected_country]["C1_School closing"].reset_index(drop=True)[0])
+		c1 = st.select_slider("C1_School closing", fourvals, key='c1_'+selected_country, value=c1_val) #vals
 	with col2:
-		c2 = st.select_slider("C2_Workplace closing", fourvals, key='c2',
-									value=weights[weights["CountryName"]==selected_country]["C2_Workplace closing"].reset_index(drop=True)[0]) #vals
+		c2_val = int(weights[weights["CountryName"]==selected_country]["C2_Workplace closing"].reset_index(drop=True)[0])
+		c2 = st.select_slider("C2_Workplace closing", fourvals, key='c2_'+selected_country, value=c2_val) #vals
 	with col3:
-		c3 = st.select_slider("C3_Cancel public events", threevals, key='c3',
-									value=weights[weights["CountryName"]==selected_country]["C3_Cancel public events"].reset_index(drop=True)[0]) #vals[:-1]
+		c3_val = int(weights[weights["CountryName"]==selected_country]["C3_Cancel public events"].reset_index(drop=True)[0])
+		c3 = st.select_slider("C3_Cancel public events", threevals, key='c3_'+selected_country, value=c3_val) #vals[:-1]
 	with col4:
-		c4 = st.select_slider("C4_Restrictions on gatherings", fivevals, key='c4',
-									value=weights[weights["CountryName"]==selected_country]["C4_Restrictions on gatherings"].reset_index(drop=True)[0]) #vals_v2
+		c4_val = int(weights[weights["CountryName"]==selected_country]["C4_Restrictions on gatherings"].reset_index(drop=True)[0])
+		c4 = st.select_slider("C4_Restrictions on gatherings", fivevals, key='c4_'+selected_country, value=c4_val) #vals_v2
 	with col5:
-		c5 = st.select_slider("C5_Close public transport", threevals, key='c5',
-									value=weights[weights["CountryName"]==selected_country]["C5_Close public transport"].reset_index(drop=True)[0]) #vals[:-1]
+		c5_val = int(weights[weights["CountryName"]==selected_country]["C5_Close public transport"].reset_index(drop=True)[0])
+		c5 = st.select_slider("C5_Close public transport", threevals, key='c5_'+selected_country, value=c5_val) #vals[:-1]
 	with col6:
-		c6 = st.select_slider("C6_Stay at home requirements", fourvals, key='c6',
-									value=weights[weights["CountryName"]==selected_country]["C6_Stay at home requirements"].reset_index(drop=True)[0]) #vals
+		c6_val = int(weights[weights["CountryName"]==selected_country]["C6_Stay at home requirements"].reset_index(drop=True)[0])
+		c6 = st.select_slider("C6_Stay at home requirements", fourvals, key='c6_'+selected_country, value=c6_val) #vals
 	with col7:
-		c7 = st.select_slider("C7_Restrictions on internal movement", threevals, key='c7',
-									value=weights[weights["CountryName"]==selected_country]["C7_Restrictions on internal movement"].reset_index(drop=True)[0]) #vals[:-1]
+		c7_val = int(weights[weights["CountryName"]==selected_country]["C7_Restrictions on internal movement"].reset_index(drop=True)[0])
+		c7 = st.select_slider("C7_Restrictions on internal movement", threevals, key='c7_'+selected_country, value=c7_val) #vals[:-1]
 	with col8:
-		c8 = st.select_slider("C8_International travel controls", fivevals, key='c8',
-									value=weights[weights["CountryName"]==selected_country]["C8_International travel controls"].reset_index(drop=True)[0]) #vals_v2
+		c8_val = int(weights[weights["CountryName"]==selected_country]["C8_International travel controls"].reset_index(drop=True)[0])
+		c8 = st.select_slider("C8_International travel controls", fivevals, key='c8_'+selected_country, value=c8_val) #vals_v2
 	with col9:
-		h1 = st.select_slider("H1_Public information campaigns", threevals, key='h1',
-									value=weights[weights["CountryName"]==selected_country]["H1_Public information campaigns"].reset_index(drop=True)[0]) #vals[:-1]
+		h1_val = int(weights[weights["CountryName"]==selected_country]["H1_Public information campaigns"].reset_index(drop=True)[0])
+		h1 = st.select_slider("H1_Public information campaigns", threevals, key='h1_'+selected_country, value=h1_val) #vals[:-1]
 	with col10:
-		h2 = st.select_slider("H2_Testing policy", fourvals, key='h2',
-									value=weights[weights["CountryName"]==selected_country]["H2_Testing policy"].reset_index(drop=True)[0]) #vals
+		h2_val = int(weights[weights["CountryName"]==selected_country]["H2_Testing policy"].reset_index(drop=True)[0])
+		h2 = st.select_slider("H2_Testing policy", fourvals, key='h2_'+selected_country, value=h2_val) #vals
 	with col11:
-		h3 = st.select_slider("H3_Contact tracing", threevals, key='h3',
-									value=weights[weights["CountryName"]==selected_country]["H3_Contact tracing"].reset_index(drop=True)[0]) #vals[:-1]
+		h3_val = int(weights[weights["CountryName"]==selected_country]["H3_Contact tracing"].reset_index(drop=True)[0])
+		h3 = st.select_slider("H3_Contact tracing", threevals, key='h3_'+selected_country, value=h3_val) #vals[:-1]
 	with col12:
-		h6 = st.select_slider("H6_Facial Coverings", fivevals, key='h6',
-									value=weights[weights["CountryName"]==selected_country]["H6_Facial Coverings"].reset_index(drop=True)[0]) #vals_v2
+		h6_val = int(weights[weights["CountryName"]==selected_country]["H6_Facial Coverings"].reset_index(drop=True)[0])
+		h6 = st.select_slider("H6_Facial Coverings", fivevals, key='h6_'+selected_country, value=h6_val) #vals_v2
 
 	flag = False
 	str_ip = str(c1)+str(c2)+str(c3)+str(c4)+str(c5)+str(c6)+str(c7)+str(c8)+str(h1)+str(h2)+str(h3)+str(h6)
@@ -183,7 +164,7 @@ def write():
 			"PredictedDailyTotalDeaths":"ConfirmedDeaths",
 			"PredictedDailyNewCases":"DailyNewCases",
 			"PredictedDailyNewDeaths":"DailyNewDeaths"}, inplace=True)
-		t = t.round()
+		#t = t.round()
 		dfn = pd.concat([df, t])
 		dfn = dfn.tail(90+n_days).reset_index(drop=True) #dfn[334:].reset_index(drop=True)
 		dfn["DailyNewCasesMA"] = dfn["DailyNewCases"].rolling(7).mean()
@@ -218,31 +199,3 @@ def write():
 			marker=dict(size=12), hoverinfo="all", hovertext=req_cip["change"]))
 
 		st.plotly_chart(fig)
-		
-	#if selected_country == "United States" and str_ip == init_str and flag==False and n_days==30:
-	#	st.success("Predictions are ready!")
-	#	us_df = pd.read_csv("src/data/us_df.csv", parse_dates=["Date"])
-	#	us_df1 = us_df.head(us_df.shape[0] - 30).reset_index(drop=True)
-	#	us_df2 = us_df.tail(30).reset_index(drop=True)
-
-	#	req_cip = cip[cip["CountryName"]==selected_country].reset_index(drop=True)
-	#	req_cip = req_cip[(req_cip["Date"] >= us_df1["Date"].min()) & (req_cip["Date"] <= us_df1["Date"].max())].reset_index(drop=True)
-	#	req_cip = req_cip.sort_values(by=["Date"]).reset_index(drop=True)
-	#	req_cip["DailyNewCases"] = us_df1[us_df1["Date"].isin(req_cip["Date"])]["DailyNewCases"].reset_index(drop=True)
-
-	#	fig_us = make_subplots(rows=1, cols=1, subplot_titles=["Daily New Cases - "+str(selected_country)], specs=[[{"secondary_y": True}]])
-	#	
-	#	fig_us.add_trace(go.Scatter(x=us_df1["Date"], y=us_df1["DailyNewCases"], 
-	#		name="Ground Truth", mode='lines', line={'dash': 'dash', 'width':3, 'color':'orange'}), row=1, col=1, secondary_y=False)
-		
-	#	fig_us.add_trace(go.Scatter(x=us_df2["Date"], y=us_df2["DailyNewCases"], name="Predicted", 
-	#		mode='lines', line={'color':'#636efa'}), row=1, col=1, secondary_y=False)
-		
-	#	fig_us.update_layout(height=600, width=900)
-	#	fig_us.update_xaxes(spikesnap="cursor", spikecolor="#999999", spikedash="solid", spikethickness=3)
-	#	fig_us.update_yaxes(spikesnap="cursor", spikecolor="#999999", spikedash="solid", spikethickness=3)
-		
-	#	fig_us.add_trace(go.Scatter(x=req_cip["Date"], y=req_cip["DailyNewCases"], mode='markers', name="Changes in IP",
-	#		marker=dict(size=12), hoverinfo="all", hovertext=req_cip["change"]))
-		
-	#	st.plotly_chart(fig_us)
