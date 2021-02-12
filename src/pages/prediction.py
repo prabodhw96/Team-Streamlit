@@ -40,7 +40,7 @@ def load_ip_change():
 def get_table_download_link(df):
 	csv = df.to_csv(index=False)
 	b64 = base64.b64encode(csv.encode()).decode()  # some strings <-> bytes conversions necessary here
-	href = f'<a href="data:file/csv;base64,{b64}" download="prediction.csv">Download csv file</a>'
+	href = f'<a href="data:file/csv;base64,{b64}">Download csv file</a>'
 	return href
 
 def create_ip(selected_country, c1, c2, c3, c4, c5, c6, c7, c8, h1, h2, h3, h6, n_days=30):
@@ -155,7 +155,7 @@ def write():
 		#st.write(ip)
 		pred = predict(ip)
 		#st.write(pred)
-		st.markdown(get_table_download_link(pred), unsafe_allow_html=True)
+		#st.markdown(get_table_download_link(pred), unsafe_allow_html=True)
 		df = data[data["CountryName"]==selected_country].reset_index(drop=True)
 		df = df[["CountryName", "Date", "ConfirmedCases", "ConfirmedDeaths", "DailyNewCases", "DailyNewDeaths"]]
 		t = pred.copy()
