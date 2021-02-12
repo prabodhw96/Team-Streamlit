@@ -175,7 +175,7 @@ def write():
 		col1, col2 = st.beta_columns(2)
 		if res_df["CountryName"].unique()[0] == selected_country:
 			with col1:
-				str_val = st.select_slider("Select Stringency (on a scale of {})".format(len(np_arr)-1), np_arr)
+				str_val = st.select_slider("Select Stringency (in increasing order)", np_arr)
 		
 		stringency = stl_dict[str_val]
 
