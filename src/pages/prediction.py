@@ -48,6 +48,16 @@ def load_pred_cache():
 	data = data.sort_values(by=["CountryName", "Date"]).reset_index(drop=True)
 	data = data.drop(columns=["DailyNewCasesMA"])
 	return data
+def get_table_download_link(df):
+	"""Generates a link allowing the data in a given panda dataframe to be downloaded
+	in:  dataframe
+	out: href string
+	"""
+	csv = df.to_csv(index=False)
+	b64 = base64.b64encode(csv.encode()).decode()  # some strings <-> bytes conversions necessary here
+	href = f'<a href="data:file/csv;base64,{b64}">Download csv file</a>'
+	return href
+
 
 def create_ip(selected_country, c1, c2, c3, c4, c5, c6, c7, c8, h1, h2, h3, h6, n_days=30):
 	data = load_data()
@@ -161,9 +171,10 @@ def write():
 		st.write("It takes ⏳ ~ {} seconds to run for 30 days".format(10))
 		flag = True
 		ip = create_ip(selected_country, c1, c2, c3, c4, c5, c6, c7, c8, h1, h2, h3, h6, n_days)
-		st.write(ip)
+		#st.write(ip)
 		pred = predict(ip)
-		st.write(pred)
+		#st.write(pred)
+		st.markdown(get_table_download_link(pred), unsafe_allow_html=True)
 		df = data[data["CountryName"]==selected_country].reset_index(drop=True)
 		df = df[["CountryName", "Date", "ConfirmedCases", "ConfirmedDeaths", "DailyNewCases", "DailyNewDeaths"]]
 		t = pred.copy()
