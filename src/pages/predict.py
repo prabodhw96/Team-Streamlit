@@ -43,8 +43,8 @@ def predict(npis_df) -> None:
 	npis_df["GeoID"] = np.where(npis_df["RegionName"].isnull(), npis_df["CountryName"], npis_df["CountryName"] + ' / ' + npis_df["RegionName"])
 	start_date_dt = npis_df["Date"].min()
 	end_date_dt = npis_df["Date"].max()
-	for npi_col in NPI_COLUMNS:
-		npis_df.update(npis_df.groupby(['CountryName', 'RegionName'])[npi_col].ffill().fillna(0))
+	#for npi_col in NPI_COLUMNS:
+	#	npis_df.update(npis_df.groupby(['CountryName', 'RegionName'])[npi_col].ffill().fillna(0))
 	predictors = ["LSTM", "LGBM"]
 	for model in predictors:
 		if model == "LSTM":

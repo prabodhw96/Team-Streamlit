@@ -153,6 +153,7 @@ def write():
 		flag = True
 		ip = create_ip(selected_country, c1, c2, c3, c4, c5, c6, c7, c8, h1, h2, h3, h6, n_days)
 		#st.write(ip)
+		#st.markdown(get_table_download_link(ip), unsafe_allow_html=True)
 		pred = predict(ip)
 		#st.write(pred)
 		#st.markdown(get_table_download_link(pred), unsafe_allow_html=True)
