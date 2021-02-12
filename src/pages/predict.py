@@ -38,15 +38,7 @@ def get_ensemble_pred(alpha, lstm_predictions_df, lgbm_predictions_df):
 
 	return ensemble_data
 
-def get_table_download_link(df):
-    """Generates a link allowing the data in a given panda dataframe to be downloaded
-    in:  dataframe
-    out: href string
-    """
-    csv = df.to_csv(index=False)
-    b64 = base64.b64encode(csv.encode()).decode()  # some strings <-> bytes conversions necessary here
-    href = f'<a href="data:file/csv;base64,{b64}">Download csv file</a>'
-	return href
+
 
 def predict(npis_df) -> None:
 	#npis_df = pd.read_csv(path_to_ips_file, parse_dates=['Date'], encoding="ISO-8859-1", dtype={"RegionName": str, "RegionCode": str}, error_bad_lines=False)
