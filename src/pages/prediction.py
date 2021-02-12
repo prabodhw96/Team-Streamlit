@@ -163,6 +163,7 @@ def write():
 		ip = create_ip(selected_country, c1, c2, c3, c4, c5, c6, c7, c8, h1, h2, h3, h6, n_days)
 		st.write(ip)
 		pred = predict(ip)
+		st.write(pred)
 		df = data[data["CountryName"]==selected_country].reset_index(drop=True)
 		df = df[["CountryName", "Date", "ConfirmedCases", "ConfirmedDeaths", "DailyNewCases", "DailyNewDeaths"]]
 		t = pred.copy()

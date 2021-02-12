@@ -63,6 +63,7 @@ def write():
 	prior_ip = load_oxford_data()
 
 	countries = load_countries()
+	countries = countries.sort_values(by=["CountryName"]).reset_index(drop=True)
 	countries = list(countries["CountryName"].unique())
 	selected_country = st.selectbox("Type the country to select", countries, key='selected_country')
 
