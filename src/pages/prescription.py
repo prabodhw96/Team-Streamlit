@@ -65,7 +65,8 @@ def write():
 	countries = load_countries()
 	countries = countries.sort_values(by=["CountryName"]).reset_index(drop=True)
 	countries = list(countries["CountryName"].unique())
-	selected_country = st.selectbox("Type the country to select", countries, key='selected_country')
+	us_idx = countries.index("United States")
+	selected_country = st.selectbox("Type the country to select", countries, key='selected_country',index=us_idx)
 
 	col0, colx, coly = st.beta_columns(3)
 	with col0:
