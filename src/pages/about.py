@@ -54,7 +54,7 @@ def write():
 		st.write(data[data["Name"]=="Marc-Andre Rousseau"]["p2"].reset_index(drop=True)[0])
 		st.write(data[data["Name"]=="Marc-Andre Rousseau"]["p3"].reset_index(drop=True)[0])
 		st.write(data[data["Name"]=="Marc-Andre Rousseau"]["p4"].reset_index(drop=True)[0])
-		st.write(data[data["Name"]=="Marc-Andre Rousseau"]["p3"].reset_index(drop=True)[0])
+		st.write(data[data["Name"]=="Marc-Andre Rousseau"]["p5"].reset_index(drop=True)[0])
 		st.markdown(data[data["Name"]=="Marc-Andre Rousseau"]["links"].reset_index(drop=True)[0])
 
 	with st.beta_expander("Brady Neal"):
@@ -98,9 +98,7 @@ def write():
 			st.image(aw_photo)
 		with txt:
 			st.write(data[data["Name"]=="Andrew Williams"]["p1"].reset_index(drop=True)[0])
-		
-		
-
+			
 	with st.beta_expander("Chen-Yang Su"):
 		img, txt = st.beta_columns([0.2, 0.8])
 		with img:

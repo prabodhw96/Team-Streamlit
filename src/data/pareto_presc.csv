@@ -2,7 +2,7 @@ CountryName,RegionName,PrescriptionIndex,PredictedDailyNewCases,Stringency,TestN
 United States,,0,132163.8092367644,0.0,NA,Neat2D_AD15_CKP0,United States,0
 United States,,1,124983.62743045084,1.5,NA,Neat2D_AD15_CKP0,United States,3
 United States,,2,110123.16744235027,2.5,NA,Neat2D_AD15_CKP0,United States,9
-United States,,3,106928.43631976658,3.5,NA,Neat2D_AD15_CKP0,United States,2
+United States,,3,108326.90473851371,3.0,NA,Neat2D_AD15_CKP0,United States,2
 United States,,4,98935.13120747803,4.5,NA,Neat2D_AD15_CKP0,United States,7
 United States,,5,94789.28732217057,6.0,NA,Heuristic,United States,1
 United States,,6,93254.60405292267,8.0,NA,Heuristic,United States,2

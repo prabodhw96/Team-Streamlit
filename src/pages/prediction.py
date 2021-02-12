@@ -37,6 +37,18 @@ def load_ip_change():
 	data = pd.read_csv("src/data/change_in_ip.csv", parse_dates=["Date"])
 	return data
 
+@st.cache(persist=True, allow_output_mutation=True)
+def load_pred_cache():
+	data = pd.read_csv("cache/pred_const_ip_cache.csv", parse_dates=["Date"])
+	data = data[~data["RegionName"].isin(data["RegionName"].unique()[1:])].reset_index(drop=True)
+	data = data.rename(columns={"PredictedDailyNewCases":"DailyNewCases"})
+	data["DailyNewCasesMA"] = data["DailyNewCases"].rolling(7).mean()
+	data["DailyNewCasesMA"].fillna(data["DailyNewCases"], inplace=True)
+	data["DailyNewCases"] = data["DailyNewCasesMA"]
+	data = data.sort_values(by=["CountryName", "Date"]).reset_index(drop=True)
+	data = data.drop(columns=["DailyNewCasesMA"])
+	return data
+
 def create_ip(selected_country, c1, c2, c3, c4, c5, c6, c7, c8, h1, h2, h3, h6, n_days=30):
 	data = load_data()
 	cols = ["CountryName", "RegionName", "GeoID", "Date", "NewCases", "C1_School closing", "C2_Workplace closing", 
@@ -67,7 +79,7 @@ def create_ip(selected_country, c1, c2, c3, c4, c5, c6, c7, c8, h1, h2, h3, h6, 
 	ip = ip.sort_values(by="CountryName").reset_index(drop=True)
 	return ip
 
-init_str = "322412232314"
+#init_str = "322412232314"
 
 def write():
 	st.markdown(f"""<style>
@@ -93,6 +105,7 @@ def write():
 		n_days = st.number_input("Enter no. of days", 30, 90, value=30)
 
 	weights = load_weights()
+	cache_pred = load_pred_cache()
 
 	fourvals = [0, 1, 2, 3]
 	threevals = [0, 1, 2]
@@ -143,9 +156,9 @@ def write():
 	flag = False
 	str_ip = str(c1)+str(c2)+str(c3)+str(c4)+str(c5)+str(c6)+str(c7)+str(c8)+str(h1)+str(h2)+str(h3)+str(h6)
 	
-
 	if st.button("Submit", False):
-		st.write("It takes ⏳ ~ {} seconds to run".format(10))
+		st.write(selected_country)
+		st.write("It takes ⏳ ~ {} seconds to run for 30 days".format(10))
 		flag = True
 		ip = create_ip(selected_country, c1, c2, c3, c4, c5, c6, c7, c8, h1, h2, h3, h6, n_days)
 		st.write(ip)
@@ -165,8 +178,8 @@ def write():
 		dfn["DailyNewCasesMA"].fillna(dfn["DailyNewCases"], inplace=True)
 		dfn["DailyNewCases"] = dfn["DailyNewCasesMA"]
 
-		#dfn.to_csv("src/data/us_df.csv", index=False)
-		#st.write("Saved!")
+		#dfn.to_csv("src/data/cached_30/cached_30_{}.csv".format(selected_country), index=False)
+		#st.write("Saved ", selected_country,"!")
 		st.success("Predictions are ready!")
 		end = time.time()
 		st.write("✔️ Took {} seconds".format(round(end-start, 2)))

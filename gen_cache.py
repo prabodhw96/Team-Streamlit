@@ -26,13 +26,13 @@ EQUAL_COSTS_FILE = './src/data/fixed_equal_costs.csv'
 TMP_IP_FILE = os.path.join(OUTPUT_DIR, 'npi_tmp.csv')
 
 print('Updating Oxford data...')
-df = pd.read_csv(OXFORD_URL,
+df = pd.read_csv(OXFORD_FILEPATH,
                  parse_dates=['Date'],
                  encoding="ISO-8859-1",
                  dtype={'RegionName': str,
                         'RegionCode': str},
                  error_bad_lines=False)
-df.to_csv(OXFORD_FILEPATH)
+#df.to_csv(OXFORD_FILEPATH)
 
 start_date = pd.to_datetime('today').floor('D') - pd.Timedelta(days=3)
 end_date = start_date + pd.Timedelta(days=N_DAYS-1)
