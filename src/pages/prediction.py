@@ -100,7 +100,7 @@ def write():
 
 	cip = load_ip_change()
 	start = time.time()
-	#st.markdown("<h1 style='text-align: center;'>Prediction - Phase 1</h1>", unsafe_allow_html=True)
+	st.markdown("<h1 style='text-align: center;'>Prediction - Phase 1</h1>", unsafe_allow_html=True)
 	st.write("This dashboard allows the user to visualize the forecasts made by the predictor we had developed for Phase 1 of this competition.")
 	st.write("1. Select the country from the drop down list.")
 	st.write("2. Enter the number of days we wish to forecast into the future.")
