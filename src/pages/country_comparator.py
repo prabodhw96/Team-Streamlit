@@ -129,6 +129,9 @@ def write():
 		for i in cols[3:]:
 			df1 = df1.append(create_timeline(country1, i))
 			df2 = df2.append(create_timeline(country2, i))
+		
+		df1["Stringency"].fillna("None", inplace=True)
+		df2["Stringency"].fillna("None", inplace=True)
 		df1["Description"] = df1.apply(add_hover_text, axis=1)
 		df2["Description"] = df2.apply(add_hover_text, axis=1)
 		color = {"None":"#6f9c3d", "Medium":"#a5c90f", "Medium-Hard":"#ffb366", "Hard":"#ff8829", "Strict":"#ff6b40"}
