@@ -162,6 +162,7 @@ def write():
 		pres = pres.round(0)
 		pres["Stringency"] = ['%.2f' % elem for elem in sl]
 		stringency_list = list(pres["Stringency"])
+		stl_dict = dict(zip(np.arange(0, 10), stringency_list))
 		end = time.time()
 
 		if start == 0:
@@ -172,7 +173,8 @@ def write():
 		col1, col2 = st.beta_columns(2)
 		if res_df["CountryName"].unique()[0] == selected_country:
 			with col1:
-				stringency = st.select_slider("Select Stringency out of {} possible values".format(len(stringency_list)), stringency_list)
+				stringency = st.select_slider("Select Stringency (on a scale of {})".format(len(stringency_list)), np.arange(0, len(stringency_list)))
+				stringency = stl_dict(stringency)
 
 		presc_idx = pres[pres["Stringency"]==stringency].reset_index(drop=True)["PrescriptionIndex"][0]
 		pareto_presc = pd.read_csv("src/data/pareto_presc.csv")
