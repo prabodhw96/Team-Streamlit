@@ -7,7 +7,7 @@ from src.pages.predictor.tempgeolstm_predictor import tempGeoLSTMPredictor
 from src.pages.predictor.tempgeolgbm_predictor import tempGeoLGBMPredictor
 
 import awesome_streamlit as ast
-
+import base64
 ALPHA = 0.50
 
 MODEL_WEIGHTS_FILE = "src/models/model_alldata.h5"
