@@ -53,6 +53,11 @@ def write():
 	}}</style>""", unsafe_allow_html=True)
 
 	st.markdown("<h1 style='text-align: center;'>Prescription - Phase 2</h1>", unsafe_allow_html=True)
+	st.write("NOTE: Please note that this is not a full fledged website. \
+		 If the Run button has been clicked, it would take ~100 seconds to render the results. Please wait until the graph appears. It will not be possible to move to another page when the process is running due to limitations of the script we use.\
+		 In case there is an issue with rendering the graph, please move the stringency slider or reload the page (Ctrl+R/Cmd+R). ")
+	
+	
 	st.write("This dashboard allows the user to visualize the intervention plans suggested by our prescriptor built for Phase 2.")
 	st.markdown("1. Select the country from the drop down list.")
 	st.markdown("2. Enter the number of days to prescribe intervention plans for.")
@@ -60,11 +65,14 @@ def write():
 	st.markdown("4. Click on Run. (Note: It takes ~100 seconds to run for 28 days)")
 	st.markdown("5. Select the stringency level.")
 
+
 	prior_ip = load_oxford_data()
 
 	countries = load_countries()
+	countries = countries.sort_values(by=["CountryName"]).reset_index(drop=True)
 	countries = list(countries["CountryName"].unique())
-	selected_country = st.selectbox("Type the country to select", countries, key='selected_country')
+	us_idx = countries.index("United States")
+	selected_country = st.selectbox("Type the country to select", countries, key='selected_country',index=us_idx)
 
 	col0, colx, coly = st.beta_columns(3)
 	with col0:

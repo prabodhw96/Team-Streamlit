@@ -7,7 +7,7 @@ from src.pages.predictor.tempgeolstm_predictor import tempGeoLSTMPredictor
 from src.pages.predictor.tempgeolgbm_predictor import tempGeoLGBMPredictor
 
 import awesome_streamlit as ast
-
+import base64
 ALPHA = 0.50
 
 MODEL_WEIGHTS_FILE = "src/models/model_alldata.h5"
@@ -37,14 +37,24 @@ def get_ensemble_pred(alpha, lstm_predictions_df, lgbm_predictions_df):
 	ensemble_data['PredictedDailyNewDeaths'] = alpha * lstm_predictions_df['PredictedDailyNewDeaths'] + (1 - alpha) * lgbm_predictions_df['PredictedDailyNewDeaths']
 
 	return ensemble_data
+def get_table_download_link(df):
+	"""Generates a link allowing the data in a given panda dataframe to be downloaded
+	in:  dataframe
+	out: href string
+	"""
+	csv = df.to_csv(index=False)
+	b64 = base64.b64encode(csv.encode()).decode()  # some strings <-> bytes conversions necessary here
+	href = f'<a href="data:file/csv;base64,{b64}">Download csv file</a>'
+	return href
+
 
 def predict(npis_df) -> None:
 	#npis_df = pd.read_csv(path_to_ips_file, parse_dates=['Date'], encoding="ISO-8859-1", dtype={"RegionName": str, "RegionCode": str}, error_bad_lines=False)
 	npis_df["GeoID"] = np.where(npis_df["RegionName"].isnull(), npis_df["CountryName"], npis_df["CountryName"] + ' / ' + npis_df["RegionName"])
 	start_date_dt = npis_df["Date"].min()
 	end_date_dt = npis_df["Date"].max()
-	for npi_col in NPI_COLUMNS:
-		npis_df.update(npis_df.groupby(['CountryName', 'RegionName'])[npi_col].ffill().fillna(0))
+	# for npi_col in NPI_COLUMNS:
+	# 	npis_df.update(npis_df.groupby(['CountryName', 'RegionName'])[npi_col].ffill().fillna(0))
 	predictors = ["LSTM", "LGBM"]
 	for model in predictors:
 		if model == "LSTM":

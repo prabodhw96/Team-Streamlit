@@ -52,6 +52,8 @@ def write():
 	st.markdown("<h1 style='text-align: center;'>Country Comparator</h1>", unsafe_allow_html=True)
 	st.write("This page allows you to compare the intervention plans put in force by various governments at different stages of the pandemic.\
 		 We also plot the number of daily cases smoothed by a 7 day moving average atop the chart of intervention plans, thus indicating the actions the governments took in response to the change in new cases.")
+	st.write('The date for a specific period can be found by hovering your mouse cursor over the curve which should give then you the date.')
+	st.write('Furthermore, hovering over a coloured section on the graph will provide additional information about the meaning of the intervention that the country took as defined by the Oxford CGRT dataset.')
 	countries = load_countries()
 	countries = countries.sort_values(by=["CountryName"]).reset_index(drop=True)
 	countries = list(countries["CountryName"].unique())
