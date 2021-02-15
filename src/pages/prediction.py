@@ -167,7 +167,7 @@ def write():
 			"PredictedDailyNewDeaths":"DailyNewDeaths"}, inplace=True)
 		#t = t.round()
 		dfn = pd.concat([df, t])
-		dfn = dfn.tail(90+n_days).reset_index(drop=True) #dfn[334:].reset_index(drop=True)
+		dfn = dfn.tail(120+n_days).reset_index(drop=True) #dfn[334:].reset_index(drop=True)
 		dfn["DailyNewCasesMA"] = dfn["DailyNewCases"].rolling(7).mean()
 		dfn["DailyNewCasesMA"].fillna(dfn["DailyNewCases"], inplace=True)
 		dfn["DailyNewCases"] = dfn["DailyNewCasesMA"]

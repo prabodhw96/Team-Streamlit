@@ -65,7 +65,7 @@ def write():
 			st.image(bn_photo)
 		with txt:
 			st.write(data[data["Name"]=="Brady Neal"]["p1"].reset_index(drop=True)[0])
-		st.write(data[data["Name"]=="Baihan Lin"]["links"].reset_index(drop=True)[0])
+		st.write(data[data["Name"]=="Brady Neal"]["links"].reset_index(drop=True)[0])
 
 	st.markdown("## Team Members")
 	with st.beta_expander("Diogo Pernes"):
@@ -150,7 +150,7 @@ def write():
 			st.image(sa_photo)
 		with txt:
 			st.write(data[data["Name"]=="Sai Aravind Sreeramadas"]["p1"].reset_index(drop=True)[0])
-		st.write(data[data["Name"]=="Baihan Lin"]["links"].reset_index(drop=True)[0])
+		st.write(data[data["Name"]=="Sai Aravind Sreeramadas"]["links"].reset_index(drop=True)[0])
 
 	with st.beta_expander("Baihan Lin"):
 		img, txt = st.beta_columns([0.2, 0.8])
