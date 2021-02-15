@@ -119,7 +119,7 @@ def write():
 			st.image(ob_photo)
 		with txt:
 			st.write(data[data["Name"]=="Olexa Bilaniuk"]["p1"].reset_index(drop=True)[0])
-		st.markdown("[GitHub](https://github.com/obilaniu)")
+		st.markdown(data[data["Name"]=="Olexa Bilaniuk"]["links"].reset_index(drop=True)[0])
 
 	with st.beta_expander("Makesh Narsimhan"):
 		img, txt = st.beta_columns([0.2, 0.8])
