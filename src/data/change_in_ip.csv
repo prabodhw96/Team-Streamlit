@@ -125,6 +125,7 @@ Angola,2020-11-01,2.0,2.0,1.0,2.0,1.0,1.0,2.0,4.0,1.0,3.0,0.0,3.0,C4_Restriction
 Angola,2020-11-23,2.0,2.0,1.0,2.0,1.0,1.0,1.0,4.0,1.0,3.0,0.0,3.0,C7_Restrictions on internal movement decreased from 2.0 to 1.0
 Angola,2020-12-03,2.0,2.0,1.0,3.0,1.0,1.0,1.0,4.0,2.0,2.0,0.0,3.0,C4_Restrictions on gatherings increased from 2.0 to 3.0
 Angola,2021-01-19,2.0,2.0,1.0,3.0,1.0,1.0,1.0,3.0,2.0,2.0,0.0,3.0,C8_International travel controls decreased from 4.0 to 3.0
+Angola,2021-02-05,1.0,1.0,2.0,4.0,1.0,1.0,1.0,2.0,2.0,2.0,0.0,3.0,C1_School closing decreased from 2.0 to 1.0
 Argentina,2020-01-23,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,2.0,0.0,0.0,0.0,H1_Public information campaigns increased from 0.0 to 2.0
 Argentina,2020-03-04,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,2.0,1.0,2.0,0.0,H3_Contact tracing increased from 0.0 to 2.0
 Argentina,2020-03-11,0.0,0.0,2.0,0.0,0.0,0.0,0.0,2.0,2.0,1.0,2.0,0.0,C3_Cancel public events increased from 0.0 to 2.0
@@ -216,6 +217,7 @@ Australia,2021-02-01,3.0,3.0,2.0,4.0,1.0,2.0,2.0,4.0,2.0,2.0,2.0,3.0,C1_School c
 Australia,2021-02-05,3.0,2.0,1.0,3.0,1.0,0.0,2.0,4.0,2.0,2.0,2.0,3.0,C6_Stay at home requirements decreased from 2.0 to 0.0
 Australia,2021-02-08,1.0,2.0,1.0,3.0,1.0,0.0,2.0,4.0,2.0,2.0,2.0,3.0,C1_School closing decreased from 3.0 to 1.0
 Australia,2021-02-12,1.0,3.0,2.0,4.0,1.0,3.0,2.0,4.0,2.0,2.0,2.0,4.0,C6_Stay at home requirements increased from 0.0 to 3.0
+Australia,2021-02-15,3.0,3.0,2.0,4.0,1.0,3.0,2.0,4.0,2.0,2.0,2.0,4.0,C1_School closing increased from 1.0 to 3.0
 Austria,2020-02-01,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,H2_Testing policy increased from 0.0 to 1.0
 Austria,2020-02-24,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,2.0,1.0,0.0,0.0,H1_Public information campaigns increased from 0.0 to 2.0
 Austria,2020-02-25,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,2.0,1.0,1.0,0.0,H3_Contact tracing increased from 0.0 to 1.0
@@ -349,6 +351,7 @@ Bangladesh,2020-05-31,3.0,1.0,2.0,3.0,1.0,1.0,0.0,3.0,2.0,2.0,1.0,4.0,C2_Workpla
 Bangladesh,2020-06-16,3.0,1.0,2.0,4.0,1.0,2.0,2.0,3.0,2.0,2.0,1.0,4.0,C7_Restrictions on internal movement increased from 0.0 to 2.0
 Bangladesh,2020-07-16,3.0,3.0,2.0,4.0,1.0,2.0,2.0,3.0,2.0,2.0,1.0,4.0,C2_Workplace closing increased from 1.0 to 3.0
 Bangladesh,2020-11-10,3.0,3.0,2.0,4.0,2.0,2.0,2.0,3.0,2.0,2.0,1.0,4.0,C5_Close public transport increased from 1.0 to 2.0
+Bangladesh,2021-01-26,3.0,3.0,2.0,4.0,2.0,3.0,2.0,2.0,2.0,3.0,1.0,4.0,C6_Stay at home requirements increased from 2.0 to 3.0
 Barbados,2020-01-22,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,2.0,0.0,0.0,0.0,H1_Public information campaigns increased from 0.0 to 2.0
 Barbados,2020-01-26,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,2.0,1.0,0.0,0.0,H2_Testing policy increased from 0.0 to 1.0
 Barbados,2020-02-15,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,2.0,1.0,0.0,0.0,C8_International travel controls increased from 0.0 to 1.0
@@ -1165,8 +1168,7 @@ Denmark,2020-11-23,1.0,1.0,1.0,4.0,0.0,1.0,0.0,3.0,2.0,3.0,1.0,2.0,C6_Stay at ho
 Denmark,2020-12-09,2.0,2.0,2.0,4.0,0.0,1.0,0.0,3.0,2.0,3.0,1.0,2.0,C1_School closing increased from 1.0 to 2.0
 Denmark,2021-01-04,3.0,3.0,2.0,4.0,0.0,1.0,0.0,3.0,2.0,3.0,1.0,2.0,C1_School closing increased from 2.0 to 3.0
 Denmark,2021-01-09,3.0,3.0,2.0,4.0,0.0,1.0,0.0,4.0,2.0,3.0,1.0,2.0,C8_International travel controls increased from 3.0 to 4.0
-Denmark,2021-01-30,3.0,2.0,2.0,4.0,0.0,1.0,0.0,4.0,2.0,3.0,1.0,2.0,C2_Workplace closing decreased from 3.0 to 2.0
-Denmark,2021-02-08,2.0,2.0,2.0,4.0,0.0,1.0,0.0,4.0,2.0,3.0,1.0,2.0,C1_School closing decreased from 3.0 to 2.0
+Denmark,2021-02-08,2.0,3.0,2.0,4.0,0.0,1.0,0.0,4.0,2.0,3.0,1.0,2.0,C1_School closing decreased from 3.0 to 2.0
 Djibouti,2020-03-18,0.0,0.0,0.0,0.0,0.0,0.0,0.0,4.0,2.0,2.0,2.0,0.0,C8_International travel controls increased from 0.0 to 4.0
 Djibouti,2020-03-19,3.0,0.0,0.0,0.0,0.0,0.0,0.0,4.0,2.0,2.0,2.0,0.0,C1_School closing increased from 0.0 to 3.0
 Djibouti,2020-03-22,3.0,2.0,0.0,0.0,1.0,0.0,0.0,4.0,2.0,2.0,2.0,0.0,C2_Workplace closing increased from 0.0 to 2.0
@@ -1653,6 +1655,8 @@ Guam,2020-09-10,3.0,3.0,2.0,4.0,0.0,2.0,1.0,1.0,2.0,3.0,2.0,3.0,C5_Close public 
 Guam,2020-09-22,3.0,3.0,2.0,4.0,0.0,2.0,1.0,2.0,2.0,3.0,2.0,3.0,C8_International travel controls increased from 1.0 to 2.0
 Guam,2020-09-25,3.0,2.0,2.0,4.0,0.0,1.0,1.0,2.0,2.0,3.0,2.0,3.0,C2_Workplace closing decreased from 3.0 to 2.0
 Guam,2020-10-29,2.0,2.0,2.0,4.0,0.0,1.0,1.0,2.0,2.0,3.0,2.0,3.0,C1_School closing decreased from 3.0 to 2.0
+Guam,2021-01-26,1.0,2.0,2.0,4.0,0.0,1.0,1.0,2.0,2.0,3.0,2.0,3.0,C1_School closing decreased from 2.0 to 1.0
+Guam,2021-02-01,1.0,2.0,2.0,3.0,0.0,1.0,1.0,2.0,2.0,3.0,2.0,3.0,C4_Restrictions on gatherings decreased from 4.0 to 3.0
 Guatemala,2020-01-21,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,C8_International travel controls increased from 0.0 to 1.0
 Guatemala,2020-01-28,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,1.0,0.0,0.0,0.0,H1_Public information campaigns increased from 0.0 to 1.0
 Guatemala,2020-01-31,0.0,0.0,0.0,0.0,0.0,0.0,0.0,2.0,1.0,0.0,0.0,0.0,C8_International travel controls increased from 1.0 to 2.0
@@ -1675,6 +1679,7 @@ Guatemala,2020-12-23,3.0,1.0,1.0,4.0,1.0,0.0,0.0,2.0,2.0,2.0,1.0,3.0,C8_Internat
 Guatemala,2021-01-04,2.0,1.0,1.0,4.0,1.0,0.0,0.0,2.0,2.0,2.0,1.0,3.0,C1_School closing decreased from 3.0 to 2.0
 Guatemala,2021-01-14,2.0,1.0,2.0,4.0,1.0,0.0,2.0,2.0,2.0,2.0,1.0,3.0,C7_Restrictions on internal movement increased from 0.0 to 2.0
 Guatemala,2021-01-29,2.0,1.0,2.0,4.0,1.0,0.0,0.0,2.0,2.0,2.0,1.0,3.0,C7_Restrictions on internal movement decreased from 2.0 to 0.0
+Guatemala,2021-02-08,2.0,1.0,1.0,3.0,1.0,0.0,0.0,2.0,2.0,2.0,1.0,2.0,C3_Cancel public events decreased from 2.0 to 1.0
 Guinea,2020-01-27,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,H1_Public information campaigns increased from 0.0 to 1.0
 Guinea,2020-01-29,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,2.0,2.0,0.0,0.0,H2_Testing policy increased from 0.0 to 2.0
 Guinea,2020-03-07,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,2.0,2.0,0.0,0.0,C8_International travel controls increased from 0.0 to 1.0
@@ -1724,6 +1729,7 @@ Guyana,2020-10-12,3.0,1.0,2.0,4.0,1.0,2.0,2.0,1.0,2.0,2.0,2.0,3.0,C8_Internation
 Guyana,2020-11-16,2.0,1.0,2.0,4.0,1.0,2.0,2.0,1.0,2.0,2.0,2.0,3.0,C1_School closing decreased from 3.0 to 2.0
 Guyana,2020-12-29,2.0,1.0,2.0,4.0,0.0,2.0,2.0,1.0,2.0,2.0,2.0,3.0,C5_Close public transport decreased from 1.0 to 0.0
 Guyana,2021-01-01,2.0,1.0,2.0,4.0,0.0,2.0,0.0,1.0,2.0,2.0,2.0,3.0,C7_Restrictions on internal movement decreased from 2.0 to 0.0
+Guyana,2021-02-02,2.0,1.0,2.0,4.0,0.0,2.0,2.0,3.0,2.0,2.0,2.0,3.0,C7_Restrictions on internal movement increased from 0.0 to 2.0
 Haiti,2020-02-04,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,C8_International travel controls increased from 0.0 to 1.0
 Haiti,2020-03-03,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,1.0,0.0,0.0,0.0,H1_Public information campaigns increased from 0.0 to 1.0
 Haiti,2020-03-12,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,2.0,0.0,0.0,0.0,H1_Public information campaigns increased from 1.0 to 2.0
@@ -1827,6 +1833,7 @@ Iceland,2020-10-20,1.0,2.0,2.0,3.0,0.0,0.0,0.0,3.0,2.0,3.0,2.0,2.0,C1_School clo
 Iceland,2020-10-31,1.0,2.0,2.0,4.0,0.0,0.0,0.0,3.0,2.0,3.0,2.0,2.0,C4_Restrictions on gatherings increased from 3.0 to 4.0
 Iceland,2021-01-04,1.0,2.0,2.0,3.0,0.0,0.0,0.0,3.0,2.0,3.0,2.0,2.0,C4_Restrictions on gatherings decreased from 4.0 to 3.0
 Iceland,2021-01-13,1.0,2.0,1.0,3.0,0.0,0.0,0.0,3.0,2.0,3.0,2.0,2.0,C3_Cancel public events decreased from 2.0 to 1.0
+Iceland,2021-02-08,1.0,1.0,1.0,3.0,0.0,0.0,0.0,3.0,2.0,3.0,2.0,2.0,C2_Workplace closing decreased from 2.0 to 1.0
 India,2020-01-25,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,1.0,0.0,0.0,H1_Public information campaigns increased from 0.0 to 1.0
 India,2020-01-26,0.0,0.0,0.0,0.0,0.0,1.0,0.0,1.0,1.0,1.0,1.0,0.0,C6_Stay at home requirements increased from 0.0 to 1.0
 India,2020-01-31,0.0,0.0,0.0,0.0,0.0,1.0,0.0,1.0,1.0,1.0,2.0,0.0,H3_Contact tracing increased from 1.0 to 2.0
@@ -1909,7 +1916,7 @@ Iran,2020-10-26,3.0,3.0,2.0,3.0,2.0,1.0,2.0,3.0,1.0,2.0,0.0,3.0,C2_Workplace clo
 Iran,2020-10-30,3.0,3.0,2.0,3.0,1.0,1.0,2.0,3.0,1.0,2.0,0.0,3.0,C5_Close public transport decreased from 2.0 to 1.0
 Iran,2020-11-25,3.0,3.0,2.0,4.0,1.0,1.0,2.0,3.0,1.0,2.0,1.0,3.0,C4_Restrictions on gatherings increased from 3.0 to 4.0
 Iran,2020-12-03,3.0,3.0,2.0,4.0,1.0,1.0,2.0,3.0,1.0,1.0,1.0,1.0,H6_Facial Coverings decreased from 3.0 to 1.0
-Iran,2021-01-12,3.0,3.0,2.0,4.0,1.0,2.0,2.0,1.0,2.0,1.0,1.0,3.0,C8_International travel controls decreased from 3.0 to 1.0
+Iran,2021-01-12,3.0,3.0,2.0,4.0,1.0,2.0,2.0,3.0,2.0,1.0,1.0,3.0,H6_Facial Coverings increased from 1.0 to 3.0
 Iraq,2020-02-19,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,H1_Public information campaigns increased from 0.0 to 1.0
 Iraq,2020-02-20,0.0,0.0,0.0,0.0,0.0,0.0,0.0,3.0,1.0,0.0,0.0,0.0,C8_International travel controls increased from 0.0 to 3.0
 Iraq,2020-02-23,0.0,0.0,0.0,0.0,0.0,0.0,0.0,3.0,2.0,0.0,0.0,0.0,H1_Public information campaigns increased from 1.0 to 2.0
@@ -1935,6 +1942,7 @@ Iraq,2020-10-30,2.0,2.0,1.0,1.0,1.0,1.0,1.0,1.0,2.0,1.0,1.0,4.0,H2_Testing polic
 Iraq,2020-11-29,1.0,2.0,1.0,1.0,1.0,1.0,1.0,1.0,2.0,1.0,1.0,4.0,C1_School closing decreased from 2.0 to 1.0
 Iraq,2020-12-22,1.0,2.0,1.0,1.0,1.0,1.0,1.0,3.0,2.0,1.0,1.0,4.0,C8_International travel controls increased from 1.0 to 3.0
 Iraq,2021-01-23,1.0,1.0,1.0,1.0,0.0,1.0,1.0,3.0,2.0,1.0,1.0,3.0,C2_Workplace closing decreased from 2.0 to 1.0
+Iraq,2021-02-10,3.0,1.0,1.0,1.0,0.0,1.0,1.0,3.0,2.0,1.0,1.0,3.0,C1_School closing increased from 1.0 to 3.0
 Ireland,2020-02-04,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,H1_Public information campaigns increased from 0.0 to 1.0
 Ireland,2020-02-25,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,2.0,1.0,0.0,H2_Testing policy increased from 0.0 to 2.0
 Ireland,2020-02-29,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,2.0,2.0,1.0,0.0,H1_Public information campaigns increased from 1.0 to 2.0
@@ -2059,6 +2067,7 @@ Jamaica,2020-09-07,2.0,2.0,2.0,3.0,1.0,2.0,2.0,2.0,2.0,1.0,2.0,3.0,C1_School clo
 Jamaica,2021-01-04,1.0,1.0,2.0,3.0,1.0,2.0,2.0,2.0,2.0,2.0,2.0,3.0,C1_School closing decreased from 2.0 to 1.0
 Jamaica,2021-01-05,1.0,2.0,2.0,3.0,1.0,2.0,2.0,2.0,2.0,2.0,2.0,3.0,C2_Workplace closing increased from 1.0 to 2.0
 Jamaica,2021-02-01,1.0,2.0,1.0,3.0,1.0,1.0,1.0,2.0,2.0,2.0,2.0,3.0,C3_Cancel public events decreased from 2.0 to 1.0
+Jamaica,2021-02-06,1.0,2.0,2.0,4.0,1.0,2.0,2.0,2.0,2.0,3.0,2.0,3.0,C3_Cancel public events increased from 1.0 to 2.0
 Japan,2020-01-07,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,C8_International travel controls increased from 0.0 to 1.0
 Japan,2020-01-15,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,1.0,1.0,0.0,H2_Testing policy increased from 0.0 to 1.0
 Japan,2020-02-01,0.0,0.0,0.0,0.0,0.0,0.0,0.0,3.0,0.0,1.0,1.0,0.0,C8_International travel controls increased from 1.0 to 3.0
@@ -2110,6 +2119,8 @@ Jordan,2020-11-09,3.0,2.0,2.0,3.0,1.0,2.0,2.0,2.0,2.0,2.0,0.0,3.0,H3_Contact tra
 Jordan,2020-11-15,3.0,2.0,2.0,3.0,1.0,2.0,2.0,2.0,2.0,2.0,2.0,3.0,H3_Contact tracing increased from 0.0 to 2.0
 Jordan,2020-12-22,3.0,2.0,2.0,3.0,1.0,2.0,2.0,3.0,2.0,2.0,2.0,3.0,C8_International travel controls increased from 2.0 to 3.0
 Jordan,2021-01-19,3.0,2.0,2.0,3.0,1.0,2.0,1.0,3.0,2.0,2.0,1.0,3.0,C7_Restrictions on internal movement decreased from 2.0 to 1.0
+Jordan,2021-02-02,3.0,1.0,1.0,3.0,1.0,2.0,0.0,3.0,2.0,2.0,1.0,3.0,C2_Workplace closing decreased from 2.0 to 1.0
+Jordan,2021-02-07,2.0,1.0,1.0,3.0,1.0,2.0,0.0,3.0,2.0,2.0,1.0,3.0,C1_School closing decreased from 3.0 to 2.0
 Kazakhstan,2020-01-24,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,H6_Facial Coverings increased from 0.0 to 1.0
 Kazakhstan,2020-01-29,0.0,0.0,0.0,0.0,0.0,0.0,0.0,3.0,0.0,0.0,0.0,1.0,C8_International travel controls increased from 0.0 to 3.0
 Kazakhstan,2020-01-31,0.0,0.0,0.0,0.0,0.0,0.0,0.0,3.0,0.0,1.0,0.0,1.0,H2_Testing policy increased from 0.0 to 1.0
@@ -2139,6 +2150,7 @@ Kazakhstan,2020-12-04,3.0,2.0,2.0,4.0,1.0,2.0,2.0,3.0,2.0,1.0,1.0,3.0,C1_School 
 Kazakhstan,2020-12-19,3.0,2.0,2.0,4.0,1.0,2.0,2.0,3.0,2.0,1.0,0.0,3.0,H3_Contact tracing decreased from 1.0 to 0.0
 Kazakhstan,2020-12-31,3.0,2.0,2.0,4.0,0.0,1.0,2.0,3.0,2.0,1.0,0.0,3.0,C5_Close public transport decreased from 1.0 to 0.0
 Kazakhstan,2021-01-01,2.0,2.0,2.0,4.0,0.0,1.0,2.0,3.0,2.0,1.0,0.0,3.0,C1_School closing decreased from 3.0 to 2.0
+Kazakhstan,2021-02-02,2.0,2.0,2.0,4.0,1.0,1.0,1.0,3.0,2.0,1.0,1.0,4.0,C5_Close public transport increased from 0.0 to 1.0
 Kenya,2020-01-20,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,C8_International travel controls increased from 0.0 to 1.0
 Kenya,2020-02-25,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,2.0,0.0,0.0,0.0,H1_Public information campaigns increased from 0.0 to 2.0
 Kenya,2020-03-13,0.0,0.0,2.0,4.0,0.0,0.0,0.0,1.0,2.0,0.0,0.0,0.0,C4_Restrictions on gatherings increased from 0.0 to 4.0
@@ -2206,6 +2218,8 @@ Kuwait,2020-07-17,3.0,1.0,2.0,2.0,2.0,2.0,2.0,4.0,2.0,2.0,2.0,3.0,C4_Restriction
 Kuwait,2020-07-28,3.0,1.0,2.0,2.0,1.0,1.0,2.0,4.0,2.0,2.0,2.0,3.0,C5_Close public transport decreased from 2.0 to 1.0
 Kuwait,2020-08-01,3.0,1.0,2.0,2.0,1.0,1.0,2.0,2.0,2.0,2.0,2.0,3.0,C8_International travel controls decreased from 4.0 to 2.0
 Kuwait,2021-01-06,3.0,1.0,2.0,2.0,1.0,1.0,1.0,3.0,2.0,3.0,2.0,3.0,C7_Restrictions on internal movement decreased from 2.0 to 1.0
+Kuwait,2021-02-02,3.0,1.0,2.0,2.0,1.0,1.0,1.0,4.0,2.0,3.0,2.0,3.0,C8_International travel controls increased from 3.0 to 4.0
+Kuwait,2021-02-07,3.0,2.0,2.0,2.0,1.0,1.0,1.0,4.0,2.0,3.0,2.0,3.0,C2_Workplace closing increased from 1.0 to 2.0
 Kyrgyz Republic,2020-01-22,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,C8_International travel controls increased from 0.0 to 1.0
 Kyrgyz Republic,2020-01-28,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,2.0,0.0,0.0,0.0,H1_Public information campaigns increased from 0.0 to 2.0
 Kyrgyz Republic,2020-02-05,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,2.0,1.0,0.0,0.0,H2_Testing policy increased from 0.0 to 1.0
@@ -2741,6 +2755,7 @@ Mozambique,2020-10-22,2.0,2.0,2.0,3.0,1.0,1.0,0.0,3.0,2.0,1.0,2.0,3.0,C7_Restric
 Mozambique,2020-10-29,2.0,2.0,2.0,3.0,1.0,0.0,0.0,2.0,2.0,1.0,2.0,1.0,H6_Facial Coverings decreased from 3.0 to 1.0
 Mozambique,2020-11-05,2.0,2.0,2.0,3.0,1.0,0.0,0.0,2.0,2.0,1.0,2.0,3.0,H6_Facial Coverings increased from 1.0 to 3.0
 Mozambique,2021-01-15,2.0,1.0,2.0,3.0,1.0,3.0,0.0,3.0,2.0,1.0,2.0,3.0,C6_Stay at home requirements increased from 0.0 to 3.0
+Mozambique,2021-02-11,3.0,1.0,2.0,3.0,1.0,3.0,0.0,3.0,2.0,1.0,2.0,3.0,C1_School closing increased from 2.0 to 3.0
 Myanmar,2020-02-01,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,C8_International travel controls increased from 0.0 to 1.0
 Myanmar,2020-03-09,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,2.0,0.0,0.0,0.0,H1_Public information campaigns increased from 0.0 to 2.0
 Myanmar,2020-03-13,0.0,0.0,2.0,3.0,0.0,0.0,0.0,1.0,2.0,0.0,0.0,0.0,C4_Restrictions on gatherings increased from 0.0 to 3.0
@@ -2800,6 +2815,7 @@ Namibia,2021-01-13,0.0,1.0,1.0,3.0,0.0,2.0,0.0,2.0,2.0,2.0,2.0,3.0,C8_Internatio
 Namibia,2021-01-19,3.0,1.0,1.0,3.0,0.0,1.0,0.0,1.0,2.0,2.0,2.0,3.0,C1_School closing increased from 0.0 to 3.0
 Namibia,2021-01-25,3.0,1.0,1.0,3.0,0.0,1.0,0.0,1.0,2.0,2.0,2.0,4.0,H6_Facial Coverings increased from 3.0 to 4.0
 Namibia,2021-01-26,1.0,1.0,1.0,3.0,0.0,1.0,0.0,1.0,2.0,2.0,2.0,4.0,C1_School closing decreased from 3.0 to 1.0
+Namibia,2021-02-09,1.0,1.0,1.0,3.0,0.0,1.0,2.0,2.0,2.0,2.0,2.0,3.0,C7_Restrictions on internal movement increased from 0.0 to 2.0
 Nepal,2020-01-13,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,H2_Testing policy increased from 0.0 to 1.0
 Nepal,2020-01-16,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,1.0,0.0,0.0,H1_Public information campaigns increased from 0.0 to 1.0
 Nepal,2020-01-24,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,1.0,2.0,0.0,H3_Contact tracing increased from 0.0 to 2.0
@@ -2849,8 +2865,8 @@ Netherlands,2020-11-22,1.0,2.0,2.0,4.0,0.0,1.0,0.0,3.0,2.0,2.0,2.0,2.0,C2_Workpl
 Netherlands,2020-12-01,1.0,2.0,2.0,4.0,0.0,1.0,0.0,3.0,2.0,2.0,1.0,2.0,H3_Contact tracing decreased from 2.0 to 1.0
 Netherlands,2020-12-15,1.0,3.0,2.0,4.0,1.0,1.0,1.0,3.0,2.0,2.0,1.0,2.0,C2_Workplace closing increased from 2.0 to 3.0
 Netherlands,2020-12-16,3.0,3.0,2.0,4.0,1.0,1.0,1.0,3.0,2.0,2.0,1.0,2.0,C1_School closing increased from 1.0 to 3.0
-Netherlands,2021-01-23,3.0,3.0,2.0,4.0,1.0,2.0,2.0,3.0,2.0,2.0,1.0,2.0,C6_Stay at home requirements increased from 1.0 to 2.0
-Netherlands,2021-02-08,2.0,3.0,2.0,4.0,1.0,2.0,2.0,3.0,2.0,2.0,1.0,2.0,C1_School closing decreased from 3.0 to 2.0
+Netherlands,2021-01-23,3.0,3.0,2.0,4.0,1.0,2.0,1.0,3.0,2.0,2.0,1.0,2.0,C6_Stay at home requirements increased from 1.0 to 2.0
+Netherlands,2021-02-08,2.0,3.0,2.0,4.0,1.0,2.0,1.0,3.0,2.0,2.0,1.0,2.0,C1_School closing decreased from 3.0 to 2.0
 New Zealand,2020-01-22,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,2.0,0.0,0.0,0.0,H1_Public information campaigns increased from 0.0 to 2.0
 New Zealand,2020-02-02,0.0,0.0,0.0,0.0,0.0,0.0,0.0,3.0,2.0,0.0,0.0,0.0,C8_International travel controls increased from 0.0 to 3.0
 New Zealand,2020-02-28,0.0,0.0,0.0,0.0,0.0,0.0,0.0,3.0,2.0,1.0,2.0,0.0,H3_Contact tracing increased from 0.0 to 2.0
@@ -2877,6 +2893,7 @@ New Zealand,2020-10-07,0.0,0.0,0.0,0.0,0.0,0.0,0.0,4.0,2.0,2.0,2.0,1.0,C4_Restri
 New Zealand,2020-12-08,0.0,0.0,0.0,0.0,0.0,0.0,0.0,4.0,2.0,2.0,2.0,2.0,H6_Facial Coverings increased from 1.0 to 2.0
 New Zealand,2020-12-23,0.0,0.0,0.0,0.0,0.0,0.0,0.0,4.0,2.0,3.0,2.0,2.0,H2_Testing policy increased from 2.0 to 3.0
 New Zealand,2021-01-20,0.0,0.0,0.0,0.0,0.0,0.0,0.0,4.0,2.0,2.0,2.0,2.0,H2_Testing policy decreased from 3.0 to 2.0
+New Zealand,2021-02-15,1.0,2.0,2.0,4.0,0.0,0.0,2.0,4.0,2.0,2.0,2.0,2.0,C4_Restrictions on gatherings increased from 0.0 to 4.0
 Nicaragua,2020-02-21,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,1.0,0.0,0.0,C8_International travel controls increased from 0.0 to 1.0
 Nicaragua,2020-02-25,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,1.0,1.0,0.0,0.0,H1_Public information campaigns increased from 0.0 to 1.0
 Nicaragua,2020-03-19,2.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,1.0,1.0,0.0,0.0,C1_School closing increased from 0.0 to 2.0
@@ -3037,6 +3054,7 @@ Palestine,2020-11-11,3.0,1.0,0.0,0.0,1.0,1.0,2.0,2.0,2.0,1.0,1.0,0.0,H2_Testing 
 Palestine,2020-11-15,3.0,3.0,0.0,3.0,1.0,3.0,2.0,2.0,2.0,1.0,1.0,0.0,C4_Restrictions on gatherings increased from 0.0 to 3.0
 Palestine,2020-12-15,3.0,3.0,0.0,3.0,1.0,3.0,2.0,2.0,2.0,1.0,1.0,1.0,H6_Facial Coverings increased from 0.0 to 1.0
 Palestine,2021-01-18,2.0,1.0,2.0,3.0,1.0,3.0,2.0,4.0,2.0,2.0,1.0,1.0,C2_Workplace closing decreased from 3.0 to 1.0
+Palestine,2021-02-15,2.0,1.0,2.0,3.0,2.0,3.0,2.0,4.0,2.0,2.0,1.0,1.0,C5_Close public transport increased from 1.0 to 2.0
 Panama,2020-01-21,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,H1_Public information campaigns increased from 0.0 to 1.0
 Panama,2020-01-22,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,1.0,0.0,0.0,0.0,C8_International travel controls increased from 0.0 to 1.0
 Panama,2020-03-10,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,1.0,2.0,1.0,0.0,H2_Testing policy increased from 0.0 to 2.0
@@ -3152,6 +3170,7 @@ Peru,2020-12-21,2.0,2.0,2.0,4.0,0.0,2.0,0.0,2.0,2.0,2.0,2.0,3.0,C7_Restrictions 
 Peru,2021-01-21,2.0,2.0,2.0,4.0,0.0,2.0,0.0,2.0,2.0,1.0,2.0,3.0,H2_Testing policy decreased from 2.0 to 1.0
 Peru,2021-01-27,2.0,2.0,2.0,4.0,1.0,3.0,2.0,2.0,2.0,1.0,2.0,3.0,C7_Restrictions on internal movement increased from 0.0 to 2.0
 Peru,2021-01-31,2.0,3.0,2.0,4.0,1.0,3.0,2.0,2.0,2.0,1.0,2.0,3.0,C2_Workplace closing increased from 2.0 to 3.0
+Peru,2021-02-06,2.0,3.0,2.0,4.0,2.0,3.0,2.0,3.0,2.0,1.0,2.0,3.0,C5_Close public transport increased from 1.0 to 2.0
 Philippines,2020-01-24,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,2.0,1.0,0.0,0.0,H1_Public information campaigns increased from 0.0 to 2.0
 Philippines,2020-01-31,0.0,0.0,0.0,0.0,0.0,0.0,0.0,3.0,2.0,1.0,0.0,0.0,C8_International travel controls increased from 0.0 to 3.0
 Philippines,2020-02-05,0.0,0.0,0.0,0.0,0.0,0.0,0.0,3.0,2.0,1.0,2.0,0.0,H3_Contact tracing increased from 0.0 to 2.0
@@ -3666,6 +3685,8 @@ South Africa,2020-12-22,1.0,1.0,1.0,2.0,1.0,1.0,1.0,1.0,2.0,3.0,2.0,3.0,C7_Restr
 South Africa,2021-01-04,1.0,1.0,2.0,4.0,1.0,1.0,2.0,1.0,2.0,3.0,2.0,3.0,C4_Restrictions on gatherings increased from 2.0 to 4.0
 South Africa,2021-01-15,3.0,1.0,2.0,4.0,1.0,2.0,0.0,1.0,2.0,3.0,2.0,4.0,C1_School closing increased from 1.0 to 3.0
 South Africa,2021-01-19,3.0,1.0,2.0,4.0,1.0,2.0,0.0,4.0,2.0,3.0,2.0,3.0,C8_International travel controls increased from 1.0 to 4.0
+South Africa,2021-02-02,1.0,1.0,2.0,4.0,1.0,2.0,0.0,4.0,2.0,3.0,2.0,3.0,C1_School closing decreased from 3.0 to 1.0
+South Africa,2021-02-15,1.0,1.0,2.0,4.0,1.0,2.0,0.0,1.0,2.0,3.0,2.0,3.0,C8_International travel controls decreased from 4.0 to 1.0
 South Korea,2020-01-21,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,H2_Testing policy increased from 0.0 to 1.0
 South Korea,2020-01-29,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,1.0,0.0,H3_Contact tracing increased from 0.0 to 1.0
 South Korea,2020-01-31,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,1.0,0.0,C3_Cancel public events increased from 0.0 to 1.0
@@ -4049,6 +4070,7 @@ Timor-Leste,2020-12-30,1.0,0.0,1.0,4.0,0.0,2.0,1.0,4.0,2.0,3.0,2.0,3.0,C4_Restri
 Timor-Leste,2021-01-04,3.0,0.0,1.0,4.0,0.0,2.0,1.0,4.0,2.0,3.0,2.0,3.0,C1_School closing increased from 1.0 to 3.0
 Timor-Leste,2021-01-18,0.0,0.0,1.0,4.0,0.0,2.0,1.0,4.0,2.0,3.0,2.0,3.0,C1_School closing decreased from 3.0 to 0.0
 Timor-Leste,2021-01-19,0.0,0.0,1.0,4.0,0.0,2.0,0.0,4.0,2.0,3.0,2.0,3.0,C7_Restrictions on internal movement decreased from 1.0 to 0.0
+Timor-Leste,2021-02-09,0.0,0.0,1.0,4.0,0.0,1.0,0.0,4.0,2.0,2.0,2.0,3.0,C6_Stay at home requirements decreased from 2.0 to 1.0
 Togo,2020-03-06,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,H2_Testing policy increased from 0.0 to 1.0
 Togo,2020-03-16,0.0,0.0,2.0,0.0,0.0,0.0,0.0,0.0,2.0,1.0,0.0,0.0,C3_Cancel public events increased from 0.0 to 2.0
 Togo,2020-03-19,0.0,0.0,2.0,2.0,0.0,0.0,0.0,0.0,2.0,1.0,0.0,0.0,C4_Restrictions on gatherings increased from 0.0 to 2.0
@@ -4111,6 +4133,7 @@ Trinidad and Tobago,2020-10-10,3.0,2.0,2.0,3.0,1.0,1.0,2.0,4.0,2.0,1.0,2.0,4.0,C
 Trinidad and Tobago,2020-10-12,3.0,2.0,2.0,3.0,1.0,1.0,0.0,4.0,2.0,1.0,2.0,4.0,C7_Restrictions on internal movement decreased from 2.0 to 0.0
 Trinidad and Tobago,2020-10-26,3.0,2.0,2.0,3.0,1.0,0.0,0.0,4.0,2.0,1.0,2.0,4.0,C6_Stay at home requirements decreased from 1.0 to 0.0
 Trinidad and Tobago,2020-12-08,3.0,2.0,2.0,4.0,1.0,0.0,0.0,4.0,2.0,1.0,2.0,4.0,C4_Restrictions on gatherings increased from 3.0 to 4.0
+Trinidad and Tobago,2021-02-08,2.0,2.0,2.0,4.0,1.0,0.0,0.0,4.0,2.0,1.0,2.0,4.0,C1_School closing decreased from 3.0 to 2.0
 Tunisia,2020-03-02,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,1.0,0.0,H2_Testing policy increased from 0.0 to 1.0
 Tunisia,2020-03-04,0.0,0.0,1.0,0.0,0.0,0.0,0.0,1.0,1.0,1.0,1.0,0.0,C3_Cancel public events increased from 0.0 to 1.0
 Tunisia,2020-03-09,0.0,0.0,1.0,0.0,0.0,0.0,0.0,2.0,1.0,1.0,1.0,0.0,C8_International travel controls increased from 1.0 to 2.0
@@ -4140,7 +4163,6 @@ Tunisia,2020-11-08,2.0,1.0,2.0,4.0,0.0,2.0,2.0,0.0,2.0,1.0,1.0,3.0,C1_School clo
 Tunisia,2020-11-11,2.0,1.0,2.0,4.0,0.0,2.0,2.0,0.0,2.0,1.0,1.0,1.0,H6_Facial Coverings decreased from 3.0 to 1.0
 Tunisia,2020-11-25,2.0,1.0,2.0,4.0,0.0,2.0,2.0,2.0,2.0,1.0,2.0,4.0,H6_Facial Coverings increased from 1.0 to 4.0
 Tunisia,2020-12-21,2.0,1.0,2.0,4.0,0.0,2.0,2.0,3.0,2.0,1.0,2.0,4.0,C8_International travel controls increased from 2.0 to 3.0
-Tunisia,2021-01-25,2.0,1.0,2.0,3.0,0.0,2.0,2.0,3.0,2.0,1.0,2.0,4.0,C4_Restrictions on gatherings decreased from 4.0 to 3.0
 Turkey,2020-01-14,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,2.0,1.0,0.0,H2_Testing policy increased from 0.0 to 2.0
 Turkey,2020-01-24,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,2.0,1.0,0.0,C8_International travel controls increased from 0.0 to 1.0
 Turkey,2020-02-05,0.0,0.0,0.0,0.0,0.0,0.0,0.0,3.0,0.0,2.0,1.0,0.0,C8_International travel controls increased from 1.0 to 3.0
@@ -4279,6 +4301,8 @@ United Arab Emirates,2020-11-10,1.0,0.0,2.0,4.0,0.0,0.0,1.0,2.0,2.0,3.0,2.0,4.0,
 United Arab Emirates,2021-01-03,0.0,1.0,2.0,4.0,0.0,0.0,1.0,2.0,2.0,3.0,2.0,3.0,C1_School closing decreased from 1.0 to 0.0
 United Arab Emirates,2021-01-19,0.0,1.0,2.0,4.0,0.0,0.0,2.0,2.0,2.0,3.0,2.0,3.0,C7_Restrictions on internal movement increased from 1.0 to 2.0
 United Arab Emirates,2021-01-26,3.0,2.0,2.0,4.0,0.0,0.0,2.0,2.0,2.0,3.0,2.0,3.0,C1_School closing increased from 0.0 to 3.0
+United Arab Emirates,2021-02-09,3.0,2.0,2.0,4.0,0.0,0.0,2.0,1.0,2.0,3.0,2.0,3.0,C8_International travel controls decreased from 2.0 to 1.0
+United Arab Emirates,2021-02-14,2.0,2.0,2.0,4.0,0.0,0.0,2.0,1.0,2.0,3.0,2.0,3.0,C1_School closing decreased from 3.0 to 2.0
 United Kingdom,2020-01-20,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,1.0,0.0,0.0,H1_Public information campaigns increased from 0.0 to 1.0
 United Kingdom,2020-01-31,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,2.0,1.0,2.0,0.0,H3_Contact tracing increased from 0.0 to 2.0
 United Kingdom,2020-03-12,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,2.0,1.0,0.0,0.0,H3_Contact tracing decreased from 2.0 to 0.0
@@ -4491,6 +4515,7 @@ Vietnam,2020-11-17,1.0,2.0,1.0,3.0,0.0,2.0,0.0,3.0,2.0,3.0,2.0,3.0,H2_Testing po
 Vietnam,2020-12-03,3.0,2.0,1.0,3.0,0.0,2.0,0.0,3.0,2.0,3.0,2.0,3.0,C1_School closing increased from 1.0 to 3.0
 Vietnam,2020-12-15,3.0,2.0,1.0,3.0,0.0,2.0,0.0,4.0,2.0,3.0,2.0,3.0,C8_International travel controls increased from 3.0 to 4.0
 Vietnam,2021-01-26,3.0,2.0,1.0,3.0,1.0,2.0,2.0,4.0,2.0,3.0,1.0,3.0,C7_Restrictions on internal movement increased from 0.0 to 2.0
+Vietnam,2021-02-02,3.0,3.0,1.0,3.0,2.0,2.0,2.0,4.0,2.0,3.0,1.0,3.0,C2_Workplace closing increased from 2.0 to 3.0
 Yemen,2020-03-15,3.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,C1_School closing increased from 0.0 to 3.0
 Yemen,2020-03-17,3.0,0.0,2.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,C3_Cancel public events increased from 0.0 to 2.0
 Yemen,2020-03-18,3.0,0.0,2.0,0.0,0.0,0.0,0.0,4.0,0.0,0.0,0.0,0.0,C8_International travel controls increased from 0.0 to 4.0
@@ -4551,3 +4576,4 @@ Zimbabwe,2020-10-26,2.0,1.0,2.0,3.0,1.0,2.0,2.0,2.0,2.0,1.0,1.0,3.0,H6_Facial Co
 Zimbabwe,2020-11-09,1.0,1.0,2.0,3.0,1.0,2.0,2.0,2.0,2.0,1.0,1.0,3.0,C1_School closing decreased from 2.0 to 1.0
 Zimbabwe,2020-12-18,1.0,2.0,2.0,3.0,1.0,2.0,2.0,2.0,2.0,1.0,1.0,3.0,C2_Workplace closing increased from 1.0 to 2.0
 Zimbabwe,2021-01-05,2.0,3.0,2.0,4.0,1.0,2.0,2.0,4.0,2.0,1.0,1.0,4.0,C8_International travel controls increased from 2.0 to 4.0
+Zimbabwe,2021-01-18,2.0,3.0,2.0,4.0,2.0,2.0,2.0,1.0,2.0,2.0,1.0,4.0,C8_International travel controls decreased from 4.0 to 1.0
