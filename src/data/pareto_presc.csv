@@ -1,11 +1,11 @@
 CountryName,RegionName,PrescriptionIndex,PredictedDailyNewCases,Stringency,TestName,source,GeoID,source-PrescriptionIndex
-United States,,0,132163.8092367644,0.0,NA,Neat2D_AD15_CKP0,United States,0
-United States,,1,124983.62743045084,1.5,NA,Neat2D_AD15_CKP0,United States,3
-United States,,2,110123.16744235027,2.5,NA,Neat2D_AD15_CKP0,United States,9
-United States,,3,108326.90473851371,3.0,NA,Neat2D_AD15_CKP0,United States,2
-United States,,4,98935.13120747803,4.5,NA,Neat2D_AD15_CKP0,United States,7
-United States,,5,94789.28732217057,6.0,NA,Heuristic,United States,1
-United States,,6,93254.60405292267,8.0,NA,Heuristic,United States,2
-United States,,7,88810.24053147167,10.0,NA,Neat2D_AD15_CKP0,United States,5
-United States,,8,84255.72757950802,15.0,NA,Neat2D_AD15_CKP0,United States,6
-United States,,9,79020.8003131232,32.0,NA,Neat2D_AD15_CKP0,United States,1
+United States,,0,132231.09829378003,0.0,NA,Neat2D_AD15_CKP0,United States,0
+United States,,1,125047.01102792095,1.5,NA,Neat2D_AD15_CKP0,United States,3
+United States,,2,110179.02693168954,2.5,NA,Neat2D_AD15_CKP0,United States,9
+United States,,3,108381.79873389468,3.0,NA,Neat2D_AD15_CKP0,United States,2
+United States,,4,98985.20642010131,4.5,NA,Neat2D_AD15_CKP0,United States,7
+United States,,5,94837.10604248021,6.0,NA,Heuristic,United States,1
+United States,,6,93301.55502619625,8.0,NA,Heuristic,United States,2
+United States,,7,88854.93660262853,10.0,NA,Neat2D_AD15_CKP0,United States,5
+United States,,8,84297.93745345029,15.0,NA,Neat2D_AD15_CKP0,United States,6
+United States,,9,79060.19836585064,32.0,NA,Neat2D_AD15_CKP0,United States,1
