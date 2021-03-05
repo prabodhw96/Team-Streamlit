@@ -9,7 +9,7 @@ scikit-learn==0.23.2
 lightgbm
 tensorflow
 keras
-streamlit==0.69
+streamlit==0.76
 streamlit_folium
 awesome-streamlit
 pickle5

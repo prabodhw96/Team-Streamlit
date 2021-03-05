@@ -16,7 +16,7 @@ import src.pages.country_comparator
 import warnings
 warnings.filterwarnings("ignore")
 
-st.beta_set_page_config(initial_sidebar_state='expanded')
+st.set_page_config(initial_sidebar_state='expanded')
 st.markdown(
   f'''
     <style>
