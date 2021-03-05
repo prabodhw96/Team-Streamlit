@@ -87,7 +87,6 @@ def write():
 			st.image(tn_photo)
 		with txt:
 			st.write(data[data["Name"]=="Thin Nguyen"]["p1"].reset_index(drop=True)[0])
-		st.write(data[data["Name"]=="Thin Nguyen"]["p2"].reset_index(drop=True)[0])
 		st.markdown(data[data["Name"]=="Thin Nguyen"]["links"].reset_index(drop=True)[0])
 
 	with st.beta_expander("Andrew Williams"):
